@@ -34,7 +34,15 @@ public final class ArkaSMPEconomy extends JavaPlugin implements Listener {
 
     @Override
     public void onEnable() {
-        saveDefaultConfig();
+        // adds options that are new in this version to config.yml and keeps the admin's own values
+        try {
+            com.arka.smp.core.ConfigUpdater.update(getDataFolder(), () -> getResource("config.yml"),
+                    getPluginMeta().getVersion(), getLogger(), java.util.Set.of());
+        } catch (LinkageError e) {
+            getLogger().severe("ArkaSMPCore is too old for this ArkaSMPEconomy. Update both plugins to the same version.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
         core = JavaPlugin.getPlugin(ArkaSMPCore.class);
         messages = new Messages(this);
         db = new Database(this);

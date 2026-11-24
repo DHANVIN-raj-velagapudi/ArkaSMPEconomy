@@ -4,7 +4,11 @@
 #  Text uses MiniMessage:  <green>text</green>  <bold>  <gray>  etc.
 #  After editing run:  /arkaeco reload
 # ==============================================================================
-config-version: 1
+
+# MANAGED BY THE PLUGIN - DO NOT CHANGE THIS LINE. It stores the plugin version that last updated this file.
+# When you install a newer version, new options are added below automatically and your settings are kept
+# (a backup of the old file goes to the config-backups folder).
+config-version: "auto"
 
 currency:
   symbol: "₹"

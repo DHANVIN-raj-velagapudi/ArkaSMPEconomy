@@ -33,10 +33,11 @@ This plugin **requires ArkaSMPCore** (it uses its menu system and shares service
 9. [Placeholders (PlaceholderAPI)](#placeholders-placeholderapi)
 10. [Moving from Essentials](#moving-from-essentials)
 11. [Working with ArkaSMPCore](#working-with-arkasmpcore)
-12. [Status and known limits](#status-and-known-limits)
-13. [Building from source](#building-from-source)
-14. [Contributing and support](#contributing-and-support)
-15. [License](#license)
+12. [Versions and updating](#versions-and-updating)
+13. [Status and known limits](#status-and-known-limits)
+14. [Building from source](#building-from-source)
+15. [Contributing and support](#contributing-and-support)
+16. [License](#license)
 
 ---
 
@@ -88,8 +89,8 @@ This plugin **requires ArkaSMPCore** (it uses its menu system and shares service
 
 ## Installation
 
-1. Install **ArkaSMPCore** first.
-2. Put `ArkaSMPEconomy-1.0.0.jar` in `plugins/` next to it and start the server once.
+1. Install **ArkaSMPCore** first (use the same version number as this plugin).
+2. Put `ArkaSMPEconomy-<version>.jar` in `plugins/` next to it and start the server once.
 3. Edit `plugins/ArkaSMPEconomy/config.yml` (money, rewards, trade, shop settings) and, if you like,
    `base-prices.yml` (shop prices).
 4. Run `/arkaeco reload`.
@@ -235,6 +236,31 @@ Without this plugin, ArkaSMPCore still works. The paid features simply stay unav
 
 ---
 
+## Versions and updating
+
+Every release gets a new version number (`MAJOR.MINOR.PATCH`: a fix raises the last number, a new feature the middle
+one, a breaking change the first). The history is in [CHANGELOG.md](CHANGELOG.md), and the jar name carries the
+version, e.g. `ArkaSMPEconomy-1.1.0.jar`.
+
+**Your `config.yml` updates itself.** It stores the plugin version that last updated it:
+
+```yaml
+config-version: "1.1.0"      # do not change this line
+```
+
+When you install a newer jar and start the server, the plugin saves a backup of your config in
+`plugins/ArkaSMPEconomy/config-backups/`, **adds the options that are new in this version** (with comments),
+**keeps every value you changed**, raises `config-version` and tells you in the console.
+**Please do not edit the `config-version` line.** It is managed by the plugin. A config with a YAML mistake is left
+exactly as it is.
+
+`base-prices.yml` is **not** rewritten, because it holds your own price decisions. New items are priced by the
+calculation rules automatically; check `/shopadmin audit` after an update.
+
+Update ArkaSMPCore and ArkaSMPEconomy **together**: this plugin refuses to start with a Core that is too old.
+
+---
+
 ## Status and known limits
 
 We built and tested this for our own server, and we are releasing it as it is. It is **young software**:
@@ -255,7 +281,7 @@ Requires JDK 21+ and Maven. Build and install **ArkaSMPCore** first (`mvn -q -B 
 mvn -q -B package
 ```
 
-The jar is written to `target/ArkaSMPEconomy-1.0.0.jar`.
+The jar is written to `target/ArkaSMPEconomy-<version>.jar` (the version is set in `pom.xml`; keep the ArkaSMPCore dependency version in step).
 
 ---
 
