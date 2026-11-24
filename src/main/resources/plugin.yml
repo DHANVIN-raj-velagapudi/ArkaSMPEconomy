@@ -1,0 +1,94 @@
+name: ArkaSMPEconomy
+version: ${project.version}
+main: com.arka.smp.economy.ArkaSMPEconomy
+api-version: '1.21'
+description: Rupee economy, payments, hourly rewards and safe player trading.
+authors: [Arka]
+depend: [ArkaSMPCore]
+softdepend: [PlaceholderAPI]
+
+commands:
+  bal:
+    description: Show your balance
+    usage: /bal [player]
+    aliases: [balance, money]
+  pay:
+    description: Pay rupees to a player
+    usage: /pay [player] [amount]
+  baltop:
+    description: Richest players
+    usage: /baltop [page]
+    aliases: [balancetop, topmoney]
+  paytoggle:
+    description: Allow or block incoming payments
+    usage: /paytoggle
+  trade:
+    description: Trade items and rupees safely
+    usage: /trade [player|accept|deny|cancel|toggle|block|unblock|history]
+  shop:
+    description: Open the shop
+    usage: /shop
+    aliases: [buy, store]
+  sell:
+    description: Sell items (hand or all)
+    usage: /sell <hand|all>
+  sellgui:
+    description: Open a chest to drop items in and sell
+    usage: /sellgui
+    aliases: [sg, sellchest]
+  worth:
+    description: See what an item sells for
+    usage: /worth [item]
+    aliases: [price]
+  shopadmin:
+    description: Shop price admin tools
+    usage: /shopadmin help
+  arkaeco:
+    description: Economy admin tools
+    usage: /arkaeco help
+    aliases: [aeco]
+
+permissions:
+  arkaeco.admin:
+    description: All economy admin commands
+    default: op
+    children:
+      arkaeco.admin.give: true
+      arkaeco.admin.take: true
+      arkaeco.admin.set: true
+      arkaeco.admin.reset: true
+      arkaeco.admin.freeze: true
+      arkaeco.admin.log: true
+      arkaeco.admin.import: true
+      arkaeco.admin.reload: true
+      arkaeco.admin.balance: true
+  arkaeco.admin.give:
+    default: false
+  arkaeco.admin.take:
+    default: false
+  arkaeco.admin.set:
+    default: false
+  arkaeco.admin.reset:
+    default: false
+  arkaeco.admin.freeze:
+    default: false
+  arkaeco.admin.log:
+    default: false
+  arkaeco.admin.import:
+    default: false
+  arkaeco.admin.reload:
+    default: false
+  arkaeco.admin.balance:
+    default: false
+  arkaeco.baltop.hide:
+    description: Hide this player from /baltop
+    default: false
+  arkaeco.trade.bypass:
+    description: Bypass trade safety checks (AFK/combat/creative)
+    default: false
+  arkaeco.shop.admin:
+    description: Change shop prices (/shopadmin)
+    default: op
+  arkaeco.shop.bypass:
+    description: Skip the minimum play time before selling
+    default: false

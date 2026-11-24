@@ -1,0 +1,212 @@
+# ==============================================================================
+#  ArkaSMPEconomy  -  Stage 1 (money, /pay, /baltop, hourly reward, /trade)
+#  Currency is rupees only. All amounts below are in RUPEES (not paise).
+#  Text uses MiniMessage:  <green>text</green>  <bold>  <gray>  etc.
+#  After editing run:  /arkaeco reload
+# ==============================================================================
+config-version: 1
+
+currency:
+  symbol: "₹"
+
+economy:
+  start-balance: 1000        # what a new player begins with
+  max-balance: 1000000000    # nobody can hold more than this (hard limit 1,000,000,000,000)
+
+pay:
+  minimum: 1                 # smallest /pay
+  maximum: 1000000           # largest single /pay
+  confirm-over: 10000        # typed /pay above this asks for a second confirmation
+  cooldown-seconds: 2        # delay between payments (stops spam)
+  allow-offline: true        # may pay players who are offline (by name)
+  menu-amounts: [10, 50, 100, 500, 1000, 5000, 10000]   # buttons in the tap-only /pay menu (max 7)
+
+baltop:
+  page-size: 10
+  refresh-seconds: 30        # how often the ranking is rebuilt (async)
+
+rewards:
+  playtime:
+    enabled: true
+    amount: 100              # rupees paid each interval, the same for everyone
+    interval-minutes: 60     # ACTIVE (non-AFK) minutes needed for one reward
+    max-per-day: 24          # most rewards one player can earn per day (stops AFK-farm alts)
+
+trade:
+  enabled: true
+  request-timeout: 60        # seconds before a trade request expires
+  request-cooldown: 5        # seconds between sending requests
+  countdown: 3               # seconds after both press ready, before the swap
+  lopsided-warning:          # warns (once) when you give far more than you get, by shop sell price
+    enabled: true
+    ratio: 3.0               # warn when what you give is worth this many times what you get...
+    min-difference: 500      # ...and the difference is at least this many rupees
+  money-steps: [100, 1000]   # the small and big +/- rupee buttons inside the trade window
+  block-in-combat: true
+  block-while-afk: true
+  block-creative: true       # creative/spectator players cannot trade
+  blocked-items:             # these can never be offered
+    - BEDROCK
+    - BARRIER
+    - COMMAND_BLOCK
+    - CHAIN_COMMAND_BLOCK
+    - REPEATING_COMMAND_BLOCK
+    - COMMAND_BLOCK_MINECART
+    - STRUCTURE_BLOCK
+    - STRUCTURE_VOID
+    - JIGSAW
+    - LIGHT
+    - DEBUG_STICK
+    - KNOWLEDGE_BOOK
+    - SPAWNER
+    - TRIAL_SPAWNER
+    - VAULT
+    - REINFORCED_DEEPSLATE
+    - PETRIFIED_OAK_SLAB
+    - END_PORTAL_FRAME
+
+shop:
+  enabled: true
+  max-buy: 2304              # most items one purchase can give (36 stacks of 64)
+  big-buy-confirm: 5000      # buying for this much or more asks "are you sure?"
+  # Prices, buy multiplier, craft factor and the anti-farm sell limits live in base-prices.yml.
+  # Change single prices in-game with /shopadmin set <item> <sell> [buy] (saved in price-overrides.yml).
+
+log:
+  keep-days: 90              # transaction log is pruned after this many days (0 = keep forever)
+
+menus:
+  pay:
+    pick-title: "Pay who?"
+    amount-title: "Pay {player}"
+    confirm-title: "Pay {amount} to {player}?"
+  shop:
+    title: "Shop"
+    sellgui-title: "Sell items - drop them in, then press SELL"
+    title-category: "{category}"
+    title-item: "{item}"
+    categories:                 # rename a category here (ids: blocks wood stone colors ores redstone tools armor food farming mobs misc)
+      blocks: "Building Blocks"
+      wood: "Wood"
+      stone: "Stone & Bricks"
+      colors: "Colors & Glass"
+      ores: "Ores & Metals"
+      redstone: "Redstone"
+      tools: "Tools & Weapons"
+      armor: "Armor"
+      food: "Food"
+      farming: "Farming & Plants"
+      mobs: "Mob Drops"
+      misc: "Decoration & Misc"
+  trade:
+    pick-title: "Trade with who?"
+    title: "Trade with {player}"
+    money-minus: "<red>- {amount}"
+    money-minus-lore: "<gray>Take rupees out of your offer"
+    money-plus: "<green>+ {amount}"
+    money-plus-lore: "<gray>Add rupees to your offer"
+    my-money: "<gold>You give: <white>{amount}"
+    their-money: "<gold>{player} gives: <white>{amount}"
+    cancel: "<red><bold>Cancel trade"
+    cancel-lore: "<gray>Everything is returned"
+    ready-off: "<green><bold>Ready"
+    ready-off-lore: "<gray>Tap when you are happy with the trade"
+    ready-on: "<yellow><bold>Waiting... tap to un-ready"
+    their-ready-on: "<green>{player} is ready"
+    their-ready-off: "<gray>{player} is not ready"
+    status: "<white>How it works"
+    status-lore: "<gray>Tap items in your inventory to offer them.|<gray>Tap your offered items to take them back.|<gray>Any change cancels both ready buttons."
+
+messages:
+  prefix: "<gold>[Eco] </gold>"
+  no-permission: "<red>You do not have permission."
+  player-only: "<red>Only players can use this."
+  unknown-player: "<red>Player not found."
+  no-account: "<red>That player has no account."
+  invalid-amount: "<red>Invalid amount. Use a positive number like 100 or 25.50."
+  reward-earned: "<green>Hourly reward: <white>+{amount} <gray>for playing."
+
+  balance-self: "<gray>Balance: <green>{amount}"
+  balance-other: "<gray>{player}'s balance: <green>{amount}"
+  paytoggle-on: "<green>You now accept payments."
+  paytoggle-off: "<yellow>You no longer accept payments."
+
+  pay-usage: "<red>Usage: /pay <player> <amount>  (or just /pay for the menu)"
+  pay-self: "<red>You cannot pay yourself."
+  pay-min: "<red>The minimum payment is {min}."
+  pay-max: "<red>The maximum payment is {max}."
+  pay-cooldown: "<red>Slow down a little."
+  pay-sent: "<green>You paid <white>{amount} <green>to <white>{player}<green>."
+  pay-received: "<green>You received <white>{amount} <green>from <white>{player}<green>."
+  pay-insufficient: "<red>You only have {balance}."
+  pay-frozen: "<red>Your account is frozen. Contact staff."
+  pay-too-rich: "<red>{player} cannot hold that much money."
+  pay-not-accepting: "<red>{player} is not accepting payments."
+
+  baltop-header: "<gold><bold>Richest players <gray>(page {page}/{pages})"
+  baltop-empty: "<gray>Nobody is on the list yet."
+  baltop-line: "<yellow>#{rank} <white>{player} <gray>- <green>{amount}"
+  baltop-you: "<gray>You are <yellow>#{rank} <gray>with <green>{amount}"
+
+  trade-usage: "<red>Usage: /trade <player> | accept | deny | cancel | toggle | block <player> | unblock <player> | history"
+  trade-disabled: "<red>Trading is turned off."
+  trade-self: "<red>You cannot trade with yourself."
+  trade-you-busy: "<red>You are already in a trade."
+  trade-target-busy: "<red>{player} is already trading."
+  trade-unavailable: "<red>{player} is not accepting trade requests."
+  trade-frozen: "<red>Trading is unavailable (frozen account)."
+  trade-afk-you: "<red>You cannot trade while AFK."
+  trade-afk-target: "<red>{player} is AFK."
+  trade-combat-you: "<red>You cannot trade while in combat."
+  trade-combat-target: "<red>{player} is in combat."
+  trade-creative: "<red>Trading is not allowed in creative or spectator mode."
+  trade-cooldown: "<red>Wait a moment before sending another request."
+  trade-pending: "<yellow>You already sent {player} a request."
+  trade-request-sent: "<green>Trade request sent to <white>{player}<green>."
+  trade-request-received: "<white>{player} <yellow>wants to trade. <green><click:run_command:'/trade accept {player}'><hover:show_text:'Accept the trade'>[Accept]</hover></click> <red><click:run_command:'/trade deny {player}'><hover:show_text:'Deny the trade'>[Deny]</hover></click>"
+  trade-none: "<red>You have no trade request."
+  trade-denied: "<gray>Request denied."
+  trade-denied-you: "<yellow>{player} denied your trade request."
+  trade-cancelled: "<yellow>Trade cancelled. Your items were returned."
+  trade-cancelled-by: "<yellow>{player} cancelled the trade. Your items were returned."
+  trade-complete: "<green>Trade complete!"
+  trade-reset: "<yellow>Trade changed - both players must press Ready again."
+  trade-countdown: "<green>Trading in {seconds}..."
+  trade-empty: "<red>Offer something first."
+  trade-item-blocked: "<red>That item cannot be traded."
+  trade-offer-full: "<red>Your offer has no more room."
+  trade-inv-full: "<red>Your inventory is full."
+  trade-money-limit: "<red>You cannot offer more than you have."
+  trade-failed-space: "<red>{player} does not have enough inventory space. Make room and press Ready again."
+  trade-failed-money: "<red>Trade failed (money: {player}). Check balances and try again."
+  trade-returned: "<yellow>Items from an interrupted trade were returned to you."
+  trade-toggle-on: "<green>You now accept trade requests."
+  trade-toggle-off: "<yellow>You no longer accept trade requests."
+  trade-block-added: "<yellow>{player} can no longer send you trade requests."
+  trade-block-removed: "<green>{player} can trade with you again."
+  trade-history-header: "<gold>Your last trades"
+  trade-history-empty: "<gray>No trades yet."
+  trade-lopsided: "<yellow>Careful: you give about <white>{give} <yellow>and get about <white>{get} <yellow>(shop prices). Press Ready again if you are happy with this."
+  trade-history-line: "<gray>{time} <white>{note}"
+
+  # shop
+  shop-disabled: "<red>The shop is turned off."
+  shop-no-playhours: "<red>You need {hours} hours of active play time before you can sell items."
+  shop-creative: "<red>You cannot use the shop in creative mode."
+  shop-bought: "<green>Bought <white>{qty}x {item} <green>for <white>{amount}<green>."
+  shop-no-space: "<red>Not enough inventory space."
+  shop-insufficient: "<red>That costs {cost} but you only have {balance}."
+  shop-not-for-sale: "<red>That item is not for sale."
+  shop-error: "<red>That purchase could not be completed. Nothing was taken."
+  shop-sold: "<green>Sold <white>{items} items <green>for <white>{amount}<green>."
+  shop-sell-failed: "<red>The sale could not be completed. Nothing was taken."
+  shop-nothing: "<red>You have nothing sellable of that kind. <gray>(Plain, undamaged, unnamed items only.)"
+  shop-refused: "<gray>{n} stack(s) skipped: enchanted, renamed, damaged or container items cannot be sold."
+  shop-limit-hour: "<yellow>Some items hit their hourly sell limit. The rest stay in your inventory; the limit frees up gradually."
+  shop-limit-day: "<yellow>Daily sell limit reached. You can still sell up to <white>{cap} <yellow>today."
+  shop-sell-usage: "<red>Usage: /sell hand  or  /sell all  <gray>(or tap items in /shop)"
+  worth-hold: "<red>Hold an item first, or use /worth <item>."
+  worth-unknown: "<red>No item with that name."
+  worth-none: "<red>{item} cannot be bought or sold."
+  worth-line: "<gold>{item}<gray>: sells for <green>{sell}<gray>, costs <yellow>{buy}"
+  worth-hour-left: "<gray>You can still earn <white>{amount} <gray>from this item this hour."
