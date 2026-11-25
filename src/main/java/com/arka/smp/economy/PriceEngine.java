@@ -88,9 +88,22 @@ final class PriceEngine {
     static Result compute(Collection<String> items, Map<String, Double> baseRupees, Map<String, Premium> premium,
                           Collection<String> noSell, Collection<String> noBuy, List<Recipe> recipes, List<Drop> drops,
                           Map<String, String> remainders, Rules rules) {
+        return compute(items, baseRupees, Map.of(), premium, noSell, noBuy, recipes, drops, remainders, rules);
+    }
+
+    /**
+     * @param baseRupees    hand-set prices of raw items (exact names or * patterns)
+     * @param craftedRupees fixed prices of items made from recipes; these items are never sold for less than they cost
+     *                      to build and are not for sale when every way of making them needs something not for sale.
+     *                      Items priced by neither list are derived from their recipes.
+     */
+    static Result compute(Collection<String> items, Map<String, Double> baseRupees, Map<String, Double> craftedRupees,
+                          Map<String, Premium> premium, Collection<String> noSell, Collection<String> noBuy,
+                          List<Recipe> recipes, List<Drop> drops, Map<String, String> remainders, Rules rules) {
         List<String> notes = new ArrayList<>();
         Map<String, Long> priced = new HashMap<>();
         Map<String, Integer> depth = new HashMap<>();
+        Set<String> craftedSet = new HashSet<>();
 
         // 1. base prices: patterns first, exact names override
         for (var e : baseRupees.entrySet()) {
@@ -105,6 +118,14 @@ final class PriceEngine {
             }
             priced.put(e.getKey(), toPaise(e.getValue()));
         }
+        for (var e : craftedRupees.entrySet()) {
+            if (!items.contains(e.getKey())) {
+                notes.add("base price for unknown item ignored: " + e.getKey());
+                continue;
+            }
+            priced.put(e.getKey(), toPaise(e.getValue()));
+            craftedSet.add(e.getKey());
+        }
         Map<String, Long> premiumBuy = new HashMap<>();
         for (int pass = 0; pass < 2; pass++) {               // patterns first, exact names override
             for (var e : premium.entrySet()) {
@@ -113,6 +134,7 @@ final class PriceEngine {
                 Set<String> hit = expand(List.of(e.getKey()), items);
                 if (hit.isEmpty() && !isPattern) notes.add("premium price for unknown item ignored: " + e.getKey());
                 for (String item : hit) {
+                    craftedSet.remove(item);                  // a premium price is a hand-set price
                     if (e.getValue().sell() > 0) priced.put(item, toPaise(e.getValue().sell()));
                     if (e.getValue().buy() > 0) premiumBuy.put(item, toPaise(e.getValue().buy()));
                 }
@@ -122,17 +144,12 @@ final class PriceEngine {
         for (String k : priced.keySet()) depth.put(k, 0);
 
         // 2. derive in rounds
-        Map<String, List<String>> via = new HashMap<>();   // item -> the ingredients its price came from
-        Map<String, Integer> viaAmount = new HashMap<>();  // item -> how many that recipe makes
         for (int round = 1; round <= 200; round++) {
             Map<String, Long> found = new HashMap<>();
-            Map<String, List<String>> foundVia = new HashMap<>();
-            Map<String, Integer> foundAmount = new HashMap<>();
             for (Recipe r : recipes) {
                 if (priced.containsKey(r.out()) || r.amount() <= 0) continue;
                 long cost = 0;
                 boolean ok = true;
-                List<String> used = new ArrayList<>();
                 for (List<String> slot : r.slots()) {
                     String best = null;
                     long bestCost = Long.MAX_VALUE;
@@ -152,7 +169,6 @@ final class PriceEngine {
                         break;
                     }
                     cost += bestCost;
-                    used.add(best);
                 }
                 if (!ok) continue;
                 double factor = r.smelt() ? rules.smeltFactor() : rules.craftFactor();
@@ -161,16 +177,13 @@ final class PriceEngine {
                 Long cur = found.get(r.out());
                 if (cur == null || candidate < cur) {
                     found.put(r.out(), candidate);
-                    foundVia.put(r.out(), used);
-                    foundAmount.put(r.out(), r.amount());
                 }
             }
             if (found.isEmpty()) break;
             for (var e : found.entrySet()) {
                 priced.put(e.getKey(), e.getValue());
+                craftedSet.add(e.getKey());
                 depth.put(e.getKey(), round);
-                via.put(e.getKey(), foundVia.get(e.getKey()));
-                viaAmount.put(e.getKey(), foundAmount.get(e.getKey()));
             }
         }
 
@@ -178,15 +191,41 @@ final class PriceEngine {
         Set<String> noSellSet = expand(noSell, items);
         Set<String> blocked = new HashSet<>(expand(noBuy, items));
         blocked.removeAll(premiumBuy.keySet());           // an explicit premium buy price beats the no-buy list
-        List<String> order = new ArrayList<>(via.keySet());
-        order.sort((a, b) -> Integer.compare(depth.get(a), depth.get(b)));
-        for (String item : order) {                       // inherit no-buy through the ingredients
-            for (String ing : via.get(item)) {
-                if (blocked.contains(ing)) {
+        Map<String, List<Recipe>> making = new HashMap<>();
+        for (Recipe r : recipes) if (r.amount() > 0) making.computeIfAbsent(r.out(), k -> new ArrayList<>()).add(r);
+        // a crafted item is not for sale when EVERY way of making it needs something that is not for sale
+        for (int pass = 0; pass < 200; pass++) {
+            boolean changed = false;
+            for (var e : making.entrySet()) {
+                String item = e.getKey();
+                if (blocked.contains(item) || premiumBuy.containsKey(item) || !craftedSet.contains(item)) continue;
+                boolean everyWayBlocked = true;
+                for (Recipe r : e.getValue()) {
+                    boolean dead = false;
+                    for (List<String> slot : r.slots()) {
+                        boolean allBlocked = true;
+                        for (String c : slot) {
+                            if (!blocked.contains(c)) {
+                                allBlocked = false;
+                                break;
+                            }
+                        }
+                        if (allBlocked) {
+                            dead = true;
+                            break;
+                        }
+                    }
+                    if (!dead) {
+                        everyWayBlocked = false;
+                        break;
+                    }
+                }
+                if (everyWayBlocked) {
                     blocked.add(item);
-                    break;
+                    changed = true;
                 }
             }
+            if (!changed) break;
         }
         Map<String, Long> sellMap = new HashMap<>();
         Map<String, Long> buyMap = new HashMap<>();
@@ -202,24 +241,62 @@ final class PriceEngine {
             long b = (long) Math.ceil(p * rules.buyMultiplier());
             Long pb = premiumBuy.get(item);
             if (pb != null) b = Math.max(b, pb);
-            // never cheaper to buy than to build: the price of the cheapest ingredients bought one by one
-            List<String> ings = via.get(item);
-            if (ings != null) {
-                long sum = 0;
-                boolean all = true;
-                for (String ing : ings) {
-                    Long ib = buyMap.get(ing);
-                    if (ib == null) {
-                        all = false;
-                        break;
-                    }
-                    String left = remainders.get(ing);
-                    sum += Math.max(0, ib - (left == null ? 0 : buyMap.getOrDefault(left, 0L)));
-                }
-                int amt = viaAmount.get(item);
-                if (all) b = Math.max(b, (sum + amt - 1) / amt);
-            }
             buyMap.put(item, b);
+        }
+        // never cheaper to buy than to build: a crafted item costs at least what its cheapest recipe costs when
+        // everything is bought from the raw (hand-priced) items. The cost is worked out from the raw items upwards,
+        // so un-crafting recipes (block back to ingots) cannot be used to make a rare item look cheap.
+        Map<String, Double> cost = new HashMap<>();
+        for (int pass = 0; pass < 200; pass++) {
+            boolean changed = false;
+            for (var e : making.entrySet()) {
+                String item = e.getKey();
+                if (!craftedSet.contains(item) || blocked.contains(item)) continue;
+                for (Recipe r : e.getValue()) {
+                    double sum = 0;
+                    boolean ok = true;
+                    for (List<String> slot : r.slots()) {
+                        double best = Double.MAX_VALUE;
+                        for (String c : slot) {
+                            double v;
+                            if (craftedSet.contains(c)) {
+                                Double cv = blocked.contains(c) ? null : cost.get(c);
+                                if (cv == null) continue;
+                                v = cv;
+                            } else {
+                                Long bv = buyMap.get(c);
+                                if (bv == null) continue;
+                                v = bv;
+                            }
+                            String left = remainders.get(c);
+                            if (left != null) {
+                                double lv = craftedSet.contains(left) ? cost.getOrDefault(left, 0.0) : buyMap.getOrDefault(left, 0L);
+                                v = Math.max(0, v - lv);
+                            }
+                            if (v < best) best = v;
+                        }
+                        if (best == Double.MAX_VALUE) {
+                            ok = false;
+                            break;
+                        }
+                        sum += best;
+                    }
+                    if (!ok) continue;
+                    double per = sum / r.amount();
+                    Double cur = cost.get(item);
+                    if (cur == null || per < cur - 1e-9) {
+                        cost.put(item, per);
+                        changed = true;
+                    }
+                }
+            }
+            if (!changed) break;
+        }
+        for (var e : cost.entrySet()) {
+            Long cur = buyMap.get(e.getKey());
+            if (cur == null) continue;
+            long floor = (long) Math.ceil(e.getValue() - 1e-9);
+            if (floor > cur) buyMap.put(e.getKey(), floor);
         }
 
         // 4. arbitrage check over every recipe, smelt, cut, smithing step and mining yield
@@ -240,16 +317,14 @@ final class PriceEngine {
                     for (List<String> slot : e.slots()) {
                         double best = Double.MAX_VALUE;
                         for (String c : slot) {
+                            // only things that can really be bought (or made from bought things) count as a way in:
+                            // an item that cannot be bought has no purchase price, so it cannot start a buy-process-sell loop
                             Double v = acq.get(c);
-                            if (v == null) {
-                                Long sv = sellMap.get(c);
-                                if (sv == null) continue;          // cannot be bought and is worth nothing: not a priced input
-                                v = (double) sv;
-                            }
+                            if (v == null) continue;
                             String left = remainders.get(c);
                             if (left != null) {
                                 Double lv = acq.get(left);
-                                if (lv == null) lv = (double) sellMap.getOrDefault(left, 0L);
+                                if (lv == null) lv = 0.0;
                                 v = Math.max(0, v - lv);
                             }
                             if (v < best) best = v;

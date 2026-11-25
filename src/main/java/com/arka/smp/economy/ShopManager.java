@@ -111,6 +111,11 @@ public final class ShopManager {
         if (section != null) {
             for (String k : section.getKeys(false)) base.put(k, section.getDouble(k));
         }
+        Map<String, Double> crafted = new LinkedHashMap<>();
+        var cs = y.getConfigurationSection("crafted");
+        if (cs != null) {
+            for (String k : cs.getKeys(false)) crafted.put(k, cs.getDouble(k));
+        }
         Map<String, PriceEngine.Premium> premium = new LinkedHashMap<>();
         var ps = y.getConfigurationSection("premium");
         if (ps != null) {
@@ -135,7 +140,7 @@ public final class ShopManager {
             Material left = m.getCraftingRemainingItem();
             if (left != null && isItem(left)) remainders.put(m.name(), left.name());
         }
-        var result = PriceEngine.compute(names, base, premium, y.getStringList("no-sell"), y.getStringList("no-buy"),
+        var result = PriceEngine.compute(names, base, crafted, premium, y.getStringList("no-sell"), y.getStringList("no-buy"),
                 recipes, drops, remainders, new PriceEngine.Rules(buyMult, craft, smelt));
 
         Map<Material, Long> s = new EnumMap<>(Material.class);
@@ -206,12 +211,17 @@ public final class ShopManager {
                     slots.add(tpl);
                     slots.add(base);
                     slots.add(add);
+                } else if (r instanceof org.bukkit.inventory.TransmuteRecipe tr) {
+                    List<String> in = names(tr.getInput()), mat = names(tr.getMaterial());
+                    if (in == null || mat == null) continue;
+                    slots.add(in);
+                    slots.add(mat);
                 } else if (r instanceof StonecuttingRecipe sc) {
                     List<String> ch = names(sc.getInputChoice());
                     if (ch == null) continue;
                     slots.add(ch);
                 } else {
-                    continue;   // smithing, transmute, special recipes: not priced from recipes
+                    continue;   // smithing trims and special recipes (maps, fireworks, banners): not priced from recipes
                 }
                 if (slots == null || slots.isEmpty()) continue;
                 out.add(new PriceEngine.Recipe(name, amount, slots, smelt));

@@ -38,12 +38,11 @@ public final class PriceArbitrageCheck {
                     double best = Double.MAX_VALUE;
                     for (String c : slot) {
                         Double v = cost.get(c);
-                        if (v == null && sell.containsKey(c)) v = (double) sell.get(c);
-                        if (v == null) continue;
+                        if (v == null) continue;                  // cannot be bought: no purchase price
                         String left = rem.get(c);
                         if (left != null) {
                             Double lv = cost.get(left);
-                            if (lv == null) lv = (double) sell.getOrDefault(left, 0L);
+                            if (lv == null) lv = 0.0;
                             v = Math.max(0, v - lv);
                         }
                         best = Math.min(best, v);
@@ -165,6 +164,41 @@ public final class PriceArbitrageCheck {
         check("mining yield clamp: raw copper no longer pays more than the ore costs",
                 r.sell().get("RAW_COPPER") * 7.7 <= r.buy().get("COPPER_ORE") * 0.95 + 1);
         check("a premium item without a sell price in the table stays sellable only where allowed", r.sell().containsKey("GHAST_TEAR"));
+        // prices written out one by one ("crafted:" section): un-crafting must not make a rare item cheap,
+        // and the emerald pair must neither cascade down nor become buyable
+        {
+            List<String> its = List.of("NETHERITE_SCRAP", "GOLD_INGOT", "NETHERITE_INGOT", "NETHERITE_BLOCK", "EMERALD", "EMERALD_BLOCK");
+            Map<String, Double> raw = Map.of("GOLD_INGOT", 4.0, "EMERALD", 4.0);
+            Map<String, Double> made = Map.of("NETHERITE_INGOT", 1.10, "NETHERITE_BLOCK", 9.42, "EMERALD_BLOCK", 34.2);
+            Map<String, PriceEngine.Premium> pm = Map.of("NETHERITE_SCRAP", new PriceEngine.Premium(25, 4500));
+            String[] four = {"NETHERITE_SCRAP", "NETHERITE_SCRAP", "NETHERITE_SCRAP", "NETHERITE_SCRAP"};
+            List<List<String>> ingotSlots = new ArrayList<>();
+            for (String s : four) ingotSlots.add(List.of(s));
+            for (int i = 0; i < 4; i++) ingotSlots.add(List.of("GOLD_INGOT"));
+            List<List<String>> blockSlots = new ArrayList<>();
+            List<List<String>> emSlots = new ArrayList<>();
+            for (int i = 0; i < 9; i++) {
+                blockSlots.add(List.of("NETHERITE_INGOT"));
+                emSlots.add(List.of("EMERALD"));
+            }
+            List<PriceEngine.Recipe> rs = List.of(
+                    new PriceEngine.Recipe("NETHERITE_INGOT", 1, ingotSlots, false),
+                    new PriceEngine.Recipe("NETHERITE_BLOCK", 1, blockSlots, false),
+                    new PriceEngine.Recipe("NETHERITE_INGOT", 9, List.of(List.of("NETHERITE_BLOCK")), false),
+                    new PriceEngine.Recipe("EMERALD_BLOCK", 1, emSlots, false),
+                    new PriceEngine.Recipe("EMERALD", 9, List.of(List.of("EMERALD_BLOCK")), false));
+            var rr = PriceEngine.compute(its, raw, made, pm, List.of(), List.of("EMERALD"), rs, List.of(), Map.of(),
+                    new PriceEngine.Rules(3.0, 0.95, 1.0));
+            long scrapBuy = 450_000L, goldBuy = 1_200L;
+            check("explicit crafted prices: netherite ingot still costs 4 scrap + 4 gold",
+                    rr.buy().get("NETHERITE_INGOT") >= 4 * scrapBuy + 4 * goldBuy);
+            check("explicit crafted prices: netherite block can not be bought below 9 ingots",
+                    rr.buy().get("NETHERITE_BLOCK") >= 9 * (4 * scrapBuy + 4 * goldBuy));
+            check("explicit crafted prices: emerald block stays not for sale, but can be sold", !rr.buy().containsKey("EMERALD_BLOCK")
+                    && rr.sell().containsKey("EMERALD_BLOCK"));
+            check("explicit crafted prices: emerald does not slide down through the block", rr.sell().get("EMERALD") == 400L
+                    && rr.sell().get("EMERALD_BLOCK") == 3420L);
+        }
         System.out.println(failed == 0 ? "ALL PASSED" : failed + " FAILED");
         if (failed > 0) System.exit(1);
     }

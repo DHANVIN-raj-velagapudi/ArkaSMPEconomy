@@ -3,6 +3,31 @@
 All notable changes to ArkaSMPEconomy. Versions follow `MAJOR.MINOR.PATCH`: a fix raises the last number, a new
 feature the middle one, a breaking change the first. Every release raises the version.
 
+## 1.4.0
+
+Requires ArkaSMPCore 1.2.0 or newer.
+
+### Added
+- **Every item has its own price** in `base-prices.yml`: about 1,500 items written for Minecraft 26.3 from the game's
+  own item and recipe data (previously most of them were calculated on the fly). The file now has a `base:` part for
+  raw items, a `crafted:` part for everything made from recipes, `premium:`, `drops:` and the no-sell and no-buy lists.
+- **PRICE_LIST.md**: the full table of what you get and what you pay for every item, for players and admins.
+- 26.3 items: poplar wood set, wool stairs and slabs, concrete stairs and slabs, cushions, straw bed, spears for every
+  tool material, copper chests, chains, lanterns, bars, doors, trapdoors, lightning rods and golem statues in every
+  rust stage (and waxed), cinnabar and sulfur stone families, nautilus armour, copper horse armour, new egg colours and more.
+- Shop now reads the "transmute" recipes of newer game versions (for example dyeing shulker boxes) for the loop check.
+- Worn anvils (chipped, damaged) can be sold; bells and the loot-only banner patterns are premium items.
+
+### Changed
+- **Never cheaper to buy than to build** now covers every crafted item, and is worked out from the raw items upwards,
+  so that breaking a netherite block into ingots cannot make netherite cheap.
+- Loop check: items that cannot be bought are no longer treated as if they could be, which stops emerald and emerald
+  blocks pulling each other's sell price down to nothing.
+- Prices of crafted items that used to be rounded up twice are now exact, so a few buy prices are slightly lower.
+
+Your existing `base-prices.yml` is not overwritten. To get the complete list, rename it (for example to
+`base-prices-old.yml`), restart so the new one is created, then copy back any prices you changed.
+
 ## 1.3.0
 
 Requires ArkaSMPCore 1.2.0 or newer.

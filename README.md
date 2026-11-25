@@ -69,7 +69,10 @@ This plugin **requires ArkaSMPCore** (it uses its menu system and shares service
 - Only plain, undamaged items are accepted (no enchanted, renamed or container items)
 - **Rare items are very expensive**: elytra, totem of undying, end crystals, nether stars, tridents and netherite cost tens of thousands of rupees, and the shop pays only a few rupees for them
 - **No money loops**: after pricing, the engine checks every recipe (crafting, un-crafting, smelting, smithing, ore yields) and lowers a sell price if buying, processing and selling could ever make money
-- **New game versions** (new woods, wool stairs, copper tools) are priced automatically from their recipes
+- **Every survival item is priced**, one line each, including the 26.3 items (poplar wood, wool stairs and slabs,
+  concrete stairs, copper chests and golem statues, cinnabar and sulfur stone, spears, nautilus armour). See
+  [PRICE_LIST.md](PRICE_LIST.md)
+- **New game versions**: items that are not in the list yet are priced from their recipes automatically
 - **Anti-farm limits**: a per-item hourly earnings cap, a daily cap, and a minimum active play time before a player
   may sell (stops fresh alt accounts)
 - Big purchases and large `/sell all` actions ask for confirmation
@@ -170,14 +173,20 @@ Players need **no** permissions for normal use.
 
 ## How the shop prices work
 
-Only about 190 prices are chosen by hand (`base-prices.yml`). **Everything else is calculated from crafting
-recipes**, so no crafting loop can print money.
+Every item has its own line in `base-prices.yml` (about 1,500 items, written from the Minecraft 26.3 item and recipe
+data), and the full list with sell and buy prices is in [PRICE_LIST.md](PRICE_LIST.md). About 360 raw items are decided by
+hand (stone, crops, ores, mob drops...). The rest (tools, armour, planks, stairs, redstone parts...) is worked out from
+crafting recipes and written down in the `crafted:` section, so no crafting loop can print money.
 
 1. **Buy price is 3x the sell price**, so buying then selling the same item always loses two thirds.
 2. **A crafted item sells for at most 95% of its ingredients**, using the cheapest recipe.
 3. **Smelted or cooked items sell for the same as the raw item.**
 4. **Items with no price and no recipe path are not for sale** (potions, spawn eggs, spawners, command blocks, heads).
 5. **Restrictions are inherited**: anything crafted from a not-for-sale item is also not for sale.
+6. **Never cheaper to buy than to build**: a crafted item costs at least what its recipe costs when every ingredient
+   is bought from the raw items, so elytra, nether stars and netherite stay very expensive however they are crafted.
+7. **Loop check on every recipe** (crafting, un-crafting, smelting, stonecutting, smithing and ore yields): a sell price
+   that could make money by buying, processing and selling is lowered automatically.
 
 Anti-farm limits per player (all configurable): earnings per item per hour, a daily total, and a minimum number of
 active play hours before selling. The full explanation with default numbers is in [PRICING.md](PRICING.md).
@@ -258,8 +267,10 @@ When you install a newer jar and start the server, the plugin saves a backup of 
 **Please do not edit the `config-version` line.** It is managed by the plugin. A config with a YAML mistake is left
 exactly as it is.
 
-`base-prices.yml` is **not** rewritten, because it holds your own price decisions. New items are priced by the
-calculation rules automatically; check `/shopadmin audit` after an update.
+`base-prices.yml` is **not** rewritten, because it holds your own price decisions. New items that are not in it are
+priced from their recipes automatically; check `/shopadmin audit` after an update. To pick up the complete price list of
+a new release, rename your `base-prices.yml` (for example to `base-prices-old.yml`), restart, and copy your own changes
+back. Prices you changed with `/shopadmin set` are kept separately and are not affected.
 
 Update ArkaSMPCore and ArkaSMPEconomy **together**: this plugin refuses to start with a Core that is too old.
 

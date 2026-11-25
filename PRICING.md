@@ -1,13 +1,20 @@
 # ArkaSMPEconomy Stage 2: how prices are decided
 
-Only about 190 prices are hand-chosen (`src/main/resources/base-prices.yml`). Everything else is calculated, so no loop can make money.
+`base-prices.yml` lists **every item in the shop on its own line**, about 1,500 of them, written for Minecraft 26.3 from the game's own item and recipe data. The full table with what you get and what you pay is [PRICE_LIST.md](PRICE_LIST.md).
+
+The file has two parts:
+- **`base:`** (about 360 items) are the real decisions: stone, dirt, crops, ores, mob drops, plants, and items with no recipe.
+- **`crafted:`** (about 1,000 items) is everything made from other items: tools, armour, planks, stairs, doors, redstone parts, dyed blocks. Each price was worked out with rule 2 and 3 below and is written down so every item can be read and changed.
+
+Rare items (elytra, totem, netherite...) are in the **`premium:`** part and are described further down. Admin and unobtainable items are left out on purpose.
 
 ## The five rules
 1. **Buy is 3x sell.** Buying then selling the same item always loses two thirds.
 2. **Crafted sell price is at most 95% of its ingredients.** For every recipe the engine checks `sell(output) x amount <= sum(sell(ingredients)) x 0.95`. If an item has several recipes, the cheapest one wins. Compacting ingots into blocks and back can never gain.
 3. **Smelted/cooked sell price equals the raw item.** Smelting is free of profit and free of penalty.
 4. **Unpriced means off.** An item with no base price and no recipe path (potions, spawn eggs, spawners, command blocks, heads) cannot be bought or sold.
-5. **Inherited restrictions.** If an item is on the no-buy list, anything crafted from it is also not for sale. That blocks netherite gear and beacons being bought "through the back door".
+5. **Inherited restrictions.** If an item is on the no-buy list, anything crafted from it is also not for sale, unless it can also be made some other way from things that are for sale. That blocks emerald blocks being bought "through the back door".
+6. **Never cheaper to buy than to build.** A crafted item costs at least what its cheapest recipe costs when every ingredient is bought from the raw items (and every premium item at its premium price). This is why a beacon always costs more than a nether star, and why breaking a netherite block down into ingots cannot be used to get cheap netherite.
 
 ## Limits on farms and alts (per player)
 | Limit | Default | Stops |
@@ -69,7 +76,7 @@ What the check cannot cover is effort that has no price: farming a crop you plan
 ## What is not in the shop
 Admin and unobtainable items are left out on purpose: command blocks, structure blocks, jigsaw, barrier, light, bedrock, end portal frames, reinforced deepslate, spawners, spawn eggs, infested blocks, budding amethyst, the dragon egg, debug stick, potions and enchanted books. Emeralds can be sold but not bought, so villager trading cannot be skipped. An item with no entry in `base-prices.yml` and no recipe is simply not traded.
 
-New game versions work without changes: wood families, wool stairs and slabs, copper tools and similar items are priced from their recipes, and name patterns such as `*_LEAVES`, `*_SAPLING` and `*CORAL*` cover new variants. Your own `base-prices.yml` is never overwritten on update, so to pick up new items on an existing server, rename it and restart to get the new default, then copy your changes back.
+Items that a newer game version adds and that are not in the file yet are priced from their recipes automatically (and not traded at all when they have no recipe). Your own `base-prices.yml` is never overwritten on update, so to pick up the complete list of a new release on an existing server, rename it and restart to get the new default, then copy your changes back.
 
 ## Known exploit routes and the fix
 | Route | Fix |
