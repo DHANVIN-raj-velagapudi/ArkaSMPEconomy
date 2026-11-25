@@ -63,10 +63,13 @@ This plugin **requires ArkaSMPCore** (it uses its menu system and shares service
 - Items are returned if anything goes wrong
 
 ### Item shop
-- `/shop` is a menu of categories (building blocks, ores, tools, food, farming, ...) to **buy and sell**
+- `/shop` is a menu of categories (building blocks, wood, stone, colours, ores, redstone, tools and weapons, armour, food, farming, mob drops, decoration and **Rare & Special**) to **buy and sell**, covering common blocks, every tool and armour piece, and rare items such as elytra and netherite
 - `/sell hand` and `/sell all`, `/worth` (what an item costs and sells for)
 - **`/sellgui`**: a chest opens, you drop in everything you want to sell and press one SELL button
 - Only plain, undamaged items are accepted (no enchanted, renamed or container items)
+- **Rare items are very expensive**: elytra, totem of undying, end crystals, nether stars, tridents and netherite cost tens of thousands of rupees, and the shop pays only a few rupees for them
+- **No money loops**: after pricing, the engine checks every recipe (crafting, un-crafting, smelting, smithing, ore yields) and lowers a sell price if buying, processing and selling could ever make money
+- **New game versions** (new woods, wool stairs, copper tools) are priced automatically from their recipes
 - **Anti-farm limits**: a per-item hourly earnings cap, a daily cap, and a minimum active play time before a player
   may sell (stops fresh alt accounts)
 - Big purchases and large `/sell all` actions ask for confirmation

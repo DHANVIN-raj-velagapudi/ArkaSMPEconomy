@@ -3,6 +3,40 @@
 All notable changes to ArkaSMPEconomy. Versions follow `MAJOR.MINOR.PATCH`: a fix raises the last number, a new
 feature the middle one, a breaking change the first. Every release raises the version.
 
+## 1.3.0
+
+Requires ArkaSMPCore 1.2.0 or newer.
+
+### Added
+- **Many more items in the shop**: natural blocks (grass, mycelium, podzol, mud, moss, sculk, coral, dripstone,
+  nylium), ores as blocks, stripped wood and hyphae, leaves, saplings, plants and flowers, weathered copper, and
+  items from newer game versions (poplar wood set, wool stairs and slabs and similar, matched by name patterns and
+  recipes).
+- **Netherite tools and armour** (smithing recipes) and all tools, weapons and armour are priced from their recipes.
+- **Premium items**: elytra, totem of undying, end crystal, nether star, trident, heart of the sea, enchanted golden
+  apple, heavy core, skulls, netherite scrap, shulker shell, saddle, smithing templates, music discs, pottery sherds
+  and more are bought at very high prices and sell for very little. Everything crafted from them (beacon, conduit,
+  mace, netherite gear, shulker boxes) inherits those costs.
+- **Rare & Special** shop category for everything that costs 1,500 rupees or more (`rules.rare-from-rupees`).
+- **Loop check**: after pricing, every recipe (crafting, un-crafting, smelting, stonecutting, smithing) and the ore
+  and block mining yields in `drops:` are checked. Any sell price that could make money through buy, process, sell is
+  lowered automatically, so a wrong price cannot create infinite money. Tested on 300 random price tables.
+- A crafted item can never cost less than buying its ingredients one by one.
+- Shop categories learn new wood families by themselves.
+
+### Changed
+- Rare drops sell for much less (netherite scrap 100 -> 25 rupees, ghast tear, echo shard, shulker shell,
+  nautilus shell, phantom membrane, scutes) while their buy prices are far higher.
+- Elytra, nether stars, tridents, hearts of the sea, enchanted golden apples and skulls can now be sold (cheaply).
+- Unknown item names in `base-prices.yml` (from other game versions) are summarised in one log line.
+
+### Fixed
+- Turtle scutes are now priced (the old name `SCUTE` does not exist; the item is `TURTLE_SCUTE`).
+- Leaves, mushrooms and petals are listed under Farming instead of Colours.
+
+Your existing `base-prices.yml` is not overwritten. To get the new prices and items, rename it (for example to
+`base-prices-old.yml`), restart so the new one is created, then copy back any prices you changed.
+
 ## 1.2.0
 
 Requires ArkaSMPCore 1.2.0 or newer.

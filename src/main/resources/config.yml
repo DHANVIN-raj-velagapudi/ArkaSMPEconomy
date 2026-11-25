@@ -102,6 +102,7 @@ menus:
       farming: "Farming & Plants"
       mobs: "Mob Drops"
       misc: "Decoration & Misc"
+      rare: "Rare & Special"       # anything that costs "rules.rare-from-rupees" (base-prices.yml) or more
   trade:
     pick-title: "Trade with who?"
     title: "Trade with {player}"

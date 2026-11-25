@@ -11,6 +11,7 @@ import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.SmithingTransformRecipe;
 import org.bukkit.inventory.StonecuttingRecipe;
 
 import java.io.File;
@@ -61,6 +62,7 @@ public final class ShopManager {
     private long dayCapPaise = 1_200_000;
     private double minPlayHours = 2;
     private long bigSalePaise = 200_000;
+    private long rareFromPaise = 150_000;
     private int overridesApplied;
     private int derived;
     private List<String> notes = List.of();
@@ -109,14 +111,32 @@ public final class ShopManager {
         if (section != null) {
             for (String k : section.getKeys(false)) base.put(k, section.getDouble(k));
         }
+        Map<String, PriceEngine.Premium> premium = new LinkedHashMap<>();
+        var ps = y.getConfigurationSection("premium");
+        if (ps != null) {
+            for (String k : ps.getKeys(false)) {
+                var o = ps.getConfigurationSection(k);
+                if (o != null) premium.put(k, new PriceEngine.Premium(o.getDouble("sell", 0), o.getDouble("buy", 0)));
+            }
+        }
+        List<PriceEngine.Drop> drops = new ArrayList<>();
+        var ds = y.getConfigurationSection("drops");
+        if (ds != null) {
+            for (String in : ds.getKeys(false)) {
+                var o = ds.getConfigurationSection(in);
+                if (o != null) for (String out : o.getKeys(false)) drops.add(new PriceEngine.Drop(in, out, o.getDouble(out)));
+            }
+        }
+        rareFromPaise = Money.SCALE * (long) Math.max(1, y.getDouble("rules.rare-from-rupees", 1500));
+        ShopCategories.learnWoods(names);
         List<PriceEngine.Recipe> recipes = readRecipes();
         Map<String, String> remainders = new HashMap<>();
         for (Material m : byName.values()) {
             Material left = m.getCraftingRemainingItem();
             if (left != null && isItem(left)) remainders.put(m.name(), left.name());
         }
-        var result = PriceEngine.compute(names, base, y.getStringList("no-sell"), y.getStringList("no-buy"),
-                recipes, remainders, new PriceEngine.Rules(buyMult, craft, smelt));
+        var result = PriceEngine.compute(names, base, premium, y.getStringList("no-sell"), y.getStringList("no-buy"),
+                recipes, drops, remainders, new PriceEngine.Rules(buyMult, craft, smelt));
 
         Map<Material, Long> s = new EnumMap<>(Material.class);
         Map<Material, Long> b = new EnumMap<>(Material.class);
@@ -130,7 +150,14 @@ public final class ShopManager {
         catalogCache = buildCatalog();
         plugin.getLogger().info("Shop prices ready: " + s.size() + " items can be sold, " + b.size()
                 + " can be bought (" + derived + " derived from recipes, " + overridesApplied + " admin overrides).");
-        for (String n : notes) plugin.getLogger().warning("Price table: " + n);
+        int unknown = 0;
+        for (String n : notes) {
+            if (n.contains("unknown item ignored")) unknown++;        // names from newer game versions: harmless
+            else plugin.getLogger().warning("Price table: " + n);
+        }
+        if (unknown > 0) {
+            plugin.getLogger().info("Price table: " + unknown + " listed item name(s) do not exist on this server version and were skipped.");
+        }
     }
 
     private List<PriceEngine.Recipe> readRecipes() {
@@ -173,6 +200,12 @@ public final class ShopManager {
                     if (ch == null) continue;
                     slots.add(ch);
                     smelt = true;
+                } else if (r instanceof SmithingTransformRecipe st) {
+                    List<String> tpl = names(st.getTemplate()), base = names(st.getBase()), add = names(st.getAddition());
+                    if (tpl == null || base == null || add == null) continue;
+                    slots.add(tpl);
+                    slots.add(base);
+                    slots.add(add);
                 } else if (r instanceof StonecuttingRecipe sc) {
                     List<String> ch = names(sc.getInputChoice());
                     if (ch == null) continue;
@@ -526,7 +559,10 @@ public final class ShopManager {
         java.util.Set<Material> all = new java.util.TreeSet<>(Comparator.comparing(Material::name));
         all.addAll(sell.keySet());
         all.addAll(buy.keySet());
-        for (Material m : all) out.computeIfAbsent(ShopCategories.of(m), k -> new ArrayList<>()).add(m);
+        for (Material m : all) {
+            String cat = buy.getOrDefault(m, 0L) >= rareFromPaise ? "rare" : ShopCategories.of(m);
+            out.computeIfAbsent(cat, k -> new ArrayList<>()).add(m);
+        }
         return out;
     }
 }

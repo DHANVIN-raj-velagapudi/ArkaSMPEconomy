@@ -1,12 +1,16 @@
 # ==============================================================================
 #  base-prices.yml  -  the ONLY hand-decided prices (sell price per item, in rupees)
 #
-#  Everything craftable or smeltable is DERIVED from these by the price engine, so
-#  money can never be created by crafting, smelting, compacting or un-crafting:
+#  Everything craftable, smeltable, stonecut or smithed is DERIVED from these by the price engine:
 #     crafted sell price  <=  (sum of ingredient sell prices / items made) x craft-factor
 #     smelted sell price  <=  raw sell price
-#     buy price           =   sell price x buy-multiplier
-#  Any item NOT listed here and NOT derivable is NOT bought or sold at all (safe default).
+#     buy price           =   sell price x buy-multiplier, and never less than buying the ingredients one by one
+#  On top of that the engine runs a LOOP CHECK over every recipe (also un-crafting, smelting, stonecutting,
+#  smithing and the mining yields in "drops:" below). If any way of buying, processing and selling could make
+#  money, the sell price of that item is lowered until it cannot. So a wrong number in this file can only ever
+#  make an item sell for less, never create money. The server log tells you when that happens.
+#  Any item NOT listed here and NOT derivable is NOT bought or sold at all (safe default). That is also how
+#  admin-only and unobtainable items (command blocks, bedrock, spawners, spawn eggs...) stay out of the shop.
 #  Prices are tuned for ~Rs 100/hour of play-time reward and the caps in rules: below.
 # ==============================================================================
 
@@ -15,6 +19,7 @@ rules:
   craft-factor: 0.95           # crafted items sell for 95% of their ingredients (crafting never profits)
   smelt-factor: 1.0            # smelted/cooked item sells for the same as the raw item
   min-price: 0.01              # smallest price; cheaper items are priced per stack-rounding up to this
+  rare-from-rupees: 1500       # items that cost at least this much to buy are listed under "Rare & Special"
   # --- anti-farm limits (all per player) ---
   item-hour-cap-rupees: 600    # one item type can earn at most this much per rolling hour
                                # (cap in items = max(600, 2 x price) / price; rare items allow at least 2)
@@ -23,34 +28,73 @@ rules:
   big-sale-confirm: 2000       # a /sell all above this shows a confirm screen
 
 # Item names: Bukkit Material names. Patterns with * match any prefix/suffix.
+# Names that do not exist on your server version (new items from a newer game version, or older) are skipped.
 base:
   # ---- stone, soil, bulk blocks (unlimited by hand: pennies, capped) ----
   COBBLESTONE: 0.05
   COBBLED_DEEPSLATE: 0.05
+  DEEPSLATE: 0.05
+  GRANITE: 0.05
+  DIORITE: 0.05
+  ANDESITE: 0.05
   DIRT: 0.02
+  GRASS_BLOCK: 0.05
+  DIRT_PATH: 0.03
+  ROOTED_DIRT: 0.10
+  PODZOL: 0.10
+  MYCELIUM: 0.30
+  MUD: 0.04
+  MUDDY_MANGROVE_ROOTS: 0.10
+  SNOW: 0.02
   SAND: 0.05
   RED_SAND: 0.05
   GRAVEL: 0.04
+  FLINT: 0.10
   CLAY_BALL: 0.20
   NETHERRACK: 0.02
+  CRIMSON_NYLIUM: 0.10
+  WARPED_NYLIUM: 0.10
   BASALT: 0.05
   BLACKSTONE: 0.05
+  GILDED_BLACKSTONE: 1.50
   END_STONE: 0.10
   TUFF: 0.05
   CALCITE: 0.10
+  DRIPSTONE_BLOCK: 0.10
+  POINTED_DRIPSTONE: 0.10
   ICE: 0.08
   SNOWBALL: 0.02
   SOUL_SAND: 0.05
   SOUL_SOIL: 0.05
   MAGMA_BLOCK: 0.20
   OBSIDIAN: 1.00               # lava+water farms exist: kept low
+  CRYING_OBSIDIAN: 3.00
   AMETHYST_SHARD: 1.00         # amethyst farms exist
+  SMALL_AMETHYST_BUD: 0.50
+  MEDIUM_AMETHYST_BUD: 0.80
+  LARGE_AMETHYST_BUD: 1.20
+  AMETHYST_CLUSTER: 4.00
   GLOWSTONE_DUST: 0.30
   QUARTZ: 1.00
   PRISMARINE_SHARD: 0.50
   PRISMARINE_CRYSTALS: 0.80
   SPONGE: 4.00
+  WET_SPONGE: 4.00
   SEA_PICKLE: 0.20
+  SCULK: 0.50
+  SCULK_VEIN: 0.30
+  MOSS_BLOCK: 0.20
+  PALE_MOSS_BLOCK: 0.30
+  PALE_HANGING_MOSS: 0.10
+  RESIN_CLUMP: 0.30
+  NETHER_WART_BLOCK: 0.30
+  WARPED_WART_BLOCK: 0.30
+  SHROOMLIGHT: 0.80
+  COBWEB: 0.50
+  # copper that weathered in the world (the unweathered block is crafted from ingots)
+  EXPOSED_COPPER: 3.00
+  WEATHERED_COPPER: 3.00
+  OXIDIZED_COPPER: 3.00
 
   # ---- ores and metals (hand-mined: this is where real effort is) ----
   COAL: 1.00
@@ -64,19 +108,41 @@ base:
   LAPIS_LAZULI: 0.80
   DIAMOND: 30.00
   EMERALD: 4.00                # villager trading loops: must stay below what villagers give
-  NETHERITE_SCRAP: 100.00
-  ANCIENT_DEBRIS: 100.00
+  # ore blocks (silk-touched). Priced so that mining a bought ore with Fortune III can never pay more than it cost,
+  # see "drops:" below.
+  COAL_ORE: 1.00
+  DEEPSLATE_COAL_ORE: 1.00
+  IRON_ORE: 2.00
+  DEEPSLATE_IRON_ORE: 2.00
+  COPPER_ORE: 1.30
+  DEEPSLATE_COPPER_ORE: 1.30
+  GOLD_ORE: 4.00
+  DEEPSLATE_GOLD_ORE: 4.00
+  NETHER_GOLD_ORE: 1.50
+  REDSTONE_ORE: 2.50
+  DEEPSLATE_REDSTONE_ORE: 2.50
+  LAPIS_ORE: 5.00
+  DEEPSLATE_LAPIS_ORE: 5.00
+  DIAMOND_ORE: 30.00
+  DEEPSLATE_DIAMOND_ORE: 30.00
+  NETHER_QUARTZ_ORE: 1.50
+  EMERALD_ORE: 10.00           # not buyable; priced above what Fortune III gives (2.2 emeralds) so nothing is lowered
+  DEEPSLATE_EMERALD_ORE: 10.00
 
-  # ---- wood (tree farms exist) ----
+  # ---- wood (tree farms exist). Any wood family a newer game version adds (poplar...) is covered by the patterns ----
   "*_LOG": 0.40
   "*_STEM": 0.40
   "STRIPPED_*_LOG": 0.40
   "STRIPPED_*_STEM": 0.40
+  "STRIPPED_*_WOOD": 0.50
+  "STRIPPED_*_HYPHAE": 0.50
+  STRIPPED_BAMBOO_BLOCK: 0.43
   BAMBOO: 0.05
   MANGROVE_ROOTS: 0.10
   "*_SAPLING": 0.05
   MANGROVE_PROPAGULE: 0.05
   CHERRY_SAPLING: 0.05
+  "*_LEAVES": 0.05             # never bought back from you (see no-sell), but you can buy them for building
 
   # ---- plants and crops (auto-farmable: cheap, capped) ----
   WHEAT: 0.30
@@ -84,6 +150,8 @@ base:
   BEETROOT_SEEDS: 0.03
   MELON_SEEDS: 0.03
   PUMPKIN_SEEDS: 0.03
+  TORCHFLOWER_SEEDS: 0.50
+  PITCHER_POD: 0.50
   CARROT: 0.25
   POTATO: 0.25
   BEETROOT: 0.25
@@ -92,17 +160,51 @@ base:
   SUGAR_CANE: 0.15
   CACTUS: 0.10
   KELP: 0.08
+  SEAGRASS: 0.05
   SWEET_BERRIES: 0.10
   GLOW_BERRIES: 0.15
   COCOA_BEANS: 0.20
   APPLE: 0.50
   BROWN_MUSHROOM: 0.15
   RED_MUSHROOM: 0.15
+  SHELF_MUSHROOM: 0.15
   CRIMSON_FUNGUS: 0.15
   WARPED_FUNGUS: 0.15
   NETHER_WART: 0.30
+  CHORUS_FRUIT: 0.30
+  CHORUS_FLOWER: 0.50
   VINE: 0.05
+  GLOW_LICHEN: 0.20
+  WEEPING_VINES: 0.10
+  TWISTING_VINES: 0.10
+  CRIMSON_ROOTS: 0.05
+  WARPED_ROOTS: 0.05
+  NETHER_SPROUTS: 0.05
+  HANGING_ROOTS: 0.20
   LILY_PAD: 0.10
+  AZALEA: 0.50
+  FLOWERING_AZALEA: 0.60
+  SPORE_BLOSSOM: 3.00
+  BIG_DRIPLEAF: 0.50
+  SMALL_DRIPLEAF: 0.30
+  SHORT_GRASS: 0.03
+  TALL_GRASS: 0.05
+  FERN: 0.03
+  LARGE_FERN: 0.05
+  DEAD_BUSH: 0.05
+  SHORT_DRY_GRASS: 0.03
+  TALL_DRY_GRASS: 0.05
+  LEAF_LITTER: 0.03
+  BUSH: 0.05
+  FIREFLY_BUSH: 0.30
+  RED_SHRUB: 0.05
+  WILDFLOWERS: 0.05
+  PINK_PETALS: 0.05
+  CACTUS_FLOWER: 0.30
+  TORCHFLOWER: 0.50
+  PITCHER_PLANT: 1.00
+  OPEN_EYEBLOSSOM: 0.30
+  CLOSED_EYEBLOSSOM: 0.30
   DANDELION: 0.05
   POPPY: 0.05
   BLUE_ORCHID: 0.05
@@ -119,7 +221,9 @@ base:
   LILAC: 0.05
   ROSE_BUSH: 0.05
   PEONY: 0.05
+  "*CORAL*": 0.30              # all corals, coral fans and coral blocks, dead or alive
   EGG: 0.10
+  FROGSPAWN: 0.50
   HONEYCOMB: 0.80
   HONEY_BOTTLE: 0.60
   MILK_BUCKET: 6.00             # only used to price cake etc.; never sold (see no-sell). The returned bucket is subtracted.
@@ -134,6 +238,8 @@ base:
   SALMON: 0.30
   TROPICAL_FISH: 0.30
   PUFFERFISH: 0.30
+  ROTTEN_FLESH: 0.05
+  POISONOUS_POTATO: 0.05
   LEATHER: 0.60
   RABBIT_HIDE: 0.10
   RABBIT_FOOT: 3.00
@@ -149,14 +255,94 @@ base:
   ENDER_PEARL: 5.00
   BLAZE_ROD: 3.00
   BREEZE_ROD: 3.00
-  GHAST_TEAR: 8.00
-  PHANTOM_MEMBRANE: 4.00
-  SCUTE: 5.00
-  SHULKER_SHELL: 20.00
-  NAUTILUS_SHELL: 20.00
-  TOTEM_OF_UNDYING: 25.00
-  ECHO_SHARD: 20.00
-  DISC_FRAGMENT_5: 5.00
+
+# ------------------------------------------------------------------------------
+#  PREMIUM items: rare things that are very expensive to BUY but sell for little.
+#  sell = what the shop pays you (low on purpose), buy = what you pay (very high).
+#  Anything crafted from a premium item can never be bought for less than its parts, so a beacon always
+#  costs more than a nether star and a conduit more than its heart of the sea.
+#  The premium buy price also overrides the no-buy list below.
+# ------------------------------------------------------------------------------
+premium:
+  ELYTRA: {sell: 150, buy: 90000}
+  TOTEM_OF_UNDYING: {sell: 30, buy: 30000}
+  END_CRYSTAL: {sell: 20, buy: 20000}
+  NETHER_STAR: {sell: 120, buy: 100000}
+  TRIDENT: {sell: 40, buy: 40000}
+  HEART_OF_THE_SEA: {sell: 60, buy: 50000}
+  NAUTILUS_SHELL: {sell: 12, buy: 4000}
+  SHULKER_SHELL: {sell: 12, buy: 6000}
+  ENCHANTED_GOLDEN_APPLE: {sell: 40, buy: 40000}
+  HEAVY_CORE: {sell: 30, buy: 25000}
+  WITHER_SKELETON_SKULL: {sell: 10, buy: 30000}
+  DRAGON_HEAD: {sell: 5, buy: 40000}
+  ZOMBIE_HEAD: {sell: 3, buy: 4000}
+  CREEPER_HEAD: {sell: 3, buy: 4000}
+  SKELETON_SKULL: {sell: 3, buy: 4000}
+  PIGLIN_HEAD: {sell: 3, buy: 4000}
+  ECHO_SHARD: {sell: 8, buy: 4000}
+  DISC_FRAGMENT_5: {sell: 3, buy: 600}
+  GHAST_TEAR: {sell: 5, buy: 3500}
+  PHANTOM_MEMBRANE: {sell: 2, buy: 150}
+  TURTLE_SCUTE: {sell: 3, buy: 250}
+  ARMADILLO_SCUTE: {sell: 1, buy: 80}
+  NETHERITE_SCRAP: {sell: 25, buy: 4500}
+  ANCIENT_DEBRIS: {sell: 25, buy: 4500}
+  NETHERITE_UPGRADE_SMITHING_TEMPLATE: {sell: 20, buy: 3000}
+  "*_SMITHING_TEMPLATE": {sell: 8, buy: 1500}
+  "*_POTTERY_SHERD": {sell: 1, buy: 400}
+  "MUSIC_DISC_*": {sell: 3, buy: 1500}
+  SADDLE: {sell: 5, buy: 3000}
+  LEATHER_HORSE_ARMOR: {sell: 4, buy: 200}
+  IRON_HORSE_ARMOR: {sell: 8, buy: 600}
+  GOLDEN_HORSE_ARMOR: {sell: 12, buy: 900}
+  DIAMOND_HORSE_ARMOR: {sell: 25, buy: 2500}
+  CHAINMAIL_HELMET: {sell: 6, buy: 150}
+  CHAINMAIL_CHESTPLATE: {sell: 10, buy: 250}
+  CHAINMAIL_LEGGINGS: {sell: 8, buy: 200}
+  CHAINMAIL_BOOTS: {sell: 5, buy: 120}
+  SNIFFER_EGG: {sell: 20, buy: 6000}
+  TURTLE_EGG: {sell: 5, buy: 600}
+  CREAKING_HEART: {sell: 15, buy: 2500}
+  WITHER_ROSE: {sell: 3, buy: 400}
+  DRAGON_BREATH: {sell: 4, buy: 300}
+  SCULK_CATALYST: {sell: 5, buy: 300}
+  SCULK_SHRIEKER: {sell: 5, buy: 300}
+  SCULK_SENSOR: {sell: 5, buy: 200}
+  BEE_NEST: {sell: 5, buy: 600}
+  "*_FROGLIGHT": {sell: 3, buy: 90}
+
+# ------------------------------------------------------------------------------
+#  What mining or harvesting ONE block gives at best (Fortune III averages, rounded up). The loop check uses this
+#  so that buying an ore block and mining it can never pay more than the ore cost.
+# ------------------------------------------------------------------------------
+drops:
+  COAL_ORE: {COAL: 2.2}
+  DEEPSLATE_COAL_ORE: {COAL: 2.2}
+  IRON_ORE: {RAW_IRON: 2.2}
+  DEEPSLATE_IRON_ORE: {RAW_IRON: 2.2}
+  COPPER_ORE: {RAW_COPPER: 7.7}
+  DEEPSLATE_COPPER_ORE: {RAW_COPPER: 7.7}
+  GOLD_ORE: {RAW_GOLD: 2.2}
+  DEEPSLATE_GOLD_ORE: {RAW_GOLD: 2.2}
+  NETHER_GOLD_ORE: {GOLD_NUGGET: 8.8}
+  REDSTONE_ORE: {REDSTONE: 8.0}
+  DEEPSLATE_REDSTONE_ORE: {REDSTONE: 8.0}
+  LAPIS_ORE: {LAPIS_LAZULI: 15}
+  DEEPSLATE_LAPIS_ORE: {LAPIS_LAZULI: 15}
+  DIAMOND_ORE: {DIAMOND: 2.2}
+  DEEPSLATE_DIAMOND_ORE: {DIAMOND: 2.2}
+  NETHER_QUARTZ_ORE: {QUARTZ: 2.2}
+  EMERALD_ORE: {EMERALD: 2.2}
+  DEEPSLATE_EMERALD_ORE: {EMERALD: 2.2}
+  GILDED_BLACKSTONE: {GOLD_NUGGET: 6.6}
+  AMETHYST_CLUSTER: {AMETHYST_SHARD: 10}
+  GLOWSTONE: {GLOWSTONE_DUST: 4}
+  SEA_LANTERN: {PRISMARINE_CRYSTALS: 5}
+  MELON: {MELON_SLICE: 9}
+  CLAY: {CLAY_BALL: 4}
+  SNOW_BLOCK: {SNOWBALL: 4}
+  BOOKSHELF: {BOOK: 3}
 
 # ------------------------------------------------------------------------------
 #  Never sold to the shop (even if craftable): infinite or exploitable sources,
@@ -171,25 +357,14 @@ no-sell:
   - WATER_BUCKET
   - LAVA_BUCKET
   - POWDER_SNOW_BUCKET
-  - WATER_BUCKET
-  - LAVA_BUCKET
-  - POWDER_SNOW_BUCKET
   - COD_BUCKET
   - SALMON_BUCKET
   - PUFFERFISH_BUCKET
   - TROPICAL_FISH_BUCKET
   - AXOLOTL_BUCKET
   - TADPOLE_BUCKET                # the plain empty BUCKET is derived and can be sold
-  - TRIDENT                      # drowned farms drop it damaged
-  - ELYTRA
-  - NETHER_STAR
   - DRAGON_EGG
-  - DRAGON_HEAD
-  - "*_SKULL"
-  - "*_HEAD"
-  - HEART_OF_THE_SEA
   - ENCHANTED_BOOK
-  - ENCHANTED_GOLDEN_APPLE
   - POTION
   - SPLASH_POTION
   - LINGERING_POTION
@@ -212,21 +387,12 @@ no-sell:
   - "*SHULKER_BOX"                # may hold hidden items
 
 # ------------------------------------------------------------------------------
-#  Never sold BY the shop. Anything whose recipe uses one of these is also not for sale
-#  (so netherite gear, beacons etc. cannot be bought through the back door).
+#  Never sold BY the shop. Anything whose recipe uses one of these is also not for sale.
+#  Emeralds stay out so villager trading cannot be skipped or looped. Rare items are bought through the
+#  "premium:" section above instead, at very high prices.
 # ------------------------------------------------------------------------------
 no-buy:
-  - NETHERITE_SCRAP
-  - ANCIENT_DEBRIS
-  - NETHERITE_INGOT
-  - ECHO_SHARD
-  - TOTEM_OF_UNDYING
-  - SHULKER_SHELL
-  - NAUTILUS_SHELL
-  - DISC_FRAGMENT_5
-  - GHAST_TEAR
-  - PHANTOM_MEMBRANE
-  - SCUTE
-  - EMERALD                     # buying emeralds would skip villager progression
-  - ELYTRA
+  - EMERALD
+  - EMERALD_ORE
+  - DEEPSLATE_EMERALD_ORE
   - "*_SPAWN_EGG"

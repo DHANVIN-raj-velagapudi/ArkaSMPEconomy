@@ -79,7 +79,7 @@ public final class PriceEngineCheck {
         check("netherite ingot inherits no-buy", !r.buy().containsKey("NETHERITE_INGOT"));
         check("netherite block inherits no-buy", !r.buy().containsKey("NETHERITE_BLOCK"));
         check("netherite ingot can still be sold", r.sell().containsKey("NETHERITE_INGOT"));
-        check("buy price is 3x sell for normal items", r.buy().get("IRON_BLOCK") == 5130);
+        check("block buy price = its 9 ingots bought one by one (5400), never cheaper", r.buy().get("IRON_BLOCK") == 5400);
         check("log pattern priced", r.priced().get("OAK_LOG") == 40);
         check("planks = floor(40 x 0.95 / 4) = 9", r.priced().get("OAK_PLANKS") == 9);
         check("stick = floor(2 x 9 x 0.95 / 4) = 4", r.priced().get("STICK") == 4);
