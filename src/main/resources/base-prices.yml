@@ -6,8 +6,8 @@
 #  left out (command blocks, bedrock, spawners, spawn eggs, potions, enchanted books, maps, mob buckets...).
 #
 #  The shop sells to a player at  buy-multiplier x the sell price  (3x), and never for less than it would cost to
-#  buy the ingredients one by one. Rare items are in the "premium:" section further down: very expensive to buy,
-#  almost worthless to sell.
+#  buy the ingredients one by one. Rare items are in the "premium:" section further down: either very expensive to
+#  buy and cheap to sell, or sell-only (never for sale: elytra, totems, trims...). Tools have a fixed buy ladder there.
 #
 #  Safety: after reading this file the plugin checks EVERY recipe (crafting, un-crafting, smelting, stonecutting,
 #  smithing) and every ore yield in "drops:". If any way of buying, processing and selling could make money, the
@@ -584,7 +584,7 @@ crafted:
   REDSTONE_BLOCK:    4.27
 
   # ======================================================================
-  #  TOOLS AND WEAPONS  (63 items)
+  #  TOOLS AND WEAPONS  (27 items)
   # ======================================================================
   ARROW:                     0.08
   BOW:                       1.39
@@ -593,36 +593,12 @@ crafted:
   CARROT_ON_A_STICK:         1.19
   CLOCK:                     15.67
   COMPASS:                   8.07
-  COPPER_AXE:                1.31
-  COPPER_HOE:                0.93
-  COPPER_PICKAXE:            1.31
-  COPPER_SHOVEL:             0.55
-  COPPER_SPEAR:              0.55
-  COPPER_SWORD:              0.84
   CROSSBOW:                  3.89
-  DIAMOND_AXE:               85.67
-  DIAMOND_HOE:               57.17
-  DIAMOND_PICKAXE:           85.67
-  DIAMOND_SHOVEL:            28.67
-  DIAMOND_SPEAR:             28.67
-  DIAMOND_SWORD:             57.08
   FIRE_CHARGE:               0.82
   FISHING_ROD:               1.01
   FLINT_AND_STEEL:           1.99
-  GOLDEN_AXE:                11.57
-  GOLDEN_HOE:                7.77
-  GOLDEN_PICKAXE:            11.57
-  GOLDEN_SHOVEL:             3.97
-  GOLDEN_SPEAR:              3.97
-  GOLDEN_SWORD:              7.68
-  IRON_AXE:                  5.87
-  IRON_HOE:                  3.97
-  IRON_PICKAXE:              5.87
-  IRON_SHOVEL:               2.07
-  IRON_SPEAR:                2.07
-  IRON_SWORD:                3.88
   LEAD:                      0.95
-  MACE:                      31.35
+  MACE:                      477.85
   NAME_TAG:                  0.17
   NETHERITE_AXE:             205.07
   NETHERITE_HOE:             178.00
@@ -635,20 +611,8 @@ crafted:
   SHIELD:                    2.41
   SPECTRAL_ARROW:            0.60
   SPYGLASS:                  1.71
-  STONE_AXE:                 0.31
-  STONE_HOE:                 0.26
-  STONE_PICKAXE:             0.31
-  STONE_SHOVEL:              0.21
-  STONE_SPEAR:               0.21
-  STONE_SWORD:               0.18
   WARPED_FUNGUS_ON_A_STICK:  1.10
   WIND_CHARGE:               0.71
-  WOODEN_AXE:                0.42
-  WOODEN_HOE:                0.34
-  WOODEN_PICKAXE:            0.42
-  WOODEN_SHOVEL:             0.25
-  WOODEN_SPEAR:              0.25
-  WOODEN_SWORD:              0.25
 
   # ======================================================================
   #  ARMOUR AND MOUNTS  (44 items)
@@ -1516,39 +1480,101 @@ crafted:
   STICK:            0.09
 
 # ------------------------------------------------------------------------------
-#  PREMIUM items: rare things that are very expensive to BUY but sell for little.
-#  sell = what the shop pays you (low on purpose), buy = what you pay (very high).
+#  PREMIUM items: tools with a fixed buy price, and rare things that are very expensive to BUY or cannot be bought.
+#  sell = what the shop pays you, buy = what you pay. A line with only "sell" is sell-only: the item must also be in
+#  "no-buy" below, or its buy price becomes 3x the sell price.
 #  Anything crafted from a premium item can never be bought for less than its parts, so a beacon always
 #  costs more than a nether star and a conduit more than its heart of the sea.
 #  The premium buy price also overrides the no-buy list below.
 # ------------------------------------------------------------------------------
 premium:
-  ELYTRA: {sell: 150, buy: 90000}
-  TOTEM_OF_UNDYING: {sell: 30, buy: 30000}
-  END_CRYSTAL: {sell: 20, buy: 20000}
+  # --- Tools and weapons: a fixed buy price per material unit (pickaxe/axe 3 units, hoe/sword 2, shovel/spear 1).
+  #     The sell price is what the recipe rule gave before (95% of the ingredients), so selling is unchanged.
+  #     Netherite tools have no line here: they cost a netherite ingot + a diamond tool + the upgrade template,
+  #     and the ingot costs 4 netherite scrap, so they follow the scrap price below.
+  #     material unit price:  wood 10, stone 25, copper 70, iron 180, gold 300, diamond 1600
+  WOODEN_PICKAXE: {sell: 0.42, buy: 30}
+  WOODEN_AXE: {sell: 0.42, buy: 30}
+  WOODEN_HOE: {sell: 0.34, buy: 20}
+  WOODEN_SWORD: {sell: 0.25, buy: 20}
+  WOODEN_SHOVEL: {sell: 0.25, buy: 10}
+  WOODEN_SPEAR: {sell: 0.25, buy: 10}
+  STONE_PICKAXE: {sell: 0.31, buy: 75}
+  STONE_AXE: {sell: 0.31, buy: 75}
+  STONE_HOE: {sell: 0.26, buy: 50}
+  STONE_SWORD: {sell: 0.18, buy: 50}
+  STONE_SHOVEL: {sell: 0.21, buy: 25}
+  STONE_SPEAR: {sell: 0.21, buy: 25}
+  COPPER_PICKAXE: {sell: 1.31, buy: 210}
+  COPPER_AXE: {sell: 1.31, buy: 210}
+  COPPER_HOE: {sell: 0.93, buy: 140}
+  COPPER_SWORD: {sell: 0.84, buy: 140}
+  COPPER_SHOVEL: {sell: 0.55, buy: 70}
+  COPPER_SPEAR: {sell: 0.55, buy: 70}
+  IRON_PICKAXE: {sell: 5.87, buy: 540}
+  IRON_AXE: {sell: 5.87, buy: 540}
+  IRON_HOE: {sell: 3.97, buy: 360}
+  IRON_SWORD: {sell: 3.88, buy: 360}
+  IRON_SHOVEL: {sell: 2.07, buy: 180}
+  IRON_SPEAR: {sell: 2.07, buy: 180}
+  GOLDEN_PICKAXE: {sell: 11.57, buy: 900}
+  GOLDEN_AXE: {sell: 11.57, buy: 900}
+  GOLDEN_HOE: {sell: 7.77, buy: 600}
+  GOLDEN_SWORD: {sell: 7.68, buy: 600}
+  GOLDEN_SHOVEL: {sell: 3.97, buy: 300}
+  GOLDEN_SPEAR: {sell: 3.97, buy: 300}
+  DIAMOND_PICKAXE: {sell: 85.67, buy: 4800}
+  DIAMOND_AXE: {sell: 85.67, buy: 4800}
+  DIAMOND_HOE: {sell: 57.17, buy: 3200}
+  DIAMOND_SWORD: {sell: 57.08, buy: 3200}
+  DIAMOND_SHOVEL: {sell: 28.67, buy: 1600}
+  DIAMOND_SPEAR: {sell: 28.67, buy: 1600}
+
+  # --- Rare items that can only be SOLD (no buy price, see "no-buy" below). Sell prices follow effort and rarity,
+  #     good money but never high enough to farm: the hourly and daily limits still apply.
+  ELYTRA: {sell: 900}                 # end city ship only
+  TOTEM_OF_UNDYING: {sell: 150}       # evokers (raid farms exist)
+  END_CRYSTAL: {sell: 100}            # needs a ghast tear
+  TRIDENT: {sell: 250}                # drowned drop, rare
+  HEAVY_CORE: {sell: 500}             # ominous vaults only
+  DRAGON_HEAD: {sell: 1000}           # end city ships only
+  DRAGON_EGG: {sell: 2500}            # one per world
+  "*_ARMOR_TRIM_SMITHING_TEMPLATE": {sell: 120}
+  # rarer trims (hidden in structures, often just one chance)
+  BOLT_ARMOR_TRIM_SMITHING_TEMPLATE: {sell: 200}
+  EYE_ARMOR_TRIM_SMITHING_TEMPLATE: {sell: 200}
+  FLOW_ARMOR_TRIM_SMITHING_TEMPLATE: {sell: 200}
+  HOST_ARMOR_TRIM_SMITHING_TEMPLATE: {sell: 200}
+  RAISER_ARMOR_TRIM_SMITHING_TEMPLATE: {sell: 200}
+  SHAPER_ARMOR_TRIM_SMITHING_TEMPLATE: {sell: 200}
+  SPIRE_ARMOR_TRIM_SMITHING_TEMPLATE: {sell: 200}
+  VEX_ARMOR_TRIM_SMITHING_TEMPLATE: {sell: 200}
+  WARD_ARMOR_TRIM_SMITHING_TEMPLATE: {sell: 200}
+  WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE: {sell: 200}
+  SILENCE_ARMOR_TRIM_SMITHING_TEMPLATE: {sell: 400}   # rarest trim
+
+  # --- Rare items that can still be bought, at very high prices
   NETHER_STAR: {sell: 120, buy: 100000}
-  TRIDENT: {sell: 40, buy: 40000}
   HEART_OF_THE_SEA: {sell: 60, buy: 50000}
   NAUTILUS_SHELL: {sell: 12, buy: 4000}
   SHULKER_SHELL: {sell: 12, buy: 6000}
   ENCHANTED_GOLDEN_APPLE: {sell: 40, buy: 40000}
-  HEAVY_CORE: {sell: 30, buy: 25000}
   WITHER_SKELETON_SKULL: {sell: 10, buy: 30000}
-  DRAGON_HEAD: {sell: 5, buy: 40000}
   ZOMBIE_HEAD: {sell: 3, buy: 4000}
   CREEPER_HEAD: {sell: 3, buy: 4000}
   SKELETON_SKULL: {sell: 3, buy: 4000}
   PIGLIN_HEAD: {sell: 3, buy: 4000}
   ECHO_SHARD: {sell: 8, buy: 4000}
   DISC_FRAGMENT_5: {sell: 3, buy: 600}
-  GHAST_TEAR: {sell: 5, buy: 3500}
+  GHAST_TEAR: {sell: 5}               # sell only: buying it would be a way around the end crystal ban
   PHANTOM_MEMBRANE: {sell: 2, buy: 150}
   TURTLE_SCUTE: {sell: 3, buy: 250}
   ARMADILLO_SCUTE: {sell: 1, buy: 80}
-  NETHERITE_SCRAP: {sell: 25, buy: 4500}
-  ANCIENT_DEBRIS: {sell: 25, buy: 4500}
+  # Netherite: scrap and ancient debris set the price of the whole netherite chain. An ingot is 4 scrap, so it
+  # costs about 100,000; netherite tools, armour and blocks are priced from that automatically.
+  NETHERITE_SCRAP: {sell: 25, buy: 25000}
+  ANCIENT_DEBRIS: {sell: 25, buy: 25000}
   NETHERITE_UPGRADE_SMITHING_TEMPLATE: {sell: 20, buy: 3000}
-  "*_SMITHING_TEMPLATE": {sell: 8, buy: 1500}
   "*_POTTERY_SHERD": {sell: 1, buy: 400}
   "MUSIC_DISC_*": {sell: 3, buy: 1500}
   SADDLE: {sell: 5, buy: 3000}
@@ -1631,7 +1657,6 @@ no-sell:
   - TROPICAL_FISH_BUCKET
   - AXOLOTL_BUCKET
   - TADPOLE_BUCKET                # the plain empty BUCKET is derived and can be sold
-  - DRAGON_EGG
   - ENCHANTED_BOOK
   - POTION
   - SPLASH_POTION
@@ -1641,7 +1666,7 @@ no-sell:
   - SPAWNER
   - TRIAL_SPAWNER
   - "*_SPAWN_EGG"
-  - "*_SMITHING_TEMPLATE"
+  - NETHERITE_UPGRADE_SMITHING_TEMPLATE   # armour trims CAN be sold (see "premium"), the upgrade template cannot
   - "*_POTTERY_SHERD"
   - "MUSIC_DISC_*"
   - FILLED_MAP
@@ -1656,8 +1681,8 @@ no-sell:
 
 # ------------------------------------------------------------------------------
 #  Never sold BY the shop. Anything whose recipe uses one of these is also not for sale.
-#  Emeralds stay out so villager trading cannot be skipped or looped. Rare items are bought through the
-#  "premium:" section above instead, at very high prices.
+#  Emeralds stay out so villager trading cannot be skipped or looped. Other rare items are bought through the
+#  "premium:" section above instead, at very high prices. The rare items at the end of this list can only be sold.
 # ------------------------------------------------------------------------------
 no-buy:
   - CHIPPED_ANVIL
@@ -1668,3 +1693,15 @@ no-buy:
   - EMERALD_ORE
   - DEEPSLATE_EMERALD_ORE
   - "*_SPAWN_EGG"
+  # Rare items the shop only BUYS from players: they can be sold (see "premium") but never bought.
+  # Items made from them (the mace) are not for sale either, and ghast tears are listed because they make end crystals.
+  - TOTEM_OF_UNDYING
+  - ELYTRA
+  - DRAGON_HEAD
+  - DRAGON_EGG
+  - END_CRYSTAL
+  - GHAST_TEAR
+  - MACE
+  - HEAVY_CORE
+  - TRIDENT
+  - "*_ARMOR_TRIM_SMITHING_TEMPLATE"

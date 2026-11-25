@@ -19,8 +19,8 @@ HEADER = """# ==================================================================
 #  left out (command blocks, bedrock, spawners, spawn eggs, potions, enchanted books, maps, mob buckets...).
 #
 #  The shop sells to a player at  buy-multiplier x the sell price  (3x), and never for less than it would cost to
-#  buy the ingredients one by one. Rare items are in the "premium:" section further down: very expensive to buy,
-#  almost worthless to sell.
+#  buy the ingredients one by one. Rare items are in the "premium:" section further down: either very expensive to
+#  buy and cheap to sell, or sell-only (never for sale: elytra, totems, trims...). Tools have a fixed buy ladder there.
 #
 #  Safety: after reading this file the plugin checks EVERY recipe (crafting, un-crafting, smelting, stonecutting,
 #  smithing) and every ore yield in "drops:". If any way of buying, processing and selling could make money, the

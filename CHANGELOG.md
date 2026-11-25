@@ -3,6 +3,35 @@
 All notable changes to ArkaSMPEconomy. Versions follow `MAJOR.MINOR.PATCH`: a fix raises the last number, a new
 feature the middle one, a breaking change the first. Every release raises the version.
 
+## 1.5.0
+
+### Changed
+- **Tools cost more.** Wooden to diamond tools have a fixed buy price (per material unit: wood 10, stone 25,
+  copper 70, iron 180, gold 300, diamond 1,600; pickaxe and axe 3 units, hoe and sword 2, shovel and spear 1). A stone
+  pickaxe is now ₹75, iron ₹540, diamond ₹4,800. Selling prices are unchanged.
+- **Netherite is very expensive.** Netherite scrap and ancient debris cost ₹25,000 (was ₹4,500), so a netherite ingot
+  costs about ₹100,000, netherite tools about ₹104,000 to ₹108,000, netherite armour about ₹103,000 to ₹105,000 and a netherite block about
+  ₹900,000. They follow the scrap price automatically.
+- In the shop, tools and armour stay in their own categories however much they cost (before, anything over ₹1,500
+  moved to **Rare & Special**).
+
+### Removed from buying (they can still be sold)
+- Totem of undying, elytra, dragon head, dragon egg, end crystal, mace, heavy core, trident and all armour trim
+  smithing templates can no longer be bought. Ghast tears are sell-only as well, so an end crystal cannot be built
+  from bought parts (dried ghast is therefore not for sale either).
+- The shop now **pays** for them: dragon egg ₹2,500, dragon head ₹1,000, elytra ₹900, heavy core ₹500, mace about ₹478,
+  silence trim ₹400, trident ₹250, rarer trims ₹200, other trims ₹120, totem ₹150, end crystal ₹100. The hourly and
+  daily selling limits still apply. Before, the dragon egg and trims could not be sold at all.
+- The netherite upgrade template is still bought at ₹3,000 and cannot be sold (as before).
+
+### Notes for servers already running
+`base-prices.yml` is not replaced on update. Rename it (for example to `base-prices-old.yml`) and restart to receive the
+new prices. Admin changes made with `/shopadmin` are kept in `price-overrides.yml` and survive.
+
+### Tests
+- New `ShippedPricesCheck` reads the shipped `base-prices.yml`: tool ladder rises tier by tier, the rare items are in
+  `no-buy` and not in `no-sell`, and their sell prices stay modest. The price loop check prints no notes.
+
 ## 1.4.0
 
 Requires ArkaSMPCore 1.2.0 or newer.

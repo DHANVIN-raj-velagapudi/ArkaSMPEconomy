@@ -6,7 +6,7 @@ Generated from `base-prices.yml` and the Minecraft 26.3 recipes, so it matches a
 any price with `/shopadmin set`, and `/worth` always shows the live price. See [PRICING.md](PRICING.md) for how the
 prices are built and why none of them can be looped.
 
-**1496 items.**
+**1497 items.**
 
 ## Stone, soil and building blocks (121)
 
@@ -140,7 +140,7 @@ prices are built and why none of them can be looped.
 |---|---:|---:|
 | Amethyst Block | 3.80 | 12.00 |
 | Amethyst Shard | 1.00 | 3.00 |
-| Ancient Debris | 25.00 | 4,500.00 |
+| Ancient Debris | 25.00 | 25,000.00 |
 | Charcoal | 0.40 | 1.20 |
 | Coal | 1.00 | 3.00 |
 | Coal Block | 8.55 | 27.00 |
@@ -174,9 +174,9 @@ prices are built and why none of them can be looped.
 | Lapis Block | 6.84 | 21.60 |
 | Lapis Lazuli | 0.80 | 2.40 |
 | Lapis Ore | 5.00 | 15.00 |
-| Netherite Block | 942.21 | 162,432.00 |
-| Netherite Ingot | 110.20 | 18,048.00 |
-| Netherite Scrap | 25.00 | 4,500.00 |
+| Netherite Block | 942.21 | 900,432.00 |
+| Netherite Ingot | 110.20 | 100,048.00 |
+| Netherite Scrap | 25.00 | 25,000.00 |
 | Nether Gold Ore | 1.50 | 4.50 |
 | Nether Quartz Ore | 1.50 | 4.50 |
 | Quartz | 1.00 | 3.00 |
@@ -202,65 +202,65 @@ prices are built and why none of them can be looped.
 | Carrot On A Stick | 1.19 | 3.60 |
 | Clock | 15.67 | 49.50 |
 | Compass | 8.07 | 25.50 |
-| Copper Axe | 1.31 | 3.93 |
-| Copper Hoe | 0.93 | 2.79 |
-| Copper Pickaxe | 1.31 | 3.93 |
-| Copper Shovel | 0.55 | 1.65 |
-| Copper Spear | 0.55 | 1.65 |
-| Copper Sword | 0.84 | 2.55 |
+| Copper Axe | 1.31 | 210.00 |
+| Copper Hoe | 0.93 | 140.00 |
+| Copper Pickaxe | 1.31 | 210.00 |
+| Copper Shovel | 0.55 | 70.00 |
+| Copper Spear | 0.55 | 70.00 |
+| Copper Sword | 0.84 | 140.00 |
 | Crossbow | 3.89 | 12.08 |
-| Diamond Axe | 85.67 | 270.30 |
-| Diamond Hoe | 57.17 | 180.30 |
-| Diamond Pickaxe | 85.67 | 270.30 |
-| Diamond Shovel | 28.67 | 90.30 |
-| Diamond Spear | 28.67 | 90.30 |
-| Diamond Sword | 57.08 | 180.15 |
-| Elytra | 150.00 | 90,000.00 |
+| Diamond Axe | 85.67 | 4,800.00 |
+| Diamond Hoe | 57.17 | 3,200.00 |
+| Diamond Pickaxe | 85.67 | 4,800.00 |
+| Diamond Shovel | 28.67 | 1,600.00 |
+| Diamond Spear | 28.67 | 1,600.00 |
+| Diamond Sword | 57.08 | 3,200.00 |
+| Elytra | 900.00 | - |
 | Fire Charge | 0.82 | 2.70 |
 | Fishing Rod | 1.01 | 3.03 |
 | Flint And Steel | 1.99 | 6.30 |
-| Golden Axe | 11.57 | 36.30 |
-| Golden Hoe | 7.77 | 24.30 |
-| Golden Pickaxe | 11.57 | 36.30 |
-| Golden Shovel | 3.97 | 12.30 |
-| Golden Spear | 3.97 | 12.30 |
-| Golden Sword | 7.68 | 24.15 |
-| Iron Axe | 5.87 | 18.30 |
-| Iron Hoe | 3.97 | 12.30 |
-| Iron Pickaxe | 5.87 | 18.30 |
-| Iron Shovel | 2.07 | 6.30 |
-| Iron Spear | 2.07 | 6.30 |
-| Iron Sword | 3.88 | 12.15 |
+| Golden Axe | 11.57 | 900.00 |
+| Golden Hoe | 7.77 | 600.00 |
+| Golden Pickaxe | 11.57 | 900.00 |
+| Golden Shovel | 3.97 | 300.00 |
+| Golden Spear | 3.97 | 300.00 |
+| Golden Sword | 7.68 | 600.00 |
+| Iron Axe | 5.87 | 540.00 |
+| Iron Hoe | 3.97 | 360.00 |
+| Iron Pickaxe | 5.87 | 540.00 |
+| Iron Shovel | 2.07 | 180.00 |
+| Iron Spear | 2.07 | 180.00 |
+| Iron Sword | 3.88 | 360.00 |
 | Lead | 0.95 | 3.00 |
-| Mace | 31.35 | 25,009.00 |
+| Mace | 477.85 | - |
 | Name Tag | 0.17 | 0.59 |
-| Netherite Axe | 205.07 | 21,318.30 |
-| Netherite Hoe | 178.00 | 21,228.30 |
-| Netherite Pickaxe | 205.07 | 21,318.30 |
-| Netherite Shovel | 150.92 | 21,138.30 |
-| Netherite Spear | 150.92 | 21,138.30 |
-| Netherite Sword | 177.91 | 21,228.15 |
+| Netherite Axe | 205.07 | 107,848.00 |
+| Netherite Hoe | 178.00 | 106,248.00 |
+| Netherite Pickaxe | 205.07 | 107,848.00 |
+| Netherite Shovel | 150.92 | 104,648.00 |
+| Netherite Spear | 150.92 | 104,648.00 |
+| Netherite Sword | 177.91 | 106,248.00 |
 | Recovery Compass | 68.46 | 32,025.50 |
 | Shears | 3.80 | 12.00 |
 | Shield | 2.41 | 7.80 |
 | Spectral Arrow | 0.60 | 1.92 |
 | Spyglass | 1.71 | 5.40 |
-| Stone Axe | 0.31 | 0.93 |
-| Stone Hoe | 0.26 | 0.78 |
-| Stone Pickaxe | 0.31 | 0.93 |
-| Stone Shovel | 0.21 | 0.63 |
-| Stone Spear | 0.21 | 0.63 |
-| Stone Sword | 0.18 | 0.54 |
-| Totem Of Undying | 30.00 | 30,000.00 |
-| Trident | 40.00 | 40,000.00 |
+| Stone Axe | 0.31 | 75.00 |
+| Stone Hoe | 0.26 | 50.00 |
+| Stone Pickaxe | 0.31 | 75.00 |
+| Stone Shovel | 0.21 | 25.00 |
+| Stone Spear | 0.21 | 25.00 |
+| Stone Sword | 0.18 | 50.00 |
+| Totem Of Undying | 150.00 | - |
+| Trident | 250.00 | - |
 | Warped Fungus On A Stick | 1.10 | 3.30 |
 | Wind Charge | 0.71 | 2.25 |
-| Wooden Axe | 0.42 | 1.26 |
-| Wooden Hoe | 0.34 | 1.02 |
-| Wooden Pickaxe | 0.42 | 1.26 |
-| Wooden Shovel | 0.25 | 0.75 |
-| Wooden Spear | 0.25 | 0.75 |
-| Wooden Sword | 0.25 | 0.75 |
+| Wooden Axe | 0.42 | 30.00 |
+| Wooden Hoe | 0.34 | 20.00 |
+| Wooden Pickaxe | 0.42 | 30.00 |
+| Wooden Shovel | 0.25 | 10.00 |
+| Wooden Spear | 0.25 | 10.00 |
+| Wooden Sword | 0.25 | 20.00 |
 
 ## Armour and mounts (58)
 
@@ -309,12 +309,12 @@ prices are built and why none of them can be looped.
 | Light Gray Harness | 2.04 | 6.45 |
 | Lime Harness | 2.04 | 6.45 |
 | Magenta Harness | 2.04 | 6.45 |
-| Netherite Boots | 231.99 | 21,408.00 |
-| Netherite Chestplate | 340.29 | 21,768.00 |
-| Netherite Helmet | 259.06 | 21,498.00 |
-| Netherite Horse Armor | 147.44 | 23,548.00 |
-| Netherite Leggings | 313.21 | 21,678.00 |
-| Netherite Nautilus Armor | 147.44 | 23,548.00 |
+| Netherite Boots | 231.99 | 103,408.00 |
+| Netherite Chestplate | 340.29 | 103,768.00 |
+| Netherite Helmet | 259.06 | 103,498.00 |
+| Netherite Horse Armor | 147.44 | 105,548.00 |
+| Netherite Leggings | 313.21 | 103,678.00 |
+| Netherite Nautilus Armor | 147.44 | 105,548.00 |
 | Orange Harness | 2.04 | 6.45 |
 | Pink Harness | 2.04 | 6.45 |
 | Purple Harness | 2.04 | 6.45 |
@@ -636,7 +636,7 @@ prices are built and why none of them can be looped.
 | Cyan Concrete Slab | 0.01 | 0.06 |
 | Cyan Concrete Stairs | 0.03 | 0.12 |
 | Cyan Cushion | 0.31 | 1.13 |
-| Cyan Dye | 0.21 | 0.63 |
+| Cyan Dye | 0.21 | 1.41 |
 | Cyan Glazed Terracotta | 0.77 | 2.43 |
 | Cyan Shulker Box | - | 12,002.63 |
 | Cyan Stained Glass | 0.10 | 0.30 |
@@ -1188,7 +1188,7 @@ prices are built and why none of them can be looped.
 | Weathered Cut Copper Slab | 0.35 | 1.13 |
 | Weathered Cut Copper Stairs | 0.71 | 2.25 |
 
-## Nether, End and deep dark (95)
+## Nether, End and deep dark (96)
 
 | Item | You get | You pay |
 |---|---:|---:|
@@ -1214,8 +1214,9 @@ prices are built and why none of them can be looped.
 | Crimson Roots | 0.05 | 0.15 |
 | Crying Obsidian | 3.00 | 9.00 |
 | Dragon Breath | 4.00 | 300.00 |
-| Dragon Head | 5.00 | 40,000.00 |
-| Dried Ghast | 38.04 | 28,000.15 |
+| Dragon Egg | 2,500.00 | - |
+| Dragon Head | 1,000.00 | - |
+| Dried Ghast | 38.04 | - |
 | Echo Shard | 8.00 | 4,000.00 |
 | Ender Eye | 6.09 | 19.50 |
 | Ender Pearl | 5.00 | 15.00 |
@@ -1224,9 +1225,9 @@ prices are built and why none of them can be looped.
 | End Stone Brick Slab | 0.04 | 0.15 |
 | End Stone Brick Stairs | 0.09 | 0.30 |
 | End Stone Brick Wall | 0.09 | 0.30 |
-| Ghast Tear | 5.00 | 3,500.00 |
+| Ghast Tear | 5.00 | - |
 | Gilded Blackstone | 1.50 | 4.50 |
-| Heavy Core | 30.00 | 25,000.00 |
+| Heavy Core | 500.00 | - |
 | Magma Block | 0.20 | 0.60 |
 | Magma Cream | 2.29 | 7.50 |
 | Netherite Upgrade Smithing Template | - | 3,000.00 |
@@ -1507,26 +1508,26 @@ prices are built and why none of them can be looped.
 | Archer Pottery Sherd | - | 400.00 |
 | Arms Up Pottery Sherd | - | 400.00 |
 | Blade Pottery Sherd | - | 400.00 |
-| Bolt Armor Trim Smithing Template | - | 1,500.00 |
+| Bolt Armor Trim Smithing Template | 200.00 | - |
 | Brewer Pottery Sherd | - | 400.00 |
 | Burn Pottery Sherd | - | 400.00 |
-| Coast Armor Trim Smithing Template | - | 1,500.00 |
+| Coast Armor Trim Smithing Template | 120.00 | - |
 | Cobweb | 0.50 | 1.50 |
 | Danger Pottery Sherd | - | 400.00 |
 | Disc Fragment 5 | 3.00 | 600.00 |
-| Dune Armor Trim Smithing Template | - | 1,500.00 |
-| End Crystal | 20.00 | 20,000.00 |
+| Dune Armor Trim Smithing Template | 120.00 | - |
+| End Crystal | 100.00 | - |
 | Explorer Pottery Sherd | - | 400.00 |
-| Eye Armor Trim Smithing Template | - | 1,500.00 |
+| Eye Armor Trim Smithing Template | 200.00 | - |
 | Firework Rocket | 0.29 | 0.95 |
 | Flint | 0.10 | 0.30 |
-| Flow Armor Trim Smithing Template | - | 1,500.00 |
+| Flow Armor Trim Smithing Template | 200.00 | - |
 | Flow Pottery Sherd | - | 400.00 |
 | Friend Pottery Sherd | - | 400.00 |
 | Guster Pottery Sherd | - | 400.00 |
 | Heartbreak Pottery Sherd | - | 400.00 |
 | Heart Pottery Sherd | - | 400.00 |
-| Host Armor Trim Smithing Template | - | 1,500.00 |
+| Host Armor Trim Smithing Template | 200.00 | - |
 | Howl Pottery Sherd | - | 400.00 |
 | Miner Pottery Sherd | - | 400.00 |
 | Mourner Pottery Sherd | - | 400.00 |
@@ -1551,20 +1552,20 @@ prices are built and why none of them can be looped.
 | Music Disc Ward | - | 1,500.00 |
 | Plenty Pottery Sherd | - | 400.00 |
 | Prize Pottery Sherd | - | 400.00 |
-| Raiser Armor Trim Smithing Template | - | 1,500.00 |
-| Rib Armor Trim Smithing Template | - | 1,500.00 |
+| Raiser Armor Trim Smithing Template | 200.00 | - |
+| Rib Armor Trim Smithing Template | 120.00 | - |
 | Scrape Pottery Sherd | - | 400.00 |
-| Sentry Armor Trim Smithing Template | - | 1,500.00 |
-| Shaper Armor Trim Smithing Template | - | 1,500.00 |
+| Sentry Armor Trim Smithing Template | 120.00 | - |
+| Shaper Armor Trim Smithing Template | 200.00 | - |
 | Sheaf Pottery Sherd | - | 400.00 |
 | Shelter Pottery Sherd | - | 400.00 |
-| Silence Armor Trim Smithing Template | - | 1,500.00 |
+| Silence Armor Trim Smithing Template | 400.00 | - |
 | Snort Pottery Sherd | - | 400.00 |
-| Snout Armor Trim Smithing Template | - | 1,500.00 |
-| Spire Armor Trim Smithing Template | - | 1,500.00 |
+| Snout Armor Trim Smithing Template | 120.00 | - |
+| Spire Armor Trim Smithing Template | 200.00 | - |
 | Stick | 0.09 | 0.27 |
-| Tide Armor Trim Smithing Template | - | 1,500.00 |
-| Vex Armor Trim Smithing Template | - | 1,500.00 |
-| Ward Armor Trim Smithing Template | - | 1,500.00 |
-| Wayfinder Armor Trim Smithing Template | - | 1,500.00 |
-| Wild Armor Trim Smithing Template | - | 1,500.00 |
+| Tide Armor Trim Smithing Template | 120.00 | - |
+| Vex Armor Trim Smithing Template | 200.00 | - |
+| Ward Armor Trim Smithing Template | 200.00 | - |
+| Wayfinder Armor Trim Smithing Template | 200.00 | - |
+| Wild Armor Trim Smithing Template | 120.00 | - |

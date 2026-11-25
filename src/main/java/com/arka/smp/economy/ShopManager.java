@@ -570,7 +570,10 @@ public final class ShopManager {
         all.addAll(sell.keySet());
         all.addAll(buy.keySet());
         for (Material m : all) {
-            String cat = buy.getOrDefault(m, 0L) >= rareFromPaise ? "rare" : ShopCategories.of(m);
+            String cat = ShopCategories.of(m);
+            // very expensive items go to "Rare & Special", but tools and armour stay together in their own
+            // category (diamond and netherite gear is priced high on purpose and players look for it there)
+            if (buy.getOrDefault(m, 0L) >= rareFromPaise && !cat.equals("tools") && !cat.equals("armor")) cat = "rare";
             out.computeIfAbsent(cat, k -> new ArrayList<>()).add(m);
         }
         return out;
