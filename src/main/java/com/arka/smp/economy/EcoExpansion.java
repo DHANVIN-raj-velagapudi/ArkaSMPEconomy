@@ -8,7 +8,8 @@ import java.util.Locale;
 
 /**
  * %arkaeco_balance%            plain number, e.g. 1250.5
- * %arkaeco_balance_formatted%  e.g. ₹1,250.50
+ * %arkaeco_balance_formatted%  short form, e.g. ₹1.25k, ₹2.5L, ₹1Cr (currency.compact: false gives ₹1,250.50)
+ * %arkaeco_balance_exact%      always written out, e.g. ₹1,250.50
  * %arkaeco_rank%               your /baltop position
  * %arkaeco_top_<n>_name%       name at rank n
  * %arkaeco_top_<n>_value%      formatted balance at rank n
@@ -75,6 +76,7 @@ final class EcoExpansion extends PlaceholderExpansion {
         return switch (p) {
             case "balance" -> String.valueOf(Money.toRupees(bal));
             case "balance_formatted" -> plugin.messages().money(bal);
+            case "balance_exact" -> plugin.messages().moneyExact(bal);
             case "rank" -> {
                 int r = eco.rankOf(player.getUniqueId());
                 yield r == 0 ? "-" : String.valueOf(r);

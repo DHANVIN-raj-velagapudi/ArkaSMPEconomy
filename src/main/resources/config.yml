@@ -12,6 +12,7 @@ config-version: "auto"
 
 currency:
   symbol: "₹"
+  compact: true              # show big amounts short: 1.5k from 1,000, 2.5L from 1 lakh (100k), 1Cr from 1 crore (100L). false = full numbers
 
 economy:
   start-balance: 1000        # what a new player begins with
@@ -32,7 +33,10 @@ baltop:
 rewards:
   playtime:
     enabled: true
-    amount: 100              # rupees paid each interval, the same for everyone
+    amount: 100              # rupees paid each interval to a brand new player (the starting reward)
+    growth-percent-per-hour: 3   # the reward grows EXPONENTIALLY with lifetime active hours: amount x 1.03 ^ hours
+                                 # (100 -> 209 after 25 hours -> 438 after 50 hours). 0 = always the same amount
+    max-amount: 1000         # the reward never grows above this (reached after about 78 active hours with the numbers above)
     interval-minutes: 60     # ACTIVE (non-AFK) minutes needed for one reward
     max-per-day: 24          # most rewards one player can earn per day (stops AFK-farm alts)
 

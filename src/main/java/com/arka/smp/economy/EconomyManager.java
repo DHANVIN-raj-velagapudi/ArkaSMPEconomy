@@ -29,6 +29,7 @@ public final class EconomyManager {
         public volatile boolean acceptPay = true;
         public volatile boolean hideTop;
         long playSecs;
+        long playTotal;          // lifetime ACTIVE play seconds (drives the growing hourly reward)
         int rewardDay;
         int rewardToday;
         final long created;
@@ -44,7 +45,7 @@ public final class EconomyManager {
 
         Database.Row row() {
             return new Database.Row(id, name, balance, frozen, acceptPay, hideTop, playSecs, rewardDay,
-                    rewardToday, created, seen);
+                    rewardToday, created, seen, playTotal);
         }
     }
 
@@ -73,6 +74,7 @@ public final class EconomyManager {
             a.acceptPay = r.acceptPay();
             a.hideTop = r.hideTop();
             a.playSecs = r.playSecs();
+            a.playTotal = r.playTotal();
             a.rewardDay = r.rewardDay();
             a.rewardToday = r.rewardToday();
             a.seen = r.seen();
@@ -273,15 +275,19 @@ public final class EconomyManager {
     }
 
     /** Hourly reward: adds active seconds, pays full intervals. Returns paise paid. */
-    public long rewardTick(UUID id, long secs, long intervalSecs, int dailyCap, long amount) {
+    public long rewardTick(UUID id, long secs, long intervalSecs, int dailyCap, long baseAmount, double growthPercent,
+                           long maxAmount) {
         lock.lock();
         try {
             Account a = accounts.get(id);
-            if (a == null || a.frozen || amount <= 0 || intervalSecs <= 0) return 0;
+            if (a == null || a.frozen || baseAmount <= 0 || intervalSecs <= 0) return 0;
             a.playSecs += secs;
+            a.playTotal += secs;
             long paid = 0;
             while (a.playSecs >= intervalSecs) {
                 a.playSecs -= intervalSecs;
+                // the reward grows with lifetime active hours (see RewardManager.amountFor)
+                long amount = RewardManager.amountFor(baseAmount, growthPercent, maxAmount, a.playTotal);
                 int day = (int) LocalDate.now().toEpochDay();
                 if (a.rewardDay != day) {
                     a.rewardDay = day;

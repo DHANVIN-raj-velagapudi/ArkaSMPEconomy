@@ -44,8 +44,14 @@ public final class Messages {
         to.sendMessage(MM.deserialize(plugin.getConfig().getString("messages.prefix", "") + fill(miniMessage, kv)));
     }
 
-    /** "₹1,250" using the configured symbol. */
+    /** "₹1.25k" (or "₹1,250" when currency.compact is false) using the configured symbol. */
     public String money(long paise) {
+        String symbol = plugin.getConfig().getString("currency.symbol", "₹");
+        return symbol + (plugin.getConfig().getBoolean("currency.compact", true) ? Money.compact(paise) : Money.plain(paise));
+    }
+
+    /** The exact amount, always written out: "₹1,250.50". */
+    public String moneyExact(long paise) {
         return plugin.getConfig().getString("currency.symbol", "₹") + Money.plain(paise);
     }
 }

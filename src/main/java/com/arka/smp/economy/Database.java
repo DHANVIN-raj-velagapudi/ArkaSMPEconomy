@@ -27,7 +27,7 @@ final class Database {
     }
 
     record Row(UUID id, String name, long balance, boolean frozen, boolean acceptPay, boolean hideTop,
-               long playSecs, int rewardDay, int rewardToday, long created, long seen) {
+               long playSecs, int rewardDay, int rewardToday, long created, long seen, long playTotal) {
     }
 
     record Sale(UUID id, String item, long ts, long paise) {
@@ -37,7 +37,7 @@ final class Database {
     }
 
     /** Database format. Raise it (and add an upgrade step in open()) when a release changes the tables. */
-    static final int SCHEMA_VERSION = 1;
+    static final int SCHEMA_VERSION = 2;
 
     private static final Task STOP = c -> {
     };
@@ -82,7 +82,8 @@ final class Database {
                         + " balance INTEGER NOT NULL CHECK(balance>=0), frozen INTEGER NOT NULL DEFAULT 0,"
                         + " accept_pay INTEGER NOT NULL DEFAULT 1, hide_top INTEGER NOT NULL DEFAULT 0,"
                         + " play_secs INTEGER NOT NULL DEFAULT 0, reward_day INTEGER NOT NULL DEFAULT 0,"
-                        + " reward_today INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, seen INTEGER NOT NULL)");
+                        + " reward_today INTEGER NOT NULL DEFAULT 0, created INTEGER NOT NULL, seen INTEGER NOT NULL,"
+                        + " play_total INTEGER NOT NULL DEFAULT 0)");
                 st.execute("CREATE TABLE IF NOT EXISTS transactions(id INTEGER PRIMARY KEY AUTOINCREMENT,"
                         + " ts INTEGER NOT NULL, type TEXT NOT NULL, from_uuid TEXT, to_uuid TEXT,"
                         + " amount INTEGER NOT NULL, note TEXT)");
@@ -95,7 +96,22 @@ final class Database {
                 st.execute("CREATE INDEX IF NOT EXISTS sales_ts ON sales(ts)");
                 st.execute("CREATE TABLE IF NOT EXISTS escrow(session TEXT NOT NULL, owner TEXT NOT NULL,"
                         + " slot INTEGER NOT NULL, item BLOB NOT NULL)");
-                // Future releases that change a table add their upgrade step here, keyed on 'have'.
+                // Upgrade steps, keyed on 'have' (the database format that was found on disk).
+                if (have < 2) {
+                    // 1 -> 2: lifetime active play seconds, used by the growing hourly reward. A brand new database
+                    // already has the column (see CREATE TABLE above), so adding it may fail: that is fine.
+                    boolean added = true;
+                    try {
+                        st.execute("ALTER TABLE accounts ADD COLUMN play_total INTEGER NOT NULL DEFAULT 0");
+                    } catch (SQLException alreadyThere) {
+                        added = false;
+                    }
+                    // players who already earned rewards start from the number of rewards they were paid (one hour each)
+                    if (added) {
+                        st.execute("UPDATE accounts SET play_total = 3600 * (SELECT COUNT(*) FROM transactions"
+                                + " WHERE type='reward' AND to_uuid = accounts.uuid)");
+                    }
+                }
                 if (have < SCHEMA_VERSION) st.execute("PRAGMA user_version=" + SCHEMA_VERSION);
             }
             conn.setAutoCommit(false);
@@ -200,12 +216,12 @@ final class Database {
         List<Row> rows = new ArrayList<>();
         try (Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery("SELECT uuid,name,balance,frozen,accept_pay,hide_top,play_secs,"
-                     + "reward_day,reward_today,created,seen FROM accounts")) {
+                     + "reward_day,reward_today,created,seen,play_total FROM accounts")) {
             while (rs.next()) {
                 try {
                     rows.add(new Row(UUID.fromString(rs.getString(1)), rs.getString(2), rs.getLong(3),
                             rs.getInt(4) != 0, rs.getInt(5) != 0, rs.getInt(6) != 0, rs.getLong(7), rs.getInt(8),
-                            rs.getInt(9), rs.getLong(10), rs.getLong(11)));
+                            rs.getInt(9), rs.getLong(10), rs.getLong(11), rs.getLong(12)));
                 } catch (IllegalArgumentException ignored) {
                 }
             }
@@ -284,10 +300,11 @@ final class Database {
         submit(c -> {
             try (PreparedStatement ps = c.prepareStatement(
                     "INSERT INTO accounts(uuid,name,balance,frozen,accept_pay,hide_top,play_secs,reward_day,"
-                            + "reward_today,created,seen) VALUES(?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(uuid) DO UPDATE SET "
+                            + "reward_today,created,seen,play_total) VALUES(?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(uuid) DO UPDATE SET "
                             + "name=excluded.name,balance=excluded.balance,frozen=excluded.frozen,"
                             + "accept_pay=excluded.accept_pay,hide_top=excluded.hide_top,play_secs=excluded.play_secs,"
-                            + "reward_day=excluded.reward_day,reward_today=excluded.reward_today,seen=excluded.seen")) {
+                            + "reward_day=excluded.reward_day,reward_today=excluded.reward_today,seen=excluded.seen,"
+                            + "play_total=excluded.play_total")) {
                 ps.setString(1, r.id().toString());
                 ps.setString(2, r.name());
                 ps.setLong(3, r.balance());
@@ -299,6 +316,7 @@ final class Database {
                 ps.setInt(9, r.rewardToday());
                 ps.setLong(10, r.created());
                 ps.setLong(11, r.seen());
+                ps.setLong(12, r.playTotal());
                 ps.executeUpdate();
             }
         });

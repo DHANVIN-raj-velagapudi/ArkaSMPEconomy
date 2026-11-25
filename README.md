@@ -49,7 +49,7 @@ This plugin **requires ArkaSMPCore** (it uses its menu system and shares service
   there are **no floating-point errors**
 - `/bal`, `/pay` (with a confirmation for large payments, a payment cooldown and a tap-only amount menu),
   `/baltop`, `/paytoggle`
-- **Hourly play-time reward**: a fixed amount for each hour of *active* (non-AFK) play, with a daily cap so alt
+- **Hourly play-time reward**: ₹100 an hour for *active* (non-AFK) play that grows 3% for every active hour you have played (₹209 after 25 hours, ₹438 after 50) up to a ceiling of ₹1,000 an hour, with a daily cap so alt
   accounts cannot farm it
 - Every change is written to a **transaction log** that admins can inspect
 - Safe storage: a dedicated writer thread (SQLite WAL), a global lock around transfers, and a hard balance limit
@@ -205,7 +205,7 @@ active play hours before selling. The full explanation with default numbers is i
 | `economy` | Start balance, maximum balance |
 | `pay` | Minimum, maximum, confirmation threshold, cooldown, offline payments, menu amounts |
 | `baltop` | Page size, refresh time |
-| `rewards.playtime` | Reward amount, active minutes per reward, daily cap |
+| `rewards.playtime` | Starting reward, growth per active hour, ceiling, active minutes per reward, daily cap |
 | `trade` | Timeouts, countdown, lopsided warning, blocked items, which states block trading |
 | `shop` | Maximum purchase size, confirmation threshold |
 | `log` | How many days of transactions to keep |
@@ -222,7 +222,8 @@ Identifier: `arkaeco`.
 | Placeholder | Value |
 |---|---|
 | `%arkaeco_balance%` | Plain number, e.g. `1250.5` |
-| `%arkaeco_balance_formatted%` | e.g. `₹1,250.50` |
+| `%arkaeco_balance_formatted%` | short form, e.g. `₹1.25k`, `₹2.5L`, `₹1Cr` (full numbers if `currency.compact` is false) |
+| `%arkaeco_balance_exact%` | always the full amount, e.g. `₹1,250.50` |
 | `%arkaeco_rank%` | Your `/baltop` position |
 | `%arkaeco_top_<n>_name%`, `_value%`, `_raw%` | Player, formatted balance and plain number at rank `n` |
 

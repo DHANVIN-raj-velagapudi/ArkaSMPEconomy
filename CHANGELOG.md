@@ -3,6 +3,37 @@
 All notable changes to ArkaSMPEconomy. Versions follow `MAJOR.MINOR.PATCH`: a fix raises the last number, a new
 feature the middle one, a breaking change the first. Every release raises the version.
 
+## 1.7.0
+
+### Added
+- **The hourly reward grows the longer you play.** It is exponential: `amount x 1.03 ^ active hours`, counted over a
+  player's whole life on the server (AFK time does not count). A new player earns ₹100 an hour, after 25 hours ₹209, after
+  50 hours ₹438, and it reaches the ceiling of ₹1,000 an hour after about 78 hours. The ceiling is what keeps the
+  economy stable: nobody can grow without limit, and the daily limit of 24 rewards still applies.
+- New options in `rewards.playtime`: `growth-percent-per-hour` (3, use 0 for a flat reward) and `max-amount` (1000). They
+  are added to your config automatically on update. `amount` is now the starting reward.
+
+### Changed
+- **Database format 2.** Each account now stores its lifetime active play time. On the first start the plugin upgrades
+  `economy.db` by itself and takes a safety snapshot first (`data-backups`). Players who already earned rewards start from
+  one hour per reward they were paid. An older jar refuses to start on the upgraded database to protect balances, so to go
+  back to 1.6.x restore the snapshot from `data-backups`.
+
+### Tests
+- New `RewardCheck`: starting amount, growth per hour, the ceiling, flat reward at 0%, bad numbers and huge numbers.
+
+## 1.6.0
+
+### Added
+- **Short money amounts.** Amounts from ₹1,000 are shown short everywhere in chat, menus and the shop: `k` from 1,000
+  (₹1.5k), `L` for lakh from 100k (₹2.5L) and `Cr` for crore from 100L (₹1.25Cr). Under ₹1,000 the exact amount is
+  shown. Decimals are cut, never rounded up, so ₹99,999 shows as ₹99.99k and never ₹100k.
+- **Short typing.** `/pay`, `/eco` and the shop admin commands accept `2.5k`, `1.5l` and `1cr` as well as plain numbers.
+- `currency.compact` in `config.yml` (default `true`). Set it to `false` to show full numbers again. It is added to your
+  config automatically on update.
+- New placeholder `%arkaeco_balance_exact%` always gives the full amount (₹12,345.50). `%arkaeco_balance_formatted%`
+  and the top-list values follow `currency.compact`.
+
 ## 1.5.1
 
 ### Changed
