@@ -29,11 +29,13 @@ final class YamlStore {
             try {
                 yaml.load(file);
             } catch (IOException | InvalidConfigurationException e) {
-                plugin.getLogger().severe("Could not read " + name + ": " + e.getMessage()
-                        + " (a copy is kept as " + name + ".broken)");
+                plugin.getLogger().severe("Could not read " + name + ": " + e.getMessage());
+                // keep the unreadable file under a unique name: a later save must never overwrite the only copy
+                String keep = name + ".broken-" + System.currentTimeMillis();
                 try {
-                    Files.copy(file.toPath(), file.toPath().resolveSibling(name + ".broken"),
-                            StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(file.toPath(), file.toPath().resolveSibling(keep), StandardCopyOption.REPLACE_EXISTING);
+                    plugin.getLogger().severe("A copy of the unreadable file was kept as " + keep
+                            + ". Starting with empty " + name + ".");
                 } catch (IOException ignored) {
                 }
             }

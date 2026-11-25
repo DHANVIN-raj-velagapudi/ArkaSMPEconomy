@@ -3,6 +3,19 @@
 All notable changes to ArkaSMPEconomy. Versions follow `MAJOR.MINOR.PATCH`: a fix raises the last number, a new
 feature the middle one, a breaking change the first. Every release raises the version.
 
+## 1.2.0
+
+Requires ArkaSMPCore 1.2.0 or newer.
+
+### Added
+- **Safe upgrades and downgrades** (see ArkaSMPCore): a snapshot of `economy.db` and the other data files is saved to
+  `data-backups/` on every version change, and data from a newer format is never opened by an older jar.
+- The balance database now records its format (`PRAGMA user_version`). An `economy.db` from a newer jar is not opened
+  by an older one.
+
+### Fixed
+- An unreadable data file is kept as `<name>.broken-<time>` and never overwritten by a later failure.
+
 ## 1.1.0
 
 Requires ArkaSMPCore 1.1.0 or newer.

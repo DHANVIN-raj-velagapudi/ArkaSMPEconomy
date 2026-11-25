@@ -36,6 +36,10 @@ public final class ArkaSMPEconomy extends JavaPlugin implements Listener {
     public void onEnable() {
         // adds options that are new in this version to config.yml and keeps the admin's own values
         try {
+            if (!com.arka.smp.core.DataGuard.check(getDataFolder(), getPluginMeta().getVersion(), 1, getLogger()).proceed()) {
+                getServer().getPluginManager().disablePlugin(this);
+                return;
+            }
             com.arka.smp.core.ConfigUpdater.update(getDataFolder(), () -> getResource("config.yml"),
                     getPluginMeta().getVersion(), getLogger(), java.util.Set.of());
         } catch (LinkageError e) {

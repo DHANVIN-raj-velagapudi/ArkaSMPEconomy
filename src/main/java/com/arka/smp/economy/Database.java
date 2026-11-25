@@ -36,6 +36,9 @@ final class Database {
     record Tx(long ts, String type, String from, String to, long amount, String note) {
     }
 
+    /** Database format. Raise it (and add an upgrade step in open()) when a release changes the tables. */
+    static final int SCHEMA_VERSION = 1;
+
     private static final Task STOP = c -> {
     };
 
@@ -61,6 +64,17 @@ final class Database {
             plugin.getDataFolder().mkdirs();
             conn = DriverManager.getConnection("jdbc:sqlite:" + file.getAbsolutePath());
             try (Statement st = conn.createStatement()) {
+                int have = 0;
+                try (ResultSet rs = st.executeQuery("PRAGMA user_version")) {
+                    if (rs.next()) have = rs.getInt(1);
+                }
+                if (have > SCHEMA_VERSION) {
+                    plugin.getLogger().severe("economy.db was written by a newer ArkaSMPEconomy (database format " + have
+                            + ", this jar understands " + SCHEMA_VERSION + "). To protect your balances this plugin will NOT "
+                            + "start. Install the newer jar again, or restore economy.db from data-backups/.");
+                    conn.close();
+                    return false;
+                }
                 st.execute("PRAGMA journal_mode=WAL");
                 st.execute("PRAGMA synchronous=NORMAL");
                 st.execute("PRAGMA busy_timeout=5000");
@@ -81,6 +95,8 @@ final class Database {
                 st.execute("CREATE INDEX IF NOT EXISTS sales_ts ON sales(ts)");
                 st.execute("CREATE TABLE IF NOT EXISTS escrow(session TEXT NOT NULL, owner TEXT NOT NULL,"
                         + " slot INTEGER NOT NULL, item BLOB NOT NULL)");
+                // Future releases that change a table add their upgrade step here, keyed on 'have'.
+                if (have < SCHEMA_VERSION) st.execute("PRAGMA user_version=" + SCHEMA_VERSION);
             }
             conn.setAutoCommit(false);
             conn.commit();
