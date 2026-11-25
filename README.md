@@ -67,8 +67,8 @@ This plugin **requires ArkaSMPCore** (it uses its menu system and shares service
 - `/sell hand` and `/sell all`, `/worth` (what an item costs and sells for)
 - **`/sellgui`**: a chest opens, you drop in everything you want to sell and press one SELL button
 - Only plain, undamaged items are accepted (no enchanted, renamed or container items)
-- **Rare items are very expensive**: nether stars, hearts of the sea and netherite cost tens of thousands of rupees (a netherite ingot about ₹100,000), and the shop pays only a few rupees for them
-- **Tools have a price ladder**: a stone pickaxe costs ₹75, iron ₹540, diamond ₹4,800 and netherite about ₹108,000
+- **Rare items are very expensive**: nether stars, hearts of the sea and netherite cost tens of thousands of rupees (a netherite ingot about ₹160,000), and the shop pays only a few rupees for them
+- **Tools have a price ladder**: a stone pickaxe costs ₹75, iron ₹540, diamond ₹4,800 and netherite about ₹168,000
 - **Sell-only rare items**: elytra, totem of undying, end crystals, tridents, heavy cores, maces, dragon heads and eggs and all armour trims cannot be bought at all, but the shop pays good money for them (₹100 to ₹2,500, by rarity)
 - **No money loops**: after pricing, the engine checks every recipe (crafting, un-crafting, smelting, smithing, ore yields) and lowers a sell price if buying, processing and selling could ever make money
 - **Every survival item is priced**, one line each, including the 26.3 items (poplar wood, wool stairs and slabs,

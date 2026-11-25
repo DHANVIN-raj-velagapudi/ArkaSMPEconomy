@@ -140,7 +140,7 @@ prices are built and why none of them can be looped.
 |---|---:|---:|
 | Amethyst Block | 3.80 | 12.00 |
 | Amethyst Shard | 1.00 | 3.00 |
-| Ancient Debris | 25.00 | 25,000.00 |
+| Ancient Debris | 25.00 | 40,000.00 |
 | Charcoal | 0.40 | 1.20 |
 | Coal | 1.00 | 3.00 |
 | Coal Block | 8.55 | 27.00 |
@@ -174,9 +174,9 @@ prices are built and why none of them can be looped.
 | Lapis Block | 6.84 | 21.60 |
 | Lapis Lazuli | 0.80 | 2.40 |
 | Lapis Ore | 5.00 | 15.00 |
-| Netherite Block | 942.21 | 900,432.00 |
-| Netherite Ingot | 110.20 | 100,048.00 |
-| Netherite Scrap | 25.00 | 25,000.00 |
+| Netherite Block | 942.21 | 1,440,432.00 |
+| Netherite Ingot | 110.20 | 160,048.00 |
+| Netherite Scrap | 25.00 | 40,000.00 |
 | Nether Gold Ore | 1.50 | 4.50 |
 | Nether Quartz Ore | 1.50 | 4.50 |
 | Quartz | 1.00 | 3.00 |
@@ -216,7 +216,7 @@ prices are built and why none of them can be looped.
 | Diamond Spear | 28.67 | 1,600.00 |
 | Diamond Sword | 57.08 | 3,200.00 |
 | Elytra | 900.00 | - |
-| Fire Charge | 0.82 | 2.70 |
+| Fire Charge | 0.82 | 501.20 |
 | Fishing Rod | 1.01 | 3.03 |
 | Flint And Steel | 1.99 | 6.30 |
 | Golden Axe | 11.57 | 900.00 |
@@ -234,12 +234,12 @@ prices are built and why none of them can be looped.
 | Lead | 0.95 | 3.00 |
 | Mace | 477.85 | - |
 | Name Tag | 0.17 | 0.59 |
-| Netherite Axe | 205.07 | 107,848.00 |
-| Netherite Hoe | 178.00 | 106,248.00 |
-| Netherite Pickaxe | 205.07 | 107,848.00 |
-| Netherite Shovel | 150.92 | 104,648.00 |
-| Netherite Spear | 150.92 | 104,648.00 |
-| Netherite Sword | 177.91 | 106,248.00 |
+| Netherite Axe | 205.07 | 167,848.00 |
+| Netherite Hoe | 178.00 | 166,248.00 |
+| Netherite Pickaxe | 205.07 | 167,848.00 |
+| Netherite Shovel | 150.92 | 164,648.00 |
+| Netherite Spear | 150.92 | 164,648.00 |
+| Netherite Sword | 177.91 | 166,248.00 |
 | Recovery Compass | 68.46 | 32,025.50 |
 | Shears | 3.80 | 12.00 |
 | Shield | 2.41 | 7.80 |
@@ -254,7 +254,7 @@ prices are built and why none of them can be looped.
 | Totem Of Undying | 150.00 | - |
 | Trident | 250.00 | - |
 | Warped Fungus On A Stick | 1.10 | 3.30 |
-| Wind Charge | 0.71 | 2.25 |
+| Wind Charge | 0.71 | 1,250.00 |
 | Wooden Axe | 0.42 | 30.00 |
 | Wooden Hoe | 0.34 | 20.00 |
 | Wooden Pickaxe | 0.42 | 30.00 |
@@ -266,9 +266,9 @@ prices are built and why none of them can be looped.
 
 | Item | You get | You pay |
 |---|---:|---:|
-| Black Harness | 2.04 | 6.45 |
-| Blue Harness | 2.04 | 6.45 |
-| Brown Harness | 2.04 | 6.45 |
+| Black Harness | 2.04 | 451.05 |
+| Blue Harness | 2.04 | 451.05 |
+| Brown Harness | 2.04 | 451.05 |
 | Chainmail Boots | 5.00 | 120.00 |
 | Chainmail Chestplate | 10.00 | 250.00 |
 | Chainmail Helmet | 6.00 | 150.00 |
@@ -276,54 +276,54 @@ prices are built and why none of them can be looped.
 | Copper Boots | 1.52 | 4.80 |
 | Copper Chestplate | 3.04 | 9.60 |
 | Copper Helmet | 1.90 | 6.00 |
-| Copper Horse Armor | 3.00 | 300.00 |
+| Copper Horse Armor | 3.00 | 450.00 |
 | Copper Leggings | 2.66 | 8.40 |
-| Copper Nautilus Armor | 3.00 | 300.00 |
-| Cyan Harness | 2.04 | 6.45 |
+| Copper Nautilus Armor | 3.00 | 450.00 |
+| Cyan Harness | 2.04 | 451.05 |
 | Diamond Boots | 114.00 | 360.00 |
 | Diamond Chestplate | 228.00 | 720.00 |
 | Diamond Helmet | 142.50 | 450.00 |
-| Diamond Horse Armor | 25.00 | 2,500.00 |
+| Diamond Horse Armor | 25.00 | 3,500.00 |
 | Diamond Leggings | 199.50 | 630.00 |
-| Diamond Nautilus Armor | 25.00 | 2,500.00 |
+| Diamond Nautilus Armor | 25.00 | 3,500.00 |
 | Golden Boots | 15.20 | 48.00 |
 | Golden Chestplate | 30.40 | 96.00 |
 | Golden Helmet | 19.00 | 60.00 |
-| Golden Horse Armor | 12.00 | 900.00 |
+| Golden Horse Armor | 12.00 | 1,350.00 |
 | Golden Leggings | 26.60 | 84.00 |
-| Golden Nautilus Armor | 12.00 | 900.00 |
-| Gray Harness | 2.04 | 6.45 |
-| Green Harness | 2.04 | 6.45 |
+| Golden Nautilus Armor | 12.00 | 1,350.00 |
+| Gray Harness | 2.04 | 451.05 |
+| Green Harness | 2.04 | 451.05 |
 | Iron Boots | 7.60 | 24.00 |
 | Iron Chestplate | 15.20 | 48.00 |
 | Iron Helmet | 9.50 | 30.00 |
-| Iron Horse Armor | 8.00 | 600.00 |
+| Iron Horse Armor | 8.00 | 900.00 |
 | Iron Leggings | 13.30 | 42.00 |
-| Iron Nautilus Armor | 8.00 | 600.00 |
-| Leather Boots | 2.28 | 7.20 |
-| Leather Chestplate | 4.56 | 14.40 |
-| Leather Helmet | 2.85 | 9.00 |
-| Leather Horse Armor | 4.00 | 200.00 |
-| Leather Leggings | 3.99 | 12.60 |
-| Light Blue Harness | 2.04 | 6.45 |
-| Light Gray Harness | 2.04 | 6.45 |
-| Lime Harness | 2.04 | 6.45 |
-| Magenta Harness | 2.04 | 6.45 |
-| Netherite Boots | 231.99 | 103,408.00 |
-| Netherite Chestplate | 340.29 | 103,768.00 |
-| Netherite Helmet | 259.06 | 103,498.00 |
-| Netherite Horse Armor | 147.44 | 105,548.00 |
-| Netherite Leggings | 313.21 | 103,678.00 |
-| Netherite Nautilus Armor | 147.44 | 105,548.00 |
-| Orange Harness | 2.04 | 6.45 |
-| Pink Harness | 2.04 | 6.45 |
-| Purple Harness | 2.04 | 6.45 |
-| Red Harness | 2.04 | 6.45 |
+| Iron Nautilus Armor | 8.00 | 900.00 |
+| Leather Boots | 2.28 | 600.00 |
+| Leather Chestplate | 4.56 | 1,200.00 |
+| Leather Helmet | 2.85 | 750.00 |
+| Leather Horse Armor | 4.00 | 300.00 |
+| Leather Leggings | 3.99 | 1,050.00 |
+| Light Blue Harness | 2.04 | 451.05 |
+| Light Gray Harness | 2.04 | 451.05 |
+| Lime Harness | 2.04 | 451.05 |
+| Magenta Harness | 2.04 | 451.05 |
+| Netherite Boots | 231.99 | 163,408.00 |
+| Netherite Chestplate | 340.29 | 163,768.00 |
+| Netherite Helmet | 259.06 | 163,498.00 |
+| Netherite Horse Armor | 147.44 | 166,548.00 |
+| Netherite Leggings | 313.21 | 163,678.00 |
+| Netherite Nautilus Armor | 147.44 | 166,548.00 |
+| Orange Harness | 2.04 | 451.05 |
+| Pink Harness | 2.04 | 451.05 |
+| Purple Harness | 2.04 | 451.05 |
+| Red Harness | 2.04 | 451.05 |
 | Saddle | 5.00 | 3,000.00 |
 | Turtle Helmet | 14.25 | 1,250.00 |
-| White Harness | 2.04 | 6.45 |
+| White Harness | 2.04 | 451.05 |
 | Wolf Armor | 5.70 | 480.00 |
-| Yellow Harness | 2.04 | 6.45 |
+| Yellow Harness | 2.04 | 451.05 |
 
 ## Wood (231)
 
@@ -567,7 +567,7 @@ prices are built and why none of them can be looped.
 |---|---:|---:|
 | Black Banner | 1.51 | 4.65 |
 | Black Bed | 0.96 | 3.15 |
-| Black Bundle | - | 4.20 |
+| Black Bundle | - | 152.40 |
 | Black Candle | 1.44 | 4.80 |
 | Black Carpet | 0.15 | 0.50 |
 | Black Concrete | 0.04 | 0.12 |
@@ -586,7 +586,7 @@ prices are built and why none of them can be looped.
 | Black Wool Stairs | 0.35 | 1.13 |
 | Blue Banner | 1.51 | 4.65 |
 | Blue Bed | 0.96 | 3.15 |
-| Blue Bundle | - | 3.15 |
+| Blue Bundle | - | 151.35 |
 | Blue Candle | 1.12 | 3.75 |
 | Blue Carpet | 0.15 | 0.50 |
 | Blue Concrete | 0.04 | 0.12 |
@@ -606,7 +606,7 @@ prices are built and why none of them can be looped.
 | Bordure Indented Banner Pattern | 0.57 | 500.00 |
 | Brown Banner | 1.51 | 4.65 |
 | Brown Bed | 0.96 | 3.15 |
-| Brown Bundle | - | 3.60 |
+| Brown Bundle | - | 151.80 |
 | Brown Candle | 1.26 | 4.20 |
 | Brown Carpet | 0.15 | 0.50 |
 | Brown Concrete | 0.04 | 0.12 |
@@ -623,12 +623,12 @@ prices are built and why none of them can be looped.
 | Brown Wool | 0.25 | 0.75 |
 | Brown Wool Slab | 0.11 | 0.38 |
 | Brown Wool Stairs | 0.35 | 1.13 |
-| Bundle | - | 3.00 |
+| Bundle | - | 151.20 |
 | Candle | 1.14 | 3.60 |
 | Creeper Banner Pattern | 1.00 | 500.00 |
 | Cyan Banner | 1.51 | 4.65 |
 | Cyan Bed | 0.96 | 3.15 |
-| Cyan Bundle | - | 4.02 |
+| Cyan Bundle | - | 151.43 |
 | Cyan Candle | 1.52 | 4.56 |
 | Cyan Carpet | 0.15 | 0.50 |
 | Cyan Concrete | 0.04 | 0.12 |
@@ -649,10 +649,10 @@ prices are built and why none of them can be looped.
 | Flower Banner Pattern | 0.57 | 500.00 |
 | Flow Banner Pattern | 1.00 | 500.00 |
 | Globe Banner Pattern | 1.00 | 500.00 |
-| Glow Item Frame | 2.61 | 7.83 |
+| Glow Item Frame | 2.61 | 155.70 |
 | Gray Banner | 1.51 | 4.65 |
 | Gray Bed | 0.96 | 3.15 |
-| Gray Bundle | - | 3.68 |
+| Gray Bundle | - | 151.88 |
 | Gray Candle | 1.34 | 4.28 |
 | Gray Carpet | 0.15 | 0.50 |
 | Gray Concrete | 0.04 | 0.12 |
@@ -671,7 +671,7 @@ prices are built and why none of them can be looped.
 | Gray Wool Stairs | 0.35 | 1.13 |
 | Green Banner | 1.51 | 4.65 |
 | Green Bed | 0.96 | 3.15 |
-| Green Bundle | - | 3.30 |
+| Green Bundle | - | 151.50 |
 | Green Candle | 1.17 | 3.90 |
 | Green Carpet | 0.15 | 0.50 |
 | Green Concrete | 0.04 | 0.12 |
@@ -689,10 +689,10 @@ prices are built and why none of them can be looped.
 | Green Wool Slab | 0.11 | 0.38 |
 | Green Wool Stairs | 0.35 | 1.13 |
 | Guster Banner Pattern | 1.00 | 500.00 |
-| Item Frame | 1.25 | 3.75 |
+| Item Frame | 1.25 | 151.20 |
 | Light Blue Banner | 1.51 | 4.65 |
 | Light Blue Bed | 0.96 | 3.15 |
-| Light Blue Bundle | - | 3.15 |
+| Light Blue Bundle | - | 151.35 |
 | Light Blue Candle | 1.12 | 3.75 |
 | Light Blue Carpet | 0.15 | 0.50 |
 | Light Blue Concrete | 0.04 | 0.12 |
@@ -711,7 +711,7 @@ prices are built and why none of them can be looped.
 | Light Blue Wool Stairs | 0.35 | 1.13 |
 | Light Gray Banner | 1.51 | 4.65 |
 | Light Gray Bed | 0.96 | 3.15 |
-| Light Gray Bundle | - | 3.15 |
+| Light Gray Bundle | - | 151.35 |
 | Light Gray Candle | 1.12 | 3.75 |
 | Light Gray Carpet | 0.15 | 0.50 |
 | Light Gray Concrete | 0.04 | 0.12 |
@@ -730,7 +730,7 @@ prices are built and why none of them can be looped.
 | Light Gray Wool Stairs | 0.35 | 1.13 |
 | Lime Banner | 1.51 | 4.65 |
 | Lime Bed | 0.96 | 3.15 |
-| Lime Bundle | - | 3.27 |
+| Lime Bundle | - | 151.43 |
 | Lime Candle | 1.27 | 3.83 |
 | Lime Carpet | 0.15 | 0.50 |
 | Lime Concrete | 0.04 | 0.12 |
@@ -749,7 +749,7 @@ prices are built and why none of them can be looped.
 | Lime Wool Stairs | 0.35 | 1.13 |
 | Magenta Banner | 1.51 | 4.65 |
 | Magenta Bed | 0.96 | 3.15 |
-| Magenta Bundle | - | 3.08 |
+| Magenta Bundle | - | 151.28 |
 | Magenta Candle | 1.10 | 3.68 |
 | Magenta Carpet | 0.15 | 0.50 |
 | Magenta Concrete | 0.04 | 0.12 |
@@ -770,7 +770,7 @@ prices are built and why none of them can be looped.
 | Moss Carpet | 0.12 | 0.40 |
 | Orange Banner | 1.51 | 4.65 |
 | Orange Bed | 0.96 | 3.15 |
-| Orange Bundle | - | 3.08 |
+| Orange Bundle | - | 151.28 |
 | Orange Candle | 1.12 | 3.68 |
 | Orange Carpet | 0.15 | 0.50 |
 | Orange Concrete | 0.04 | 0.12 |
@@ -792,7 +792,7 @@ prices are built and why none of them can be looped.
 | Piglin Banner Pattern | 1.00 | 500.00 |
 | Pink Banner | 1.51 | 4.65 |
 | Pink Bed | 0.96 | 3.15 |
-| Pink Bundle | - | 3.08 |
+| Pink Bundle | - | 151.28 |
 | Pink Candle | 1.10 | 3.68 |
 | Pink Carpet | 0.15 | 0.50 |
 | Pink Concrete | 0.04 | 0.12 |
@@ -811,7 +811,7 @@ prices are built and why none of them can be looped.
 | Pink Wool Stairs | 0.35 | 1.13 |
 | Purple Banner | 1.51 | 4.65 |
 | Purple Bed | 0.96 | 3.15 |
-| Purple Bundle | - | 3.12 |
+| Purple Bundle | - | 151.32 |
 | Purple Candle | 1.10 | 3.72 |
 | Purple Carpet | 0.15 | 0.50 |
 | Purple Concrete | 0.04 | 0.12 |
@@ -830,7 +830,7 @@ prices are built and why none of them can be looped.
 | Purple Wool Stairs | 0.35 | 1.13 |
 | Red Banner | 1.51 | 4.65 |
 | Red Bed | 0.96 | 3.15 |
-| Red Bundle | - | 3.08 |
+| Red Bundle | - | 151.28 |
 | Red Candle | 1.10 | 3.68 |
 | Red Carpet | 0.15 | 0.50 |
 | Red Concrete | 0.04 | 0.12 |
@@ -853,7 +853,7 @@ prices are built and why none of them can be looped.
 | Terracotta | 0.76 | 2.40 |
 | White Banner | 1.51 | 4.65 |
 | White Bed | 0.96 | 3.15 |
-| White Bundle | - | 3.15 |
+| White Bundle | - | 151.35 |
 | White Candle | 1.12 | 3.75 |
 | White Carpet | 0.15 | 0.50 |
 | White Concrete | 0.04 | 0.12 |
@@ -872,7 +872,7 @@ prices are built and why none of them can be looped.
 | White Wool Stairs | 0.35 | 1.13 |
 | Yellow Banner | 1.51 | 4.65 |
 | Yellow Bed | 0.96 | 3.15 |
-| Yellow Bundle | - | 3.08 |
+| Yellow Bundle | - | 151.28 |
 | Yellow Candle | 1.10 | 3.68 |
 | Yellow Carpet | 0.15 | 0.50 |
 | Yellow Concrete | 0.04 | 0.12 |
@@ -898,13 +898,13 @@ prices are built and why none of them can be looped.
 | Anvil | 56.33 | 186.00 |
 | Armor Stand | 0.53 | 1.59 |
 | Barrel | 0.58 | 2.10 |
-| Beacon | 117.08 | 100,009.75 |
+| Beacon | 117.08 | - |
 | Bell | 25.00 | 1,500.00 |
 | Blast Furnace | 10.00 | 31.65 |
-| Book | 0.96 | 3.15 |
-| Bookshelf | 3.24 | 11.25 |
+| Book | 0.96 | 151.35 |
+| Bookshelf | 3.24 | 455.85 |
 | Bowl | 0.06 | 0.23 |
-| Brewing Stand | 2.99 | 9.45 |
+| Brewing Stand | 2.99 | 3,000.45 |
 | Calibrated Sculk Sensor | 7.60 | 209.00 |
 | Campfire | 1.77 | 5.31 |
 | Cartography Table | 0.60 | 2.10 |
@@ -917,7 +917,7 @@ prices are built and why none of them can be looped.
 | Composter | 0.26 | 1.05 |
 | Conduit | 148.20 | 82,000.00 |
 | Copper Bars | 0.14 | 0.45 |
-| Copper Bulb | 3.26 | 10.73 |
+| Copper Bulb | 3.26 | 758.48 |
 | Copper Chain | 0.45 | 1.47 |
 | Copper Chest | 3.68 | 12.00 |
 | Copper Door | 0.76 | 2.40 |
@@ -934,11 +934,11 @@ prices are built and why none of them can be looped.
 | Detector Rail | 1.99 | 6.30 |
 | Dispenser | 2.12 | 6.60 |
 | Dropper | 0.80 | 2.55 |
-| Enchanting Table | 61.71 | 195.15 |
-| Ender Chest | 13.38 | 43.50 |
-| End Rod | 0.78 | 2.48 |
+| Enchanting Table | 61.71 | 343.35 |
+| Ender Chest | 13.38 | 1,539.00 |
+| End Rod | 0.78 | 750.23 |
 | Exposed Copper Bars | 0.14 | 0.42 |
-| Exposed Copper Bulb | 2.96 | 9.38 |
+| Exposed Copper Bulb | 2.96 | 757.13 |
 | Exposed Copper Chain | 0.45 | 1.35 |
 | Exposed Copper Chest | 3.68 | 11.04 |
 | Exposed Copper Door | 0.76 | 2.28 |
@@ -966,7 +966,7 @@ prices are built and why none of them can be looped.
 | Jukebox | 29.18 | 92.40 |
 | Ladder | 0.19 | 0.57 |
 | Lantern | 1.70 | 5.68 |
-| Lectern | 3.23 | 11.85 |
+| Lectern | 3.23 | 456.45 |
 | Lever | 0.13 | 0.39 |
 | Lightning Rod | 1.14 | 3.60 |
 | Light Weighted Pressure Plate | 7.60 | 24.00 |
@@ -978,7 +978,7 @@ prices are built and why none of them can be looped.
 | Observer | 2.18 | 6.90 |
 | Ochre Froglight | 3.00 | 90.00 |
 | Oxidized Copper Bars | 0.14 | 0.42 |
-| Oxidized Copper Bulb | 2.96 | 9.38 |
+| Oxidized Copper Bulb | 2.96 | 757.13 |
 | Oxidized Copper Chain | 0.45 | 1.35 |
 | Oxidized Copper Chest | 3.68 | 11.04 |
 | Oxidized Copper Door | 0.76 | 2.28 |
@@ -1009,7 +1009,7 @@ prices are built and why none of them can be looped.
 | Soul Campfire | 1.44 | 4.32 |
 | Soul Lantern | 1.71 | 5.71 |
 | Soul Torch | 0.12 | 0.38 |
-| Sticky Piston | 3.62 | 12.00 |
+| Sticky Piston | 3.62 | 209.00 |
 | Stonecutter | 2.04 | 6.45 |
 | Stone Button | 0.04 | 0.15 |
 | Stone Pressure Plate | 0.09 | 0.30 |
@@ -1023,7 +1023,7 @@ prices are built and why none of them can be looped.
 | Tripwire Hook | 1.03 | 3.23 |
 | Verdant Froglight | 3.00 | 90.00 |
 | Waxed Copper Bars | 0.89 | 2.85 |
-| Waxed Copper Bulb | 3.68 | 12.53 |
+| Waxed Copper Bulb | 3.68 | 760.28 |
 | Waxed Copper Chain | 1.18 | 3.87 |
 | Waxed Copper Chest | 4.25 | 14.40 |
 | Waxed Copper Door | 1.48 | 4.80 |
@@ -1032,7 +1032,7 @@ prices are built and why none of them can be looped.
 | Waxed Copper Lantern | 1.14 | 3.84 |
 | Waxed Copper Trapdoor | 2.20 | 7.20 |
 | Waxed Exposed Copper Bars | 0.89 | 2.82 |
-| Waxed Exposed Copper Bulb | 3.40 | 11.18 |
+| Waxed Exposed Copper Bulb | 3.40 | 758.93 |
 | Waxed Exposed Copper Chain | 1.18 | 3.75 |
 | Waxed Exposed Copper Chest | 4.25 | 13.44 |
 | Waxed Exposed Copper Door | 1.48 | 4.68 |
@@ -1043,7 +1043,7 @@ prices are built and why none of them can be looped.
 | Waxed Exposed Lightning Rod | 1.84 | 5.82 |
 | Waxed Lightning Rod | 1.84 | 6.00 |
 | Waxed Oxidized Copper Bars | 0.89 | 2.82 |
-| Waxed Oxidized Copper Bulb | 3.40 | 11.18 |
+| Waxed Oxidized Copper Bulb | 3.40 | 758.93 |
 | Waxed Oxidized Copper Chain | 1.18 | 3.75 |
 | Waxed Oxidized Copper Chest | 4.25 | 13.44 |
 | Waxed Oxidized Copper Door | 1.48 | 4.68 |
@@ -1053,7 +1053,7 @@ prices are built and why none of them can be looped.
 | Waxed Oxidized Copper Trapdoor | 2.20 | 6.96 |
 | Waxed Oxidized Lightning Rod | 1.84 | 5.82 |
 | Waxed Weathered Copper Bars | 0.89 | 2.82 |
-| Waxed Weathered Copper Bulb | 3.40 | 11.18 |
+| Waxed Weathered Copper Bulb | 3.40 | 758.93 |
 | Waxed Weathered Copper Chain | 1.18 | 3.75 |
 | Waxed Weathered Copper Chest | 4.25 | 13.44 |
 | Waxed Weathered Copper Door | 1.48 | 4.68 |
@@ -1063,7 +1063,7 @@ prices are built and why none of them can be looped.
 | Waxed Weathered Copper Trapdoor | 2.20 | 6.96 |
 | Waxed Weathered Lightning Rod | 1.84 | 5.82 |
 | Weathered Copper Bars | 0.14 | 0.42 |
-| Weathered Copper Bulb | 2.96 | 9.38 |
+| Weathered Copper Bulb | 2.96 | 757.13 |
 | Weathered Copper Chain | 0.45 | 1.35 |
 | Weathered Copper Chest | 3.68 | 11.04 |
 | Weathered Copper Door | 0.76 | 2.28 |
@@ -1072,7 +1072,7 @@ prices are built and why none of them can be looped.
 | Weathered Copper Lantern | 0.41 | 1.23 |
 | Weathered Copper Trapdoor | 1.52 | 4.56 |
 | Weathered Lightning Rod | 1.14 | 3.42 |
-| Writable Book | 1.43 | 4.80 |
+| Writable Book | 1.43 | 153.00 |
 
 ## Food (65)
 
@@ -1197,9 +1197,9 @@ prices are built and why none of them can be looped.
 | Blackstone Slab | 0.02 | 0.08 |
 | Blackstone Stairs | 0.04 | 0.15 |
 | Blackstone Wall | 0.04 | 0.15 |
-| Blaze Powder | 1.42 | 4.50 |
-| Blaze Rod | 3.00 | 9.00 |
-| Breeze Rod | 3.00 | 9.00 |
+| Blaze Powder | 1.42 | 1,500.00 |
+| Blaze Rod | 3.00 | 3,000.00 |
+| Breeze Rod | 3.00 | 5,000.00 |
 | Chiseled Nether Bricks | 0.06 | 0.24 |
 | Chiseled Polished Blackstone | 0.04 | 0.15 |
 | Chiseled Resin Bricks | 1.08 | 3.60 |
@@ -1218,7 +1218,7 @@ prices are built and why none of them can be looped.
 | Dragon Head | 1,000.00 | - |
 | Dried Ghast | 38.04 | - |
 | Echo Shard | 8.00 | 4,000.00 |
-| Ender Eye | 6.09 | 19.50 |
+| Ender Eye | 6.09 | 1,515.00 |
 | Ender Pearl | 5.00 | 15.00 |
 | End Stone | 0.10 | 0.30 |
 | End Stone Bricks | 0.09 | 0.30 |
@@ -1229,7 +1229,7 @@ prices are built and why none of them can be looped.
 | Gilded Blackstone | 1.50 | 4.50 |
 | Heavy Core | 500.00 | - |
 | Magma Block | 0.20 | 0.60 |
-| Magma Cream | 2.29 | 7.50 |
+| Magma Cream | 2.29 | 1,700.00 |
 | Netherite Upgrade Smithing Template | - | 3,000.00 |
 | Netherrack | 0.02 | 0.06 |
 | Nether Brick | 0.02 | 0.06 |
@@ -1287,7 +1287,7 @@ prices are built and why none of them can be looped.
 | Warped Wart Block | 0.30 | 0.90 |
 | Weeping Vines | 0.10 | 0.30 |
 | Wither Rose | 3.00 | 400.00 |
-| Wither Skeleton Skull | 10.00 | 30,000.00 |
+| Wither Skeleton Skull | 200.00 | - |
 
 ## Farming, plants and natural blocks (167)
 
@@ -1469,7 +1469,7 @@ prices are built and why none of them can be looped.
 | Bone | 0.40 | 1.20 |
 | Bone Block | 1.02 | 3.60 |
 | Bone Meal | 0.12 | 0.40 |
-| Creeper Head | 3.00 | 4,000.00 |
+| Creeper Head | 20.00 | - |
 | Dark Prismarine | 4.16 | 13.20 |
 | Dark Prismarine Slab | 1.97 | 6.60 |
 | Dark Prismarine Stairs | 3.95 | 13.20 |
@@ -1478,11 +1478,11 @@ prices are built and why none of them can be looped.
 | Gunpowder | 0.80 | 2.40 |
 | Heart Of The Sea | 60.00 | 50,000.00 |
 | Ink Sac | 0.40 | 1.20 |
-| Leather | 0.60 | 1.80 |
+| Leather | 0.60 | 150.00 |
 | Music Disc Tears | - | 1,500.00 |
 | Nautilus Shell | 12.00 | 4,000.00 |
 | Phantom Membrane | 2.00 | 150.00 |
-| Piglin Head | 3.00 | 4,000.00 |
+| Piglin Head | 20.00 | - |
 | Prismarine | 1.90 | 6.00 |
 | Prismarine Bricks | 4.27 | 13.50 |
 | Prismarine Brick Slab | 2.02 | 6.75 |
@@ -1492,13 +1492,13 @@ prices are built and why none of them can be looped.
 | Prismarine Slab | 0.90 | 3.00 |
 | Prismarine Stairs | 1.80 | 6.00 |
 | Prismarine Wall | 1.80 | 6.00 |
-| Skeleton Skull | 3.00 | 4,000.00 |
+| Skeleton Skull | 20.00 | - |
 | Skull Pottery Sherd | - | 400.00 |
-| Slime Ball | 1.00 | 3.00 |
-| Slime Block | 8.55 | 27.00 |
+| Slime Ball | 1.00 | 200.00 |
+| Slime Block | 8.55 | 1,800.00 |
 | String | 0.40 | 1.20 |
 | Turtle Scute | 3.00 | 250.00 |
-| Zombie Head | 3.00 | 4,000.00 |
+| Zombie Head | 20.00 | - |
 
 ## Everything else (65)
 

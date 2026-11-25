@@ -261,12 +261,10 @@ base:
   WEATHERED_COPPER:  3.00
 
   # ======================================================================
-  #  NETHER, END AND DEEP DARK  (36 items)
+  #  NETHER, END AND DEEP DARK  (34 items)
   # ======================================================================
   BASALT:             0.05
   BLACKSTONE:         0.05
-  BLAZE_ROD:          3.00
-  BREEZE_ROD:         3.00
   CHORUS_FLOWER:      0.50
   CHORUS_FRUIT:       0.30
   CHORUS_PLANT:       0.40
@@ -428,17 +426,15 @@ base:
   YELLOW_POPLAR_LEAVES:     0.05
 
   # ======================================================================
-  #  MOB DROPS AND SEA ITEMS  (10 items)
+  #  MOB DROPS AND SEA ITEMS  (8 items)
   # ======================================================================
   BONE:                 0.40
   FEATHER:              0.15
   GLOW_INK_SAC:         1.50
   GUNPOWDER:            0.80
   INK_SAC:              0.40
-  LEATHER:              0.60
   PRISMARINE_CRYSTALS:  0.80
   PRISMARINE_SHARD:     0.50
-  SLIME_BALL:           1.00
   STRING:               0.40
 
   # ======================================================================
@@ -1555,15 +1551,22 @@ premium:
 
   # --- Rare items that can still be bought, at very high prices
   NETHER_STAR: {sell: 120, buy: 100000}
+  # --- Mob drops made very dear to buy (the shop still pays the old low price, so farms earn no more than before).
+  #     Blaze powder, magma cream, wind charges, fire charges, slime blocks, leather armour and books follow the
+  #     rod, ball and leather prices by themselves, because nothing is ever cheaper to buy than to build.
+  BLAZE_ROD: {sell: 3, buy: 3000}
+  BREEZE_ROD: {sell: 3, buy: 5000}
+  LEATHER: {sell: 0.6, buy: 150}
+  SLIME_BALL: {sell: 1, buy: 200}
   HEART_OF_THE_SEA: {sell: 60, buy: 50000}
   NAUTILUS_SHELL: {sell: 12, buy: 4000}
   SHULKER_SHELL: {sell: 12, buy: 6000}
   ENCHANTED_GOLDEN_APPLE: {sell: 40, buy: 40000}
-  WITHER_SKELETON_SKULL: {sell: 10, buy: 30000}
-  ZOMBIE_HEAD: {sell: 3, buy: 4000}
-  CREEPER_HEAD: {sell: 3, buy: 4000}
-  SKELETON_SKULL: {sell: 3, buy: 4000}
-  PIGLIN_HEAD: {sell: 3, buy: 4000}
+  WITHER_SKELETON_SKULL: {sell: 200}   # sell only (no-buy)
+  ZOMBIE_HEAD: {sell: 20}   # sell only (no-buy)
+  CREEPER_HEAD: {sell: 20}   # sell only (no-buy)
+  SKELETON_SKULL: {sell: 20}   # sell only (no-buy)
+  PIGLIN_HEAD: {sell: 20}   # sell only (no-buy)
   ECHO_SHARD: {sell: 8, buy: 4000}
   DISC_FRAGMENT_5: {sell: 3, buy: 600}
   GHAST_TEAR: {sell: 5}               # sell only: buying it would be a way around the end crystal ban
@@ -1572,16 +1575,16 @@ premium:
   ARMADILLO_SCUTE: {sell: 1, buy: 80}
   # Netherite: scrap and ancient debris set the price of the whole netherite chain. An ingot is 4 scrap, so it
   # costs about 100,000; netherite tools, armour and blocks are priced from that automatically.
-  NETHERITE_SCRAP: {sell: 25, buy: 25000}
-  ANCIENT_DEBRIS: {sell: 25, buy: 25000}
+  NETHERITE_SCRAP: {sell: 25, buy: 40000}
+  ANCIENT_DEBRIS: {sell: 25, buy: 40000}
   NETHERITE_UPGRADE_SMITHING_TEMPLATE: {sell: 20, buy: 3000}
   "*_POTTERY_SHERD": {sell: 1, buy: 400}
   "MUSIC_DISC_*": {sell: 3, buy: 1500}
   SADDLE: {sell: 5, buy: 3000}
-  LEATHER_HORSE_ARMOR: {sell: 4, buy: 200}
-  IRON_HORSE_ARMOR: {sell: 8, buy: 600}
-  GOLDEN_HORSE_ARMOR: {sell: 12, buy: 900}
-  DIAMOND_HORSE_ARMOR: {sell: 25, buy: 2500}
+  LEATHER_HORSE_ARMOR: {sell: 4, buy: 300}
+  IRON_HORSE_ARMOR: {sell: 8, buy: 900}
+  GOLDEN_HORSE_ARMOR: {sell: 12, buy: 1350}
+  DIAMOND_HORSE_ARMOR: {sell: 25, buy: 3500}
   CHAINMAIL_HELMET: {sell: 6, buy: 150}
   CHAINMAIL_CHESTPLATE: {sell: 10, buy: 250}
   CHAINMAIL_LEGGINGS: {sell: 8, buy: 200}
@@ -1600,11 +1603,11 @@ premium:
   "*_BANNER_PATTERN": {sell: 1, buy: 500}
   FLOWER_BANNER_PATTERN: {sell: 0.57, buy: 500}
   BORDURE_INDENTED_BANNER_PATTERN: {sell: 0.57, buy: 500}
-  COPPER_HORSE_ARMOR: {sell: 3, buy: 300}
-  COPPER_NAUTILUS_ARMOR: {sell: 3, buy: 300}
-  IRON_NAUTILUS_ARMOR: {sell: 8, buy: 600}
-  GOLDEN_NAUTILUS_ARMOR: {sell: 12, buy: 900}
-  DIAMOND_NAUTILUS_ARMOR: {sell: 25, buy: 2500}
+  COPPER_HORSE_ARMOR: {sell: 3, buy: 450}
+  COPPER_NAUTILUS_ARMOR: {sell: 3, buy: 450}
+  IRON_NAUTILUS_ARMOR: {sell: 8, buy: 900}
+  GOLDEN_NAUTILUS_ARMOR: {sell: 12, buy: 1350}
+  DIAMOND_NAUTILUS_ARMOR: {sell: 25, buy: 3500}
 
 # ------------------------------------------------------------------------------
 #  What mining or harvesting ONE block gives at best (Fortune III averages, rounded up). The loop check uses this
@@ -1705,3 +1708,9 @@ no-buy:
   - HEAVY_CORE
   - TRIDENT
   - "*_ARMOR_TRIM_SMITHING_TEMPLATE"
+  - BEACON
+  - ZOMBIE_HEAD
+  - CREEPER_HEAD
+  - SKELETON_SKULL
+  - PIGLIN_HEAD
+  - WITHER_SKELETON_SKULL

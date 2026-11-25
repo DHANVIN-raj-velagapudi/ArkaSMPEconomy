@@ -3,6 +3,20 @@
 All notable changes to ArkaSMPEconomy. Versions follow `MAJOR.MINOR.PATCH`: a fix raises the last number, a new
 feature the middle one, a breaking change the first. Every release raises the version.
 
+## 1.5.1
+
+### Changed
+- **Beacons and mob heads are no longer for sale** (zombie, creeper, skeleton, piglin and wither skeleton skull). They can
+  still be sold: beacon about ₹117, wither skeleton skull ₹200, the other heads ₹20.
+- **Netherite scrap and ancient debris cost ₹40,000** (was ₹25,000), so a netherite ingot is about ₹160,000, netherite
+  tools about ₹164,000 to ₹168,000, netherite armour about ₹163,000 to ₹167,000 and a netherite block about ₹1,440,000.
+- **Horse and nautilus armour cost about 50% more**: leather ₹300, copper ₹450, iron ₹900, gold ₹1,350, diamond ₹3,500.
+- **Blaze rod ₹3,000, breeze rod ₹5,000, leather ₹150, slime ball ₹200** to buy (the shop still pays the old low price, so
+  farms earn no more). Everything made from them follows automatically: blaze powder ₹1,500, magma cream ₹1,700,
+  wind charge ₹1,250, fire charge ₹501, slime block ₹1,800, a brewing stand about ₹3,000, a leather chestplate ₹1,200,
+  a book ₹151, a bookshelf ₹456, a saddle ₹3,000.
+- The price loop check still prints no notes. Servers must rename `base-prices.yml` to receive the new prices.
+
 ## 1.5.0
 
 ### Changed

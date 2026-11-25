@@ -38,7 +38,7 @@ Items with enchantments, a custom name or lore, damage, or contents (shulker box
 | Gold | ₹4 | piglin farms exist |
 | Emerald | ₹4 (buy disabled) | villager trade loops |
 | Diamond | ₹30 | the main hand-mined reward |
-| Netherite scrap | sells ₹25, costs ₹25,000 | rarest renewable-by-effort item, see Premium items |
+| Netherite scrap | sells ₹25, costs ₹40,000 | rarest renewable-by-effort item, see Premium items |
 | Enchanted books, potions, spawners, spawn eggs, command blocks and other admin items | not traded | infinite, NBT-based or admin-only |
 
 Examples: iron ingot sells ₹2 and costs ₹6. A diamond pickaxe is made from 3 diamonds and 2 sticks, so it sells for at most about ₹85 and costs ₹4,800 (tools have their own price ladder, see below). A cobblestone stack sells for ₹3.20.
@@ -51,13 +51,12 @@ Rare things are listed in the `premium:` section of `base-prices.yml` with their
 | Nether star | ₹120 | ₹100,000 |
 | Heart of the sea | ₹60 | ₹50,000 |
 | Enchanted golden apple | ₹40 | ₹40,000 |
-| Wither skeleton skull | ₹10 | ₹30,000 |
-| Netherite scrap / ancient debris | ₹25 | ₹25,000 |
+| Netherite scrap / ancient debris | ₹25 | ₹40,000 |
 | Shulker shell | ₹12 | ₹6,000 |
 | Nautilus shell, echo shard | ₹12 / ₹8 | ₹4,000 / ₹4,000 |
-| Saddle, netherite upgrade template, music discs, pottery sherds, horse armour | a few rupees | ₹150 to ₹3,000 |
+| Saddle, netherite upgrade template, music discs, pottery sherds, horse armour | a few rupees | ₹300 to ₹3,500 (horse armour) |
 
-Anything crafted from a premium item can never cost less than its parts, so a beacon costs more than its nether star, a conduit more than its heart of the sea, and a netherite pickaxe about ₹108,000 (it needs an ingot, which is 4 netherite scrap). Everything that costs ₹1,500 or more is listed under **Rare & Special** in the shop, except tools and armour, which stay in their own categories.
+Anything crafted from a premium item can never cost less than its parts, so a beacon costs more than its nether star, a conduit more than its heart of the sea, and a netherite pickaxe about ₹168,000 (it needs an ingot, which is 4 netherite scrap). Everything that costs ₹1,500 or more is listed under **Rare & Special** in the shop, except tools and armour, which stay in their own categories.
 
 ### Sell-only items: the shop pays, but never sells
 These items are in the `no-buy:` list, so nobody can buy them, and they have a sell price in `premium:` that follows effort and rarity. It is good money, but the hourly and daily limits still apply, so none of them can be farmed into a fortune.
@@ -70,6 +69,9 @@ These items are in the `no-buy:` list, so nobody can buy them, and they have a s
 | Heavy core | ₹500 | ominous vaults |
 | Mace | about ₹478 | made from a heavy core (never for sale) |
 | Silence armour trim | ₹400 | ancient city, rarest trim |
+| Wither skeleton skull | ₹200 | wither skeletons, rare drop |
+| Beacon | about ₹117 | made from a nether star (never for sale) |
+| Zombie, creeper, skeleton and piglin heads | ₹20 | mob drops (charged creeper, skeleton kills) |
 | Trident | ₹250 | drowned |
 | Rarer trims (bolt, eye, flow, host, raiser, shaper, spire, vex, ward, wayfinder) | ₹200 | structures, often one chance |
 | Other armour trims | ₹120 | structures |
@@ -78,10 +80,13 @@ These items are in the `no-buy:` list, so nobody can buy them, and they have a s
 
 Ghast tears are sell-only too (₹5): otherwise a player could buy a tear and craft an end crystal, which is a way round the ban. For the same reason anything that needs one is not for sale (dried ghast). The netherite upgrade template can still be bought, because netherite gear needs it; it cannot be sold.
 
+## Mob drops that are very dear to buy
+Blaze rod ₹3,000, breeze rod ₹5,000, leather ₹150 and slime ball ₹200 have a high buy price in `premium:`, while the shop still pays the old low price (₹3, ₹3, ₹0.60, ₹1). Anything made from them can never cost less than its parts, so blaze powder is ₹1,500, magma cream ₹1,700, a wind charge ₹1,250, a slime block ₹1,800, a brewing stand about ₹3,000, a leather chestplate ₹1,200 and a book ₹151.
+
 ## Tools: a fixed ladder
 Wooden to diamond tools have a fixed buy price in `premium:`, worked out as a price per unit of material: wood ₹10, stone ₹25, copper ₹70, iron ₹180, golden ₹300, diamond ₹1,600. A pickaxe or axe is 3 units, a hoe or sword 2, a shovel or spear 1. So a stone pickaxe costs ₹75, an iron pickaxe ₹540 and a diamond pickaxe ₹4,800. The sell price is unchanged (at most 95% of the ingredients), so selling a tool never pays more than before.
 
-Netherite tools have no line of their own. They are a diamond tool plus a netherite ingot plus the upgrade template, so they cost about ₹104,000 to ₹108,000, and they follow the scrap price automatically.
+Netherite tools have no line of their own. They are a diamond tool plus a netherite ingot plus the upgrade template, so they cost about ₹164,000 to ₹168,000, and they follow the scrap price automatically.
 
 ## The loop check (why buy and sell cannot be farmed)
 After all prices are worked out, the engine looks at **every** recipe, not only the ones it used for pricing: crafting, un-crafting (block back to ingots), smelting, stonecutting, smithing (netherite), and the mining yields in `drops:` (an ore block gives up to 7.7 raw copper with Fortune III). For every item it finds the cheapest way to obtain it by buying and processing, across any number of steps. If an item would sell for more than 95% of that, its **sell price is lowered** until it cannot. Buy prices are never lowered.

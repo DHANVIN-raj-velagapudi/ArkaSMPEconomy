@@ -86,6 +86,19 @@ public final class ShippedPricesCheck {
         check("rare sell prices stay at or below 5,000 (best sale less than ~1/4 of the daily limit)",
                 maxRare > 0 && maxRare <= 5000 && maxRare * 4 <= y.getDouble("rules.daily-cap-rupees", 18000) + 1);
 
+        // 4. beacon and mob heads: cannot be bought, no buy price, can be sold
+        boolean headsOk = true;
+        for (String n : List.of("BEACON", "ZOMBIE_HEAD", "CREEPER_HEAD", "SKELETON_SKULL", "PIGLIN_HEAD", "WITHER_SKELETON_SKULL")) {
+            if (!matches(noBuy, n) || matches(noSell, n) || buy(prem, n) > 0) headsOk = false;
+        }
+        check("beacon and mob heads are no-buy, sellable and have no premium buy price", headsOk);
+        check("ancient debris is at least as dear as scrap and both are at least 40,000",
+                buy(prem, "ANCIENT_DEBRIS") >= buy(prem, "NETHERITE_SCRAP") && buy(prem, "NETHERITE_SCRAP") >= 40000);
+
+        check("blaze rod, breeze rod, leather and slime ball have high buy prices and low sell prices",
+                buy(prem, "BLAZE_ROD") >= 1000 && buy(prem, "BREEZE_ROD") > buy(prem, "BLAZE_ROD")
+                        && buy(prem, "LEATHER") >= 100 && buy(prem, "SLIME_BALL") >= 100
+                        && prem.getDouble("BLAZE_ROD.sell") <= 10 && prem.getDouble("LEATHER.sell") <= 5);
         System.out.println(failed == 0 ? "ALL PASSED" : failed + " FAILED");
         if (failed > 0) System.exit(1);
     }
