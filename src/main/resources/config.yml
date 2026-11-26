@@ -129,6 +129,7 @@ menus:
 messages:
   prefix: "<gold>[Eco] </gold>"
   no-permission: "<red>You do not have permission."
+  error-internal: "<red>Something went wrong with that command. Please tell an admin this number: <white>{id}"
   player-only: "<red>Only players can use this."
   unknown-player: "<red>Player not found."
   no-account: "<red>That player has no account."

@@ -23,7 +23,7 @@ import java.util.UUID;
 /** /arkaeco: give, take, set, reset, balance, freeze, log, import, reload. Every change is logged. */
 final class EcoAdmin implements CommandExecutor, TabCompleter {
     private static final List<String> SUBS = List.of("give", "take", "set", "reset", "balance", "freeze",
-            "unfreeze", "log", "import", "reload", "flush", "resume", "help");
+            "unfreeze", "log", "errors", "import", "reload", "flush", "resume", "help");
     private static final DateTimeFormatter TIME = DateTimeFormatter.ofPattern("dd MMM HH:mm").withZone(ZoneId.systemDefault());
 
     private final ArkaSMPEconomy plugin;
@@ -58,7 +58,7 @@ final class EcoAdmin implements CommandExecutor, TabCompleter {
         var eco = plugin.economy();
         String sub = a.length == 0 ? "help" : a[0].toLowerCase(Locale.ROOT);
         if (!SUBS.contains(sub)) sub = "help";
-        String perm = sub.equals("unfreeze") ? "freeze" : (sub.equals("flush") || sub.equals("resume")) ? "reload" : sub;
+        String perm = sub.equals("errors") ? "log" : sub.equals("unfreeze") ? "freeze" : (sub.equals("flush") || sub.equals("resume")) ? "reload" : sub;
         if (!sub.equals("help") && !s.hasPermission("arkaeco.admin." + perm)) {
             msg.send(s, "no-permission");
             return true;
@@ -122,6 +122,19 @@ final class EcoAdmin implements CommandExecutor, TabCompleter {
                 msg.raw(s, sub.equals("freeze") ? "<yellow>{p} is now frozen: no paying, trading or rewards." : "<green>{p} is unfrozen.", "p", acc.name);
             }
             case "log" -> log(s, a);
+            case "errors" -> {
+                var elog = plugin.errors();
+                if (a.length > 1 && a[1].equalsIgnoreCase("test")) {
+                    String id = elog.warn("errors.test", "Test entry written by /arkaeco errors test", "by", s.getName());
+                    msg.raw(s, "<green>Wrote test entry <white>{id}<green> to <white>logs/errors.log<green>.", "id", id);
+                    return true;
+                }
+                var list = elog.recent(8);
+                msg.raw(s, "<gold>Error log <gray>({n} recent) - file: <white>plugins/ArkaSMPEconomy/logs/errors.log",
+                        "n", String.valueOf(list.size()));
+                if (list.isEmpty()) msg.raw(s, "<green>No problems recorded since the server started.");
+                for (String line : list) msg.raw(s, "<gray>{l}", "l", line);
+            }
             case "import" -> {
                 if (a.length < 2 || !a[1].equalsIgnoreCase("essentials")) {
                     msg.raw(s, "<red>/arkaeco import essentials [confirm|force]");
@@ -145,7 +158,7 @@ final class EcoAdmin implements CommandExecutor, TabCompleter {
             default -> {
                 msg.raw(s, "<gold>Economy admin <gray>(/arkaeco)");
                 msg.raw(s, "<white>give|take|set <player> <amount> <gray>| <white>reset <player> <gray>| <white>balance <player>");
-                msg.raw(s, "<white>freeze|unfreeze <player> <gray>| <white>log [player] [count]");
+                msg.raw(s, "<white>freeze|unfreeze <player> <gray>| <white>log [player] [count] <gray>| <white>errors [test]");
                 msg.raw(s, "<white>import essentials [confirm|force] <gray>| <white>reload");
             }
         }

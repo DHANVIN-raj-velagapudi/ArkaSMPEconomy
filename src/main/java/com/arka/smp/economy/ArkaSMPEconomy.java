@@ -31,9 +31,22 @@ public final class ArkaSMPEconomy extends JavaPlugin implements Listener {
     private EconCommands commands;
     private boolean essentialsImported;
     private boolean started;
+    private ErrorLog errors;
 
     @Override
     public void onEnable() {
+        // The error log comes first, so even a failure while starting is written to logs/errors.log.
+        errors = ErrorLog.create(this, "com.arka.smp.economy.");
+        errors.start();
+        try {
+            enable();
+        } catch (RuntimeException | Error t) {
+            errors.error("startup", "ArkaSMPEconomy could not start", t);
+            throw t;
+        }
+    }
+
+    private void enable() {
         // adds options that are new in this version to config.yml and keeps the admin's own values
         try {
             if (!com.arka.smp.core.DataGuard.check(getDataFolder(), getPluginMeta().getVersion(), 1, getLogger()).proceed()) {
@@ -128,14 +141,18 @@ public final class ArkaSMPEconomy extends JavaPlugin implements Listener {
     private void bind(String name, org.bukkit.command.CommandExecutor ex, org.bukkit.command.TabCompleter tab) {
         PluginCommand cmd = getCommand(name);
         if (cmd != null) {
-            cmd.setExecutor(ex);
-            cmd.setTabCompleter(tab);
+            // a crash inside a command is logged with its details and the player gets an error number
+            cmd.setExecutor(errors.guard(ex, (who, id) -> messages.send(who, "error-internal", "id", id)));
+            cmd.setTabCompleter(errors.guard(tab));
         }
     }
 
     @Override
     public void onDisable() {
-        if (!started) return;
+        if (!started) {
+            if (errors != null) errors.stop();
+            return;
+        }
         if (trades != null) trades.shutdown();
         if (sellGui != null) sellGui.shutdown();
         if (shop != null) shop.shutdown();      // returns every item held in open trades
@@ -144,6 +161,7 @@ public final class ArkaSMPEconomy extends JavaPlugin implements Listener {
         getServer().getServicesManager().unregisterAll(this);
         HandlerList.unregisterAll((Listener) this);
         db.close();                                  // flushes every queued write before exit
+        errors.stop();
     }
 
     public void reload() {
@@ -175,6 +193,7 @@ public final class ArkaSMPEconomy extends JavaPlugin implements Listener {
         db.setMeta("essentials_imported", "true");
     }
 
+    public ErrorLog errors() { return errors; }
     public ArkaSMPCore core() { return core; }
     public Messages messages() { return messages; }
     public Database db() { return db; }

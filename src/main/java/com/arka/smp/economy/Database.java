@@ -118,7 +118,7 @@ final class Database {
             conn.commit();
             return true;
         } catch (SQLException e) {
-            plugin.getLogger().severe("Could not open economy database: " + e.getMessage());
+            plugin.errors().error("database.open", "Could not open the economy database", e);
             return false;
         }
     }
@@ -140,13 +140,13 @@ final class Database {
                             t.run(conn);
                         } catch (SQLException | RuntimeException e) {
                             // one bad task must never kill the writer: every later balance change would be lost
-                            plugin.getLogger().severe("Database write failed: " + e);
+                            plugin.errors().error("database.write", "A database write failed (a balance or shop change may be lost)", e);
                         }
                     }
                     try {
                         conn.commit();
                     } catch (SQLException e) {
-                        plugin.getLogger().severe("Database commit failed: " + e.getMessage());
+                        plugin.errors().error("database.commit", "Database commit failed (recent changes may be lost)", e);
                     }
                 }
             } catch (InterruptedException ignored) {
