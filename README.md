@@ -234,7 +234,7 @@ Identifier: `arkaeco`.
 | Placeholder | Value |
 |---|---|
 | `%arkaeco_balance%` | Plain number, e.g. `1250.5` |
-| `%arkaeco_balance_formatted%` | short form, e.g. `₹1.25k`, `₹2.5L`, `₹1Cr` (full numbers if `currency.compact` is false) |
+| `%arkaeco_balance_formatted%` | short form without paise, e.g. `₹1.25k`, `₹2.5L`, `₹1Cr` (`₹1,250` if `currency.compact` is false); the same text as the `MoneyFormat` API |
 | `%arkaeco_balance_exact%` | always the full amount, e.g. `₹1,250.50` |
 | `%arkaeco_rank%` | Your `/baltop` position |
 | `%arkaeco_top_<n>_name%`, `_value%`, `_raw%` | Player, formatted balance and plain number at rank `n` |

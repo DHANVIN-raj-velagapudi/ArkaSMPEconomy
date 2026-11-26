@@ -122,6 +122,14 @@ public final class ArkaSMPEconomy extends JavaPlugin implements Listener {
             };
         }, this, ServicePriority.Normal);
 
+        // The money text (no paise) for other plugins; needs ArkaSMPCore 1.11.0 or newer, older Cores just miss it.
+        try {
+            getServer().getServicesManager().register(com.arka.smp.core.api.MoneyFormat.class,
+                    rupees -> messages.whole(Math.round(rupees * Money.SCALE)), this, ServicePriority.Normal);
+        } catch (NoClassDefFoundError e) {
+            errors.warn("startup", "MoneyFormat API not registered: update ArkaSMPCore to 1.11.0 or newer");
+        }
+
         rewards.start();
         long topEvery = Math.max(5, getConfig().getInt("baltop.refresh-seconds", 30)) * 20L;
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, economy::rebuildTop, 40L, topEvery);

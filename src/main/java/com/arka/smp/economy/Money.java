@@ -96,6 +96,11 @@ public final class Money {
         return out.append(unit).toString();
     }
 
+    /** Whole rupees, cut off and never rounded up: 1,250.50 is 1,250 and 0.15 is 0. Paise still exist, they are just not shown. */
+    public static long noPaise(long paise) {
+        return paise / SCALE * SCALE;
+    }
+
     public static double toRupees(long paise) {
         return paise / (double) SCALE;
     }

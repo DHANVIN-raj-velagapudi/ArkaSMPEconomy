@@ -92,8 +92,8 @@ final class ShopMenus {
         var msg = plugin.messages();
         List<Component> lore = new ArrayList<>();
         long b = shop.buyPrice(m), s = shop.sellPrice(m);
-        lore.add(msg.mm(b > 0 ? "<gray>Buy: <yellow>" + msg.money(b) : "<dark_gray>Cannot be bought"));
-        lore.add(msg.mm(s > 0 ? "<gray>Sell: <green>" + msg.money(s) : "<dark_gray>Cannot be sold"));
+        lore.add(msg.mm(b > 0 ? "<gray>Buy: <yellow>" + msg.price(b) : "<dark_gray>Cannot be bought"));
+        lore.add(msg.mm(s > 0 ? "<gray>Sell: <green>" + msg.price(s) : "<dark_gray>Cannot be sold"));
         lore.add(Component.empty());
         lore.add(msg.mm("<yellow>Tap to buy or sell"));
         return Items.of(m, null, lore);
@@ -125,7 +125,7 @@ final class ShopMenus {
         if (buy > 0) {
             long cost = shop.costOf(m, q);
             menu.set(20, button(plugin, Material.LIME_CONCRETE, "<green><bold>Buy " + q,
-                    "<gray>Total: <yellow>" + msg.money(cost),
+                    "<gray>Total: <yellow>" + msg.price(cost),
                     "<gray>You have: <white>" + msg.money(plugin.economy().balance(p.getUniqueId()))),
                     pl -> buy(plugin, pl, m, q, backCat, backPage));
         }
@@ -134,7 +134,7 @@ final class ShopMenus {
                     "<gray>Sells every plain " + ShopManager.pretty(m) + " in your inventory"),
                     pl -> sell(plugin, pl, m, Integer.MAX_VALUE, backCat, backPage));
             menu.set(24, button(plugin, Material.GOLD_INGOT, "<gold><bold>Sell " + q,
-                    "<gray>Pays: <green>" + msg.money(sell * q)),
+                    "<gray>Pays: <green>" + msg.price(sell * q)),
                     pl -> sell(plugin, pl, m, q, backCat, backPage));
         }
         menu.set(31, button(plugin, Material.ARROW, "<white>Back"), pl -> items(plugin, pl, backCat, backPage));
@@ -152,7 +152,7 @@ final class ShopMenus {
         Runnable reopen = () -> item(plugin, p, m, qty, cat, page);
         if (cost >= confirmAt) {
             confirm(plugin, p, "<dark_gray>Buy " + qty + "x " + ShopManager.pretty(m) + "?",
-                    List.of("<gray>Total: <yellow>" + msg.money(cost)), () -> performBuy(plugin, p, m, qty, reopen), reopen);
+                    List.of("<gray>Total: <yellow>" + msg.price(cost)), () -> performBuy(plugin, p, m, qty, reopen), reopen);
         } else {
             performBuy(plugin, p, m, qty, reopen);
         }
@@ -163,9 +163,9 @@ final class ShopMenus {
         var msg = plugin.messages();
         long cost = shop.costOf(m, qty);
         switch (shop.buy(p, m, qty)) {
-            case OK -> msg.send(p, "shop-bought", "qty", String.valueOf(qty), "item", ShopManager.pretty(m), "amount", msg.money(cost));
+            case OK -> msg.send(p, "shop-bought", "qty", String.valueOf(qty), "item", ShopManager.pretty(m), "amount", msg.price(cost));
             case NO_SPACE -> msg.send(p, "shop-no-space");
-            case INSUFFICIENT -> msg.send(p, "shop-insufficient", "cost", msg.money(cost),
+            case INSUFFICIENT -> msg.send(p, "shop-insufficient", "cost", msg.price(cost),
                     "balance", msg.money(plugin.economy().balance(p.getUniqueId())));
             case FROZEN -> msg.send(p, "pay-frozen");
             case NOT_FOR_SALE -> msg.send(p, "shop-not-for-sale");
@@ -218,13 +218,13 @@ final class ShopMenus {
         }
         if (plan.total() >= shop.bigSalePaise()) {
             List<String> lines = new ArrayList<>();
-            lines.add("<gray>You get: <green>" + msg.money(plan.total()) + " <gray>for <white>" + plan.items() + " <gray>items");
+            lines.add("<gray>You get: <green>" + msg.price(plan.total()) + " <gray>for <white>" + plan.items() + " <gray>items");
             int shown = 0;
             for (var e : plan.byMaterial().entrySet()) {
                 if (shown++ >= 6) break;
                 lines.add("<dark_gray>- <white>" + e.getValue() + "x " + ShopManager.pretty(e.getKey()));
             }
-            confirm(plugin, p, "<dark_gray>Sell for " + msg.money(plan.total()) + "?", lines,
+            confirm(plugin, p, "<dark_gray>Sell for " + msg.price(plan.total()) + "?", lines,
                     () -> complete(plugin, p, replan.get(), after), after);
             return;
         }
@@ -237,7 +237,7 @@ final class ShopMenus {
         if (plan.total() <= 0 || !shop.execute(p, plan)) {
             msg.send(p, "shop-sell-failed");
         } else {
-            msg.send(p, "shop-sold", "items", String.valueOf(plan.items()), "amount", msg.money(plan.total()));
+            msg.send(p, "shop-sold", "items", String.valueOf(plan.items()), "amount", msg.price(plan.total()));
             if (plan.dayLimited()) msg.send(p, "shop-limit-day", "cap", msg.money(shop.dayRemaining(p.getUniqueId())));
             else if (plan.hourLimited()) msg.send(p, "shop-limit-hour");
             if (plan.refused() > 0) msg.send(p, "shop-refused", "n", String.valueOf(plan.refused()));

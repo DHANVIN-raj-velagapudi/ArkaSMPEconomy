@@ -12,6 +12,7 @@ config-version: "auto"
 
 currency:
   symbol: "₹"
+  show-paise: false          # false = whole rupees (₹1,250, not ₹1,250.50); amounts under ₹10 keep paise so ₹0.15 does not read ₹0
   compact: true              # show big amounts short: 1.5k from 1,000, 2.5L from 1 lakh (100k), 1Cr from 1 crore (100L). false = full numbers
 
 economy:

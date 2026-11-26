@@ -8,7 +8,7 @@ import java.util.Locale;
 
 /**
  * %arkaeco_balance%            plain number, e.g. 1250.5
- * %arkaeco_balance_formatted%  short form, e.g. ₹1.25k, ₹2.5L, ₹1Cr (currency.compact: false gives ₹1,250.50)
+ * %arkaeco_balance_formatted%  short form without paise, e.g. ₹1.25k, ₹2.5L, ₹1Cr (currency.compact: false gives ₹1,250); the same text as the MoneyFormat API
  * %arkaeco_balance_exact%      always written out, e.g. ₹1,250.50
  * %arkaeco_rank%               your /baltop position
  * %arkaeco_top_<n>_name%       name at rank n
@@ -66,7 +66,7 @@ final class EcoExpansion extends PlaceholderExpansion {
             boolean has = n >= 1 && n <= list.size();
             return switch (parts[2]) {
                 case "name" -> has ? list.get(n - 1).name() : "-";
-                case "value" -> has ? plugin.messages().money(list.get(n - 1).balance()) : "-";
+                case "value" -> has ? plugin.messages().whole(list.get(n - 1).balance()) : "-";
                 case "raw" -> has ? String.valueOf(list.get(n - 1).balance() / Money.SCALE) : "0";
                 default -> null;
             };
@@ -75,7 +75,7 @@ final class EcoExpansion extends PlaceholderExpansion {
         long bal = eco.balance(player.getUniqueId());
         return switch (p) {
             case "balance" -> String.valueOf(Money.toRupees(bal));
-            case "balance_formatted" -> plugin.messages().money(bal);
+            case "balance_formatted" -> plugin.messages().whole(bal);
             case "balance_exact" -> plugin.messages().moneyExact(bal);
             case "rank" -> {
                 int r = eco.rankOf(player.getUniqueId());

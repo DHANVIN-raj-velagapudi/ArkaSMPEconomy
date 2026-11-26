@@ -3,6 +3,21 @@
 All notable changes to ArkaSMPEconomy. Versions follow `MAJOR.MINOR.PATCH`: a fix raises the last number, a new
 feature the middle one, a breaking change the first. Every release raises the version.
 
+## 1.10.0
+
+### Added
+- **`MoneyFormat` API** (needs ArkaSMPCore 1.11.0 or newer): other Arka plugins load it from Bukkit's ServicesManager and call
+  `format(rupees)` to get the server's money text without paise: `₹1,250`, `₹1.25k`, `₹2.5L`, `₹1Cr`. It is the same text as
+  `%arkaeco_balance_formatted%`. Paise still exist in balances and prices, they are just never shown by this API.
+- New option `currency.show-paise` (default `false`).
+
+### Changed
+- **Money is shown without paise** in balances, `/pay`, rewards, the leaderboard, trades and messages: `₹1,250` instead of
+  `₹1,250.50` (cut off, never rounded up). **Buy and sell prices and totals in the shop keep their paise** (`₹0.15`,
+  `₹9.60`), so cheap items stay readable and what you pay or get is exact. The short form is unchanged (`₹1.25k`, `₹2.5L`, `₹1Cr`).
+- `%arkaeco_balance_formatted%` and the leaderboard values never show paise; `%arkaeco_balance_exact%` and `%arkaeco_balance%`
+  still give the exact amount.
+
 ## 1.9.0
 
 ### Changed

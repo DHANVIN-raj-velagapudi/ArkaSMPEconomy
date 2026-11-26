@@ -69,7 +69,7 @@ public final class SellGui implements Listener {
         var msg = plugin.messages();
         ShopManager.Plan plan = plan(p, inv);
         List<Component> lore = new ArrayList<>();
-        lore.add(msg.mm("<gray>You get: <green>" + msg.money(plan.total()) + " <gray>for <white>" + plan.items() + " <gray>items"));
+        lore.add(msg.mm("<gray>You get: <green>" + msg.price(plan.total()) + " <gray>for <white>" + plan.items() + " <gray>items"));
         int shown = 0;
         for (var e : plan.byMaterial().entrySet()) {
             if (shown++ >= 6) break;
@@ -80,7 +80,7 @@ public final class SellGui implements Listener {
         if (plan.refused() > 0) lore.add(msg.mm("<gray>" + plan.refused() + " stack(s) cannot be sold (enchanted, named or damaged)."));
         lore.add(msg.mm("<gray>Unsold items are returned when you close."));
         inv.setItem(SELL_SLOT, Items.of(plan.total() > 0 ? Material.LIME_CONCRETE : Material.GRAY_CONCRETE,
-                msg.mm(plan.total() > 0 ? "<green><bold>SELL <white>" + msg.money(plan.total()) : "<gray><bold>Nothing to sell"), lore));
+                msg.mm(plan.total() > 0 ? "<green><bold>SELL <white>" + msg.price(plan.total()) : "<gray><bold>Nothing to sell"), lore));
     }
 
     private void sell(Player p, Inventory inv) {
@@ -99,7 +99,7 @@ public final class SellGui implements Listener {
         if (!shop.execute(p, inv, plan)) {
             msg.send(p, "shop-sell-failed");
         } else {
-            msg.send(p, "shop-sold", "items", String.valueOf(plan.items()), "amount", msg.money(plan.total()));
+            msg.send(p, "shop-sold", "items", String.valueOf(plan.items()), "amount", msg.price(plan.total()));
             if (plan.dayLimited()) msg.send(p, "shop-limit-day", "cap", msg.money(shop.dayRemaining(p.getUniqueId())));
             else if (plan.hourLimited()) msg.send(p, "shop-limit-hour");
         }

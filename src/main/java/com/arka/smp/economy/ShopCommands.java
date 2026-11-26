@@ -99,7 +99,7 @@ final class ShopCommands implements CommandExecutor, TabCompleter {
             return;
         }
         msg.send(p, "worth-line", "item", ShopManager.pretty(m),
-                "sell", s > 0 ? msg.money(s) : "-", "buy", b > 0 ? msg.money(b) : "-");
+                "sell", s > 0 ? msg.price(s) : "-", "buy", b > 0 ? msg.price(b) : "-");
         if (s > 0) {
             msg.send(p, "worth-hour-left", "amount", msg.money(shop.hourRemaining(p.getUniqueId(), m)));
         }
@@ -129,8 +129,8 @@ final class ShopCommands implements CommandExecutor, TabCompleter {
                     return;
                 }
                 msg.raw(s, "<gold>{i}<gray>: sell <green>{sell}<gray>, buy <yellow>{buy}<gray>, category <white>{c}",
-                        "i", m.name(), "sell", shop.sellPrice(m) > 0 ? msg.money(shop.sellPrice(m)) : "-",
-                        "buy", shop.buyPrice(m) > 0 ? msg.money(shop.buyPrice(m)) : "-", "c", shop.categoryOf(m));
+                        "i", m.name(), "sell", shop.sellPrice(m) > 0 ? msg.price(shop.sellPrice(m)) : "-",
+                        "buy", shop.buyPrice(m) > 0 ? msg.price(shop.buyPrice(m)) : "-", "c", shop.categoryOf(m));
             }
             case "set" -> {
                 Material m = a.length > 2 ? Material.matchMaterial(a[1]) : null;
@@ -148,8 +148,8 @@ final class ShopCommands implements CommandExecutor, TabCompleter {
                 shop.setOverride(m, sell / (double) Money.SCALE, buy == null ? null : buy / (double) Money.SCALE);
                 plugin.getLogger().info(s.getName() + " set the price of " + m.name() + " to sell " + sell + " buy " + buy + " paise");
                 msg.raw(s, "<green>{i} now sells for {sell} and costs {buy}.", "i", m.name(),
-                        "sell", shop.sellPrice(m) > 0 ? msg.money(shop.sellPrice(m)) : "-",
-                        "buy", shop.buyPrice(m) > 0 ? msg.money(shop.buyPrice(m)) : "-");
+                        "sell", shop.sellPrice(m) > 0 ? msg.price(shop.sellPrice(m)) : "-",
+                        "buy", shop.buyPrice(m) > 0 ? msg.price(shop.buyPrice(m)) : "-");
             }
             case "disable" -> {
                 Material m = a.length > 1 ? Material.matchMaterial(a[1]) : null;
@@ -190,7 +190,7 @@ final class ShopCommands implements CommandExecutor, TabCompleter {
             if (buy > 0 && buy < e.getValue()) {          // can only happen through an admin override
                 loss++;
                 msg.raw(s, "<red>MONEY LOOP: {i} sells for {sell} but costs only {buy}", "i", e.getKey().name(),
-                        "sell", msg.money(e.getValue()), "buy", msg.money(buy));
+                        "sell", msg.price(e.getValue()), "buy", msg.price(buy));
             }
         }
         msg.raw(s, loss == 0 ? "<green>No item can be bought for less than it sells for." : "<red>{n} item(s) above can print money. Fix with /shopadmin set.", "n", String.valueOf(loss));
@@ -198,7 +198,7 @@ final class ShopCommands implements CommandExecutor, TabCompleter {
         top.sort(Map.Entry.<Material, Long>comparingByValue().reversed());
         for (int i = 0; i < Math.min(5, top.size()); i++) {
             msg.raw(s, "<gray>#{n} priciest: <white>{i} <green>{p}", "n", String.valueOf(i + 1),
-                    "i", top.get(i).getKey().name(), "p", msg.money(top.get(i).getValue()));
+                    "i", top.get(i).getKey().name(), "p", msg.price(top.get(i).getValue()));
         }
     }
 

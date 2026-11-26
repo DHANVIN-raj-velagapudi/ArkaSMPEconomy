@@ -44,8 +44,25 @@ public final class Messages {
         to.sendMessage(MM.deserialize(plugin.getConfig().getString("messages.prefix", "") + fill(miniMessage, kv)));
     }
 
-    /** "₹1.25k" (or "₹1,250" when currency.compact is false) using the configured symbol. */
+    /**
+     * Money as shown everywhere except buy and sell prices: "₹1.25k" (or "₹1,250" when currency.compact is false) with
+     * the configured symbol, and no paise ("₹1,250", never "₹1,250.50") unless currency.show-paise is true.
+     */
     public String money(long paise) {
+        return plugin.getConfig().getBoolean("currency.show-paise", false) ? price(paise) : whole(paise);
+    }
+
+    /** The same text, always without paise. This is what the MoneyFormat API and %arkaeco_balance_formatted% give. */
+    public String whole(long paise) {
+        return text(Money.noPaise(paise));
+    }
+
+    /** Shop buy and sell prices and totals: paise are shown when there are any (₹0.15, ₹9.60), so cheap items stay readable. */
+    public String price(long paise) {
+        return text(paise);
+    }
+
+    private String text(long paise) {
         String symbol = plugin.getConfig().getString("currency.symbol", "₹");
         return symbol + (plugin.getConfig().getBoolean("currency.compact", true) ? Money.compact(paise) : Money.plain(paise));
     }

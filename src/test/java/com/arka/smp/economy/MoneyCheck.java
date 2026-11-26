@@ -30,6 +30,13 @@ public final class MoneyCheck {
         check("1,00,00,000 (100L) is 1Cr (one crore)", c(10000000).equals("1Cr"));
         check("12,50,00,000 is 12.5Cr", c(125000000).equals("12.5Cr"));
         check("a lot: 1,000,000,000,000 rupees is 1,00,000Cr", c(1_000_000_000_000.0).equals("1,00,000Cr"));
+        check("no paise: 1,250.50 shows as 1,250 (cut, not rounded up) and 999.99 as 999",
+                Money.plain(Money.noPaise(125050)).equals("1,250") && Money.plain(Money.noPaise(99999)).equals("999"));
+        check("no paise: 0.15 shows as 0, 9.99 as 9, whole amounts are unchanged, nothing is rounded up",
+                Money.noPaise(15) == 0 && Money.noPaise(999) == 900 && Money.noPaise(1000) == 1000 && Money.noPaise(0) == 0
+                        && Money.noPaise(-150) == -100);
+        check("no paise with the short form: 1,250.50 is 1.25k and 12,345.67 is 12.34k",
+                Money.compact(Money.noPaise(125050)).equals("1.25k") && Money.compact(Money.noPaise(1234567)).equals("12.34k"));
         check("plain form is unchanged", Money.plain(123456750).equals("12,34,567.50"));
 
         check("parse: plain numbers still work", is("500", 50000) && is("1,000", 100000) && is("₹250.50", 25050));
