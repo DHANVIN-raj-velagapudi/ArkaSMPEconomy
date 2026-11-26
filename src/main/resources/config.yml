@@ -93,20 +93,22 @@ menus:
     sellgui-title: "Sell items - drop them in, then press SELL"
     title-category: "{category}"
     title-item: "{item}"
-    categories:                 # rename a category here (ids: blocks wood stone colors ores redstone tools armor food farming mobs misc)
+    categories:                 # rename a category here (ids: blocks wood stone colors ores copper redstone tools armor food farming mobs nether misc rare)
       blocks: "Building Blocks"
       wood: "Wood"
       stone: "Stone & Bricks"
       colors: "Colors & Glass"
       ores: "Ores & Metals"
-      redstone: "Redstone"
+      copper: "Copper"
+      redstone: "Redstone & Transport"
       tools: "Tools & Weapons"
-      armor: "Armor"
+      armor: "Armor & Mounts"
       food: "Food"
       farming: "Farming & Plants"
       mobs: "Mob Drops"
-      misc: "Decoration & Misc"
-      rare: "Rare & Special"       # anything that costs "rules.rare-from-rupees" (base-prices.yml) or more
+      nether: "Nether, End & Deep Dark"
+      misc: "Utility & Decoration"
+      rare: "Rare & Special"       # trophies and collectibles (a fixed list, not decided by price). Move items with shop-categories.yml
   trade:
     pick-title: "Trade with who?"
     title: "Trade with {player}"

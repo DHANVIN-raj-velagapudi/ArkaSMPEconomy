@@ -1,0 +1,15 @@
+# ==============================================================================
+#  shop-categories.yml  -  move single items to another shop category
+#
+#  Every item has exactly ONE home. The plugin sorts items by its built-in rules (all spears in Tools, every stripped
+#  log in Wood, all copper in Copper...). If you want one item somewhere else, list it here and /arkaeco reload.
+#
+#  Category ids: blocks, wood, stone, colors, ores, copper, redstone, tools, armor, food, farming, mobs, nether,
+#                misc, rare
+#
+#  Example:
+#    items:
+#      NAME_TAG: rare
+#      SPONGE: farming
+# ==============================================================================
+items: {}

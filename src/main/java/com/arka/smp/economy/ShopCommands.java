@@ -130,7 +130,7 @@ final class ShopCommands implements CommandExecutor, TabCompleter {
                 }
                 msg.raw(s, "<gold>{i}<gray>: sell <green>{sell}<gray>, buy <yellow>{buy}<gray>, category <white>{c}",
                         "i", m.name(), "sell", shop.sellPrice(m) > 0 ? msg.money(shop.sellPrice(m)) : "-",
-                        "buy", shop.buyPrice(m) > 0 ? msg.money(shop.buyPrice(m)) : "-", "c", ShopCategories.of(m));
+                        "buy", shop.buyPrice(m) > 0 ? msg.money(shop.buyPrice(m)) : "-", "c", shop.categoryOf(m));
             }
             case "set" -> {
                 Material m = a.length > 2 ? Material.matchMaterial(a[1]) : null;

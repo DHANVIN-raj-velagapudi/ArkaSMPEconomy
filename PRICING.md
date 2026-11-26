@@ -56,7 +56,7 @@ Rare things are listed in the `premium:` section of `base-prices.yml` with their
 | Nautilus shell, echo shard | ₹12 / ₹8 | ₹4,000 / ₹4,000 |
 | Saddle, netherite upgrade template, music discs, pottery sherds, horse armour | a few rupees | ₹300 to ₹3,500 (horse armour) |
 
-Anything crafted from a premium item can never cost less than its parts, so a beacon costs more than its nether star, a conduit more than its heart of the sea, and a netherite pickaxe about ₹168,000 (it needs an ingot, which is 4 netherite scrap). Everything that costs ₹1,500 or more is listed under **Rare & Special** in the shop, except tools and armour, which stay in their own categories.
+Anything crafted from a premium item can never cost less than its parts, so a beacon costs more than its nether star, a conduit more than its heart of the sea, and a netherite pickaxe about ₹168,000 (it needs an ingot, which is 4 netherite scrap). **Rare & Special** in the shop is a fixed list of trophies and collectibles (nether star, shulker shells and boxes, music discs, pottery sherds, banner patterns, trims, heads, totems...), not everything that happens to be dear: diamond armour, netherite ingots or a brewing stand stay with their own family.
 
 ### Sell-only items: the shop pays, but never sells
 These items are in the `no-buy:` list, so nobody can buy them, and they have a sell price in `premium:` that follows effort and rarity. It is good money, but the hourly and daily limits still apply, so none of them can be farmed into a fortune.
@@ -82,6 +82,15 @@ Ghast tears are sell-only too (₹5): otherwise a player could buy a tear and cr
 
 ## Mob drops that are very dear to buy
 Blaze rod ₹3,000, breeze rod ₹5,000, leather ₹150 and slime ball ₹200 have a high buy price in `premium:`, while the shop still pays the old low price (₹3, ₹3, ₹0.60, ₹1). Anything made from them can never cost less than its parts, so blaze powder is ₹1,500, magma cream ₹1,700, a wind charge ₹1,250, a slime block ₹1,800, a brewing stand about ₹3,000, a leather chestplate ₹1,200 and a book ₹151.
+
+## Stage 2: hard to get, so very dear
+Items that are not legendary but take real effort are priced at 100 times their sell price or more: the shop pays a few rupees and charges hundreds or thousands. Name tag ₹3,000, ender pearl ₹600 (an eye of ender about ₹2,100), rabbit's foot ₹600, sponge ₹1,500, crying obsidian ₹500, spore blossom ₹300, prismarine shard ₹60 and crystals ₹150, glow ink sac ₹160, bell ₹3,000, phantom membrane ₹400, scutes ₹200 and ₹500, music discs ₹5,000, pottery sherds ₹2,000, banner patterns ₹2,000 (Mojang ₹6,000), turtle egg and bee nest ₹1,500, wither rose ₹3,000, dragon's breath ₹1,500, sculk catalyst and shrieker ₹1,500, froglights ₹600. Things made from them cost at least their parts, so a sea lantern is about ₹990 and a respawn anchor about ₹3,000. The name tag is crafted from a nugget and paper in this game version, so what the shop pays for one is pushed down to the recipe cost automatically.
+
+## Armour: the same ladder as tools
+Armour has a fixed buy price per unit of material (helmet 5 units, chestplate 8, leggings 7, boots 4): copper ₹70, chainmail ₹240, iron ₹180, gold ₹300, diamond ₹1,600. An iron chestplate costs ₹1,440, a gold one ₹2,400 and a diamond one ₹12,800. Netherite armour is a diamond piece plus an ingot plus the template, so it costs about ₹170,000 to ₹176,000. Leather armour follows the leather price. Selling is unchanged.
+
+## Only in the world: bought, never sold
+Water, lava and powder snow buckets, fish buckets, tadpole and axolotl buckets and bottles o' enchanting have a buy price (₹25 to ₹3,000) and cannot be sold back.
 
 ## Tools: a fixed ladder
 Wooden to diamond tools have a fixed buy price in `premium:`, worked out as a price per unit of material: wood ₹10, stone ₹25, copper ₹70, iron ₹180, golden ₹300, diamond ₹1,600. A pickaxe or axe is 3 units, a hoe or sword 2, a shovel or spear 1. So a stone pickaxe costs ₹75, an iron pickaxe ₹540 and a diamond pickaxe ₹4,800. The sell price is unchanged (at most 95% of the ingredients), so selling a tool never pays more than before.

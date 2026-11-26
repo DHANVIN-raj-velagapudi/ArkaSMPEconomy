@@ -63,11 +63,14 @@ This plugin **requires ArkaSMPCore** (it uses its menu system and shares service
 - Items are returned if anything goes wrong
 
 ### Item shop
-- `/shop` is a menu of categories (building blocks, wood, stone, colours, ores, redstone, tools and weapons, armour, food, farming, mob drops, decoration and **Rare & Special**) to **buy and sell**, covering common blocks, every tool and armour piece, and expensive items such as nether stars and netherite
+- `/shop` is a menu of 15 categories (building blocks, wood, stone, colours and glass, ores and metals, **copper**, redstone and transport, tools and weapons, armour and mounts, food, farming and plants, mob drops, **Nether/End/deep dark**, utility and decoration, and **Rare & Special**). Every item is in exactly one category and whole families stay together (all spears in Tools, all horse armour in Armor, every stripped log in Wood). Move a single item with `shop-categories.yml` to **buy and sell**, covering common blocks, every tool and armour piece, and expensive items such as nether stars and netherite
 - `/sell hand` and `/sell all`, `/worth` (what an item costs and sells for)
 - **`/sellgui`**: a chest opens, you drop in everything you want to sell and press one SELL button
 - Only plain, undamaged items are accepted (no enchanted, renamed or container items)
 - **Rare items are very expensive**: nether stars, hearts of the sea and netherite cost tens of thousands of rupees (a netherite ingot about ₹160,000), and the shop pays only a few rupees for them
+- **Hard-to-get items cost 100x or more of what the shop pays**: a name tag ₹3,000, an ender pearl ₹600, a rabbit's foot ₹600, a sponge ₹1,500, a music disc ₹5,000, a pottery sherd ₹2,000
+- **Armour has the same ladder as tools**: iron chestplate ₹1,440, gold ₹2,400, diamond ₹12,800, netherite about ₹176,000
+- **Water, lava and fish buckets and bottles o' enchanting can be bought** (never sold back)
 - **Tools have a price ladder**: a stone pickaxe costs ₹75, iron ₹540, diamond ₹4,800 and netherite about ₹168,000
 - **Sell-only rare items**: elytra, totem of undying, end crystals, tridents, heavy cores, maces, dragon heads and eggs and all armour trims cannot be bought at all, but the shop pays good money for them (₹100 to ₹2,500, by rarity)
 - **No money loops**: after pricing, the engine checks every recipe (crafting, un-crafting, smelting, smithing, ore yields) and lowers a sell price if buying, processing and selling could ever make money

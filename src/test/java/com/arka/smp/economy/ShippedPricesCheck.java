@@ -99,6 +99,47 @@ public final class ShippedPricesCheck {
                 buy(prem, "BLAZE_ROD") >= 1000 && buy(prem, "BREEZE_ROD") > buy(prem, "BLAZE_ROD")
                         && buy(prem, "LEATHER") >= 100 && buy(prem, "SLIME_BALL") >= 100
                         && prem.getDouble("BLAZE_ROD.sell") <= 10 && prem.getDouble("LEATHER.sell") <= 5);
+
+        // 5. armour follows the tool ladder: every tier costs more than the one below, in every slot, and a full
+        //    diamond set costs far more than a diamond pickaxe
+        String[] armourTiers = {"COPPER", "IRON", "GOLDEN", "DIAMOND"};
+        String[] slots = {"HELMET", "CHESTPLATE", "LEGGINGS", "BOOTS"};
+        boolean armourLadder = true;
+        for (String sl : slots) {
+            for (int i = 0; i < armourTiers.length; i++) {
+                double b = buy(prem, armourTiers[i] + "_" + sl);
+                if (b <= 0) armourLadder = false;
+                if (i > 0 && b <= buy(prem, armourTiers[i - 1] + "_" + sl)) armourLadder = false;
+            }
+        }
+        check("armour buy prices rise with every tier, copper to diamond, in every slot", armourLadder);
+        check("a diamond chestplate costs at least 8 diamond-tool units (12,800) and chainmail sits between copper and diamond",
+                buy(prem, "DIAMOND_CHESTPLATE") >= 12800 && buy(prem, "CHAINMAIL_CHESTPLATE") > buy(prem, "COPPER_CHESTPLATE")
+                        && buy(prem, "CHAINMAIL_CHESTPLATE") < buy(prem, "DIAMOND_CHESTPLATE"));
+
+        // 6. stage 2: hard-to-get items sell for 100 times or more of what the shop pays for them
+        boolean stage2 = true;
+        StringBuilder weak = new StringBuilder();
+        for (String n : List.of("NAME_TAG", "ENDER_PEARL", "RABBIT_FOOT", "WET_SPONGE", "SPONGE", "CRYING_OBSIDIAN", "SPORE_BLOSSOM",
+                "PRISMARINE_SHARD", "PRISMARINE_CRYSTALS", "GLOW_INK_SAC", "SADDLE", "BELL", "PHANTOM_MEMBRANE", "TURTLE_EGG",
+                "BEE_NEST", "WITHER_ROSE", "DRAGON_BREATH", "SCULK_CATALYST", "SCULK_SHRIEKER", "MUSIC_DISC_*", "*_POTTERY_SHERD")) {
+            double sell = prem.getDouble(n + ".sell", 0), b = buy(prem, n);
+            if (sell <= 0 || b < 100 * sell) {
+                stage2 = false;
+                weak.append(' ').append(n);
+            }
+        }
+        check("stage 2 items (name tag, pearls, discs, sherds...) cost 100x or more of their sell price" + weak, stage2);
+        check("a name tag costs at least 3,000 and an ender pearl at least 500",
+                buy(prem, "NAME_TAG") >= 3000 && buy(prem, "ENDER_PEARL") >= 500);
+
+        // 7. things that only exist in the world can be bought, never sold back
+        boolean buckets = true;
+        for (String n : List.of("WATER_BUCKET", "LAVA_BUCKET", "POWDER_SNOW_BUCKET", "COD_BUCKET", "SALMON_BUCKET",
+                "PUFFERFISH_BUCKET", "TROPICAL_FISH_BUCKET", "TADPOLE_BUCKET", "AXOLOTL_BUCKET", "EXPERIENCE_BOTTLE")) {
+            if (buy(prem, n) <= 0 || !matches(noSell, n)) buckets = false;
+        }
+        check("water, lava, fish buckets and experience bottles are buy-only", buckets);
         System.out.println(failed == 0 ? "ALL PASSED" : failed + " FAILED");
         if (failed > 0) System.exit(1);
     }

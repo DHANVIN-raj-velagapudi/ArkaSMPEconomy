@@ -3,6 +3,43 @@
 All notable changes to ArkaSMPEconomy. Versions follow `MAJOR.MINOR.PATCH`: a fix raises the last number, a new
 feature the middle one, a breaking change the first. Every release raises the version.
 
+## 1.9.0
+
+### Changed
+- **The shop categories were rebuilt.** Every item is in exactly one category and whole families stay together: all
+  spears are in Tools, all horse, nautilus and wolf armour, harnesses, saddles, leads and name tags are in
+  *Armor & Mounts*, every stripped log is in Wood, every copper block, door, bar, lantern, bulb, statue and lightning rod
+  (in every weathering stage) is in the new **Copper** category, and netherite ingots, scrap and blocks are in Ores &
+  Metals. New categories: **Copper** and **Nether, End & Deep Dark**. The big "Misc" pile (375 items) is now Utility &
+  Decoration with about 60 items, and chests, torches and furnaces no longer sit with dirt and flowers.
+- **Rare & Special is a fixed list** (nether star, shulker boxes and shells, music discs, pottery sherds, banner patterns,
+  trims, heads, totem, heart of the sea...) instead of "anything that costs 1,500 or more", which used to split families
+  (diamond horse armour in Rare, iron horse armour somewhere else). The old `rules.rare-from-rupees` option is gone.
+- Inside a category, colours are grouped by item (all banners, then all beds) in rainbow order, and copper by block and
+  then by weathering stage.
+- The shop menu has 5 rows because of the two new categories.
+- **New prices**, hard-to-get items cost 100 times or more of what the shop pays: name tag ₹3,000, ender pearl ₹600,
+  rabbit's foot ₹600, sponge ₹1,500, crying obsidian ₹500, spore blossom ₹300, prismarine shard ₹60 and crystals ₹150, glow
+  ink sac ₹160, bell ₹3,000, phantom membrane ₹400, scutes ₹200 and ₹500, music discs ₹5,000, pottery sherds ₹2,000,
+  banner patterns ₹2,000 (Mojang ₹6,000), turtle egg and bee nest ₹1,500, wither rose ₹3,000, dragon's breath ₹1,500, sculk
+  catalyst and shrieker ₹1,500, froglights ₹600. Things made from them follow (eye of ender about ₹2,100, sea lantern
+  about ₹990, respawn anchor about ₹3,000).
+- **Armour has the same price ladder as tools** (5, 8, 7 and 4 units per piece): iron chestplate ₹1,440, gold ₹2,400,
+  diamond ₹12,800 (it used to cost ₹720, less than a leather chestplate at ₹1,200), chainmail above iron and below gold, netherite about ₹170,000 to ₹176,000. Selling is unchanged.
+
+### Added
+- **`shop-categories.yml`**: move any single item to another category (`items: {NAME_TAG: rare}`), then `/arkaeco reload`.
+- **Buy-only items**: water, lava, powder snow, fish, tadpole and axolotl buckets and bottles o' enchanting.
+- `ShopCategoriesCheck` tests the categories on the full list of Minecraft 26.3 items, and `ShippedPricesCheck` covers the
+  armour ladder and the stage 2 prices. The price tools write the category of every item, so `PRICE_LIST.md` uses the
+  shop's own categories.
+
+### Notes for server owners
+- Your existing `base-prices.yml` is not replaced on update. To get the new prices, rename it (for example to
+  `base-prices.old.yml`) and restart, or copy the lines you want from the new file. Categories apply at once.
+- The name tag, lead and lodestone can be crafted cheaply in this game version (nugget and paper, string, bricks and an
+  iron ingot), so a high shop price only protects players who do not want to craft one.
+
 ## 1.8.0
 
 ### Added

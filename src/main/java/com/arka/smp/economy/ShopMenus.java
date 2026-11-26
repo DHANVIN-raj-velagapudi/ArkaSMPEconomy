@@ -38,7 +38,7 @@ final class ShopMenus {
         var shop = plugin.shop();
         var msg = plugin.messages();
         Map<String, List<Material>> catalog = shop.catalog();
-        Menu menu = new Menu(mm(plugin, "title", "Shop"), 4);
+        Menu menu = new Menu(mm(plugin, "title", "Shop"), 5);
         menu.set(4, button(plugin, Material.PAPER, "<white>Your balance: <green>" + msg.money(plugin.economy().balance(p.getUniqueId())),
                 "<gray>Tap a category, then an item."), null);
         int i = 0;
@@ -48,13 +48,13 @@ final class ShopMenus {
             int slot = 10 + i + (i / 7) * 2;
             i++;
             String name = plugin.getConfig().getString("menus.shop.categories." + c.id(), c.name());
-            menu.set(slot, button(plugin, c.icon(), "<yellow><bold>" + name, "<gray>" + list.size() + " items"),
+            menu.set(slot, button(plugin, c.material(), "<yellow><bold>" + name, "<gray>" + list.size() + " items"),
                     pl -> items(plugin, pl, c.id(), 0));
         }
-        menu.set(29, button(plugin, Material.HOPPER, "<gold><bold>Sell everything sellable",
+        menu.set(38, button(plugin, Material.HOPPER, "<gold><bold>Sell everything sellable",
                 "<gray>Sells every sellable item in your inventory", "<gray>(plain items only, within the limits)"),
                 pl -> sellAll(plugin, pl));
-        menu.set(31, button(plugin, Material.BARRIER, "<white>Close"), Player::closeInventory);
+        menu.set(42, button(plugin, Material.BARRIER, "<white>Close"), Player::closeInventory);
         menu.fill(Items.filler());
         menu.open(p);
     }

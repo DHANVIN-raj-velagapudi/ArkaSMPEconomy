@@ -7,7 +7,8 @@
 #
 #  The shop sells to a player at  buy-multiplier x the sell price  (3x), and never for less than it would cost to
 #  buy the ingredients one by one. Rare items are in the "premium:" section further down: either very expensive to
-#  buy and cheap to sell, or sell-only (never for sale: elytra, totems, trims...). Tools have a fixed buy ladder there.
+#  buy and cheap to sell, or sell-only (never for sale: elytra, totems, trims...). Tools and armour have a fixed buy
+#  ladder there, and hard-to-get items (name tags, ender pearls, discs, sponges...) cost 100x or more of what they pay.
 #
 #  Safety: after reading this file the plugin checks EVERY recipe (crafting, un-crafting, smelting, stonecutting,
 #  smithing) and every ore yield in "drops:". If any way of buying, processing and selling could make money, the
@@ -30,7 +31,6 @@ rules:
   craft-factor: 0.95           # crafted items sell for 95% of their ingredients (crafting never profits)
   smelt-factor: 1.0            # smelted/cooked item sells for the same as the raw item
   min-price: 0.01              # smallest price; cheaper items are priced per stack-rounding up to this
-  rare-from-rupees: 1500       # items that cost at least this much to buy are listed under "Rare & Special"
   # --- anti-farm limits (all per player) ---
   item-hour-cap-rupees: 600    # one item type can earn at most this much per rolling hour
                                # (cap in items = max(600, 2 x price) / price; rare items allow at least 2)
@@ -43,61 +43,25 @@ rules:
 base:
 
   # ======================================================================
-  #  STONE, SOIL AND BUILDING BLOCKS  (18 items)
+  #  BUILDING BLOCKS (dirt, sand, gravel, clay, ice, snow)  (17 items)
   # ======================================================================
-  AMETHYST_CLUSTER:     4.00
-  ANDESITE:             0.05
-  CALCITE:              0.10
-  CINNABAR:             0.10
-  COBBLED_DEEPSLATE:    0.05
-  COBBLESTONE:          0.05
-  DEEPSLATE:            0.05
-  DIORITE:              0.05
-  DRIPSTONE_BLOCK:      0.10
-  GRANITE:              0.05
-  LARGE_AMETHYST_BUD:   1.20
-  MEDIUM_AMETHYST_BUD:  0.80
-  POINTED_DRIPSTONE:    0.10
-  POTENT_SULFUR:        0.30
-  SMALL_AMETHYST_BUD:   0.50
-  SULFUR:               0.10
-  SULFUR_SPIKE:         0.10
-  TUFF:                 0.05
-
-  # ======================================================================
-  #  ORES, METALS AND GEMS  (31 items)
-  # ======================================================================
-  AMETHYST_SHARD:          1.00
-  COAL:                    1.00
-  COAL_ORE:                1.00
-  COPPER_INGOT:            0.40
-  COPPER_ORE:              1.30
-  DEEPSLATE_COAL_ORE:      1.00
-  DEEPSLATE_COPPER_ORE:    1.30
-  DEEPSLATE_DIAMOND_ORE:   30.00
-  DEEPSLATE_EMERALD_ORE:   10.00
-  DEEPSLATE_GOLD_ORE:      4.00
-  DEEPSLATE_IRON_ORE:      2.00
-  DEEPSLATE_LAPIS_ORE:     5.00
-  DEEPSLATE_REDSTONE_ORE:  2.50
-  DIAMOND:                 30.00
-  DIAMOND_ORE:             30.00
-  EMERALD:                 4.00
-  EMERALD_ORE:             10.00
-  GOLD_INGOT:              4.00
-  GOLD_ORE:                4.00
-  IRON_INGOT:              2.00
-  IRON_ORE:                2.00
-  LAPIS_LAZULI:            0.80
-  LAPIS_ORE:               5.00
-  NETHER_GOLD_ORE:         1.50
-  NETHER_QUARTZ_ORE:       1.50
-  QUARTZ:                  1.00
-  RAW_COPPER:              0.40
-  RAW_GOLD:                4.00
-  RAW_IRON:                2.00
-  REDSTONE:                0.50
-  REDSTONE_ORE:            2.50
+  CLAY_BALL:    0.20
+  COBWEB:       0.50
+  DIRT:         0.02
+  DIRT_PATH:    0.03
+  FLINT:        0.10
+  GRASS_BLOCK:  0.05
+  GRAVEL:       0.04
+  ICE:          0.08
+  MUD:          0.04
+  MYCELIUM:     0.30
+  PODZOL:       0.10
+  RED_SAND:     0.05
+  RESIN_CLUMP:  0.30
+  ROOTED_DIRT:  0.10
+  SAND:         0.05
+  SNOW:         0.02
+  SNOWBALL:     0.02
 
   # ======================================================================
   #  WOOD (every wood family, including poplar)  (37 items)
@@ -141,7 +105,27 @@ base:
   WARPED_STEM:              0.40
 
   # ======================================================================
-  #  COLOURS (wool, concrete, glass, terracotta, dyes) AND DECORATION  (32 items)
+  #  STONE AND BRICKS  (16 items)
+  # ======================================================================
+  ANDESITE:           0.05
+  BASALT:             0.05
+  BLACKSTONE:         0.05
+  CALCITE:            0.10
+  CINNABAR:           0.10
+  COBBLED_DEEPSLATE:  0.05
+  COBBLESTONE:        0.05
+  DEEPSLATE:          0.05
+  DIORITE:            0.05
+  DRIPSTONE_BLOCK:    0.10
+  GRANITE:            0.05
+  POINTED_DRIPSTONE:  0.10
+  POTENT_SULFUR:      0.30
+  SULFUR:             0.10
+  SULFUR_SPIKE:       0.10
+  TUFF:               0.05
+
+  # ======================================================================
+  #  COLORS AND GLASS (wool, concrete, terracotta, glass, banners, beds, candles, dyes)  (32 items)
   # ======================================================================
   BLACK_CONCRETE:       0.04
   BLACK_WOOL:           0.25
@@ -177,11 +161,48 @@ base:
   YELLOW_WOOL:          0.25
 
   # ======================================================================
-  #  REDSTONE, UTILITY AND WORKSTATIONS  (32 items)
+  #  ORES AND METALS (ores, ingots, gems, netherite)  (34 items)
   # ======================================================================
-  CHIPPED_ANVIL:                  45.00
+  AMETHYST_CLUSTER:        4.00
+  AMETHYST_SHARD:          1.00
+  COAL:                    1.00
+  COAL_ORE:                1.00
+  COPPER_INGOT:            0.40
+  COPPER_ORE:              1.30
+  DEEPSLATE_COAL_ORE:      1.00
+  DEEPSLATE_COPPER_ORE:    1.30
+  DEEPSLATE_DIAMOND_ORE:   30.00
+  DEEPSLATE_EMERALD_ORE:   10.00
+  DEEPSLATE_GOLD_ORE:      4.00
+  DEEPSLATE_IRON_ORE:      2.00
+  DEEPSLATE_LAPIS_ORE:     5.00
+  DEEPSLATE_REDSTONE_ORE:  2.50
+  DIAMOND:                 30.00
+  DIAMOND_ORE:             30.00
+  EMERALD:                 4.00
+  EMERALD_ORE:             10.00
+  GOLD_INGOT:              4.00
+  GOLD_ORE:                4.00
+  IRON_INGOT:              2.00
+  IRON_ORE:                2.00
+  LAPIS_LAZULI:            0.80
+  LAPIS_ORE:               5.00
+  LARGE_AMETHYST_BUD:      1.20
+  MEDIUM_AMETHYST_BUD:     0.80
+  NETHER_GOLD_ORE:         1.50
+  NETHER_QUARTZ_ORE:       1.50
+  QUARTZ:                  1.00
+  RAW_COPPER:              0.40
+  RAW_GOLD:                4.00
+  RAW_IRON:                2.00
+  REDSTONE_ORE:            2.50
+  SMALL_AMETHYST_BUD:      0.50
+
+  # ======================================================================
+  #  COPPER (every block, door, bar, lantern and statue, in every weathering stage)  (28 items)
+  # ======================================================================
   COPPER_GOLEM_STATUE:            3.00
-  DAMAGED_ANVIL:                  30.00
+  EXPOSED_COPPER:                 3.00
   EXPOSED_COPPER_BARS:            0.14
   EXPOSED_COPPER_CHAIN:           0.45
   EXPOSED_COPPER_CHEST:           3.68
@@ -190,7 +211,7 @@ base:
   EXPOSED_COPPER_LANTERN:         0.41
   EXPOSED_COPPER_TRAPDOOR:        1.52
   EXPOSED_LIGHTNING_ROD:          1.14
-  GLOWSTONE_DUST:                 0.30
+  OXIDIZED_COPPER:                3.00
   OXIDIZED_COPPER_BARS:           0.14
   OXIDIZED_COPPER_CHAIN:          0.45
   OXIDIZED_COPPER_CHEST:          3.68
@@ -199,10 +220,7 @@ base:
   OXIDIZED_COPPER_LANTERN:        0.41
   OXIDIZED_COPPER_TRAPDOOR:       1.52
   OXIDIZED_LIGHTNING_ROD:         1.14
-  SHELF_MUSHROOM:                 0.15
-  SHROOMLIGHT:                    0.80
-  TORCHFLOWER:                    0.50
-  TORCHFLOWER_SEEDS:              0.50
+  WEATHERED_COPPER:               3.00
   WEATHERED_COPPER_BARS:          0.14
   WEATHERED_COPPER_CHAIN:         0.45
   WEATHERED_COPPER_CHEST:         3.68
@@ -213,93 +231,39 @@ base:
   WEATHERED_LIGHTNING_ROD:        1.14
 
   # ======================================================================
-  #  FOOD  (37 items)
+  #  REDSTONE AND TRANSPORT  (1 items)
   # ======================================================================
-  APPLE:                 0.50
-  BEEF:                  0.60
-  BEETROOT:              0.25
-  BLUE_EGG:              0.10
-  BROWN_EGG:             0.10
-  BROWN_MUSHROOM:        0.15
-  BROWN_MUSHROOM_BLOCK:  0.40
-  CARROT:                0.25
-  CARVED_PUMPKIN:        0.30
-  CHICKEN:               0.40
-  COCOA_BEANS:           0.20
-  COD:                   0.20
-  GLOW_BERRIES:          0.15
-  HONEYCOMB:             0.80
-  HONEY_BOTTLE:          0.60
-  KELP:                  0.08
-  MELON_SLICE:           0.05
-  MILK_BUCKET:           6.00
-  MUSHROOM_STEM:         0.40
-  MUTTON:                0.50
-  POISONOUS_POTATO:      0.05
-  PORKCHOP:              0.60
-  POTATO:                0.25
-  PUFFERFISH:            0.30
-  PUMPKIN:               0.30
-  RABBIT:                0.60
-  RABBIT_FOOT:           3.00
-  RABBIT_HIDE:           0.10
-  RED_MUSHROOM:          0.15
-  RED_MUSHROOM_BLOCK:    0.40
-  ROTTEN_FLESH:          0.05
-  SALMON:                0.30
-  SPIDER_EYE:            0.50
-  SUGAR_CANE:            0.15
-  SWEET_BERRIES:         0.10
-  TROPICAL_FISH:         0.30
-  WHEAT:                 0.30
+  REDSTONE:  0.50
 
   # ======================================================================
-  #  COPPER  (3 items)
+  #  TOOLS AND WEAPONS  (1 items)
   # ======================================================================
-  EXPOSED_COPPER:    3.00
-  OXIDIZED_COPPER:   3.00
-  WEATHERED_COPPER:  3.00
+  MILK_BUCKET:  6.00
 
   # ======================================================================
-  #  NETHER, END AND DEEP DARK  (34 items)
+  #  FOOD  (18 items)
   # ======================================================================
-  BASALT:             0.05
-  BLACKSTONE:         0.05
-  CHORUS_FLOWER:      0.50
-  CHORUS_FRUIT:       0.30
-  CHORUS_PLANT:       0.40
-  CRIMSON_FUNGUS:     0.15
-  CRIMSON_NYLIUM:     0.10
-  CRIMSON_ROOTS:      0.05
-  CRYING_OBSIDIAN:    3.00
-  ENDER_PEARL:        5.00
-  END_STONE:          0.10
-  GILDED_BLACKSTONE:  1.50
-  MAGMA_BLOCK:        0.20
-  NETHERRACK:         0.02
-  NETHER_SPROUTS:     0.05
-  NETHER_WART:        0.30
-  NETHER_WART_BLOCK:  0.30
-  OBSIDIAN:           1.00
-  PALE_HANGING_MOSS:  0.10
-  PALE_MOSS_BLOCK:    0.30
-  PALE_OAK_LEAVES:    0.05
-  PALE_OAK_SAPLING:   0.05
-  RESIN_CLUMP:        0.30
-  SCULK:              0.50
-  SCULK_VEIN:         0.30
-  SOUL_SAND:          0.05
-  SOUL_SOIL:          0.05
-  SPORE_BLOSSOM:      3.00
-  TWISTING_VINES:     0.10
-  WARPED_FUNGUS:      0.15
-  WARPED_NYLIUM:      0.10
-  WARPED_ROOTS:       0.05
-  WARPED_WART_BLOCK:  0.30
-  WEEPING_VINES:      0.10
+  APPLE:             0.50
+  BEEF:              0.60
+  BEETROOT:          0.25
+  CARROT:            0.25
+  CHICKEN:           0.40
+  COD:               0.20
+  GLOW_BERRIES:      0.15
+  HONEY_BOTTLE:      0.60
+  MELON_SLICE:       0.05
+  MUTTON:            0.50
+  POISONOUS_POTATO:  0.05
+  PORKCHOP:          0.60
+  POTATO:            0.25
+  PUFFERFISH:        0.30
+  RABBIT:            0.60
+  SALMON:            0.30
+  SWEET_BERRIES:     0.10
+  TROPICAL_FISH:     0.30
 
   # ======================================================================
-  #  FARMING, PLANTS AND NATURAL BLOCKS  (123 items)
+  #  FARMING AND PLANTS  (125 items)
   # ======================================================================
   ACACIA_LEAVES:            0.05
   ACACIA_SAPLING:           0.05
@@ -316,16 +280,19 @@ base:
   BRAIN_CORAL:              0.30
   BRAIN_CORAL_BLOCK:        0.30
   BRAIN_CORAL_FAN:          0.30
+  BROWN_MUSHROOM:           0.15
+  BROWN_MUSHROOM_BLOCK:     0.40
   BUBBLE_CORAL:             0.30
   BUBBLE_CORAL_BLOCK:       0.30
   BUBBLE_CORAL_FAN:         0.30
   BUSH:                     0.05
   CACTUS:                   0.10
   CACTUS_FLOWER:            0.30
+  CARVED_PUMPKIN:           0.30
   CHERRY_LEAVES:            0.05
   CHERRY_SAPLING:           0.05
-  CLAY_BALL:                0.20
   CLOSED_EYEBLOSSOM:        0.30
+  COCOA_BEANS:              0.20
   CORNFLOWER:               0.05
   DANDELION:                0.05
   DARK_OAK_LEAVES:          0.05
@@ -346,9 +313,6 @@ base:
   DEAD_TUBE_CORAL:          0.30
   DEAD_TUBE_CORAL_BLOCK:    0.30
   DEAD_TUBE_CORAL_FAN:      0.30
-  DIRT:                     0.02
-  DIRT_PATH:                0.03
-  EGG:                      0.10
   FERN:                     0.03
   FIREFLY_BUSH:             0.30
   FIRE_CORAL:               0.30
@@ -358,15 +322,14 @@ base:
   FLOWERING_AZALEA_LEAVES:  0.05
   FROGSPAWN:                0.50
   GLOW_LICHEN:              0.20
-  GRASS_BLOCK:              0.05
-  GRAVEL:                   0.04
   HANGING_ROOTS:            0.20
+  HONEYCOMB:                0.80
   HORN_CORAL:               0.30
   HORN_CORAL_BLOCK:         0.30
   HORN_CORAL_FAN:           0.30
-  ICE:                      0.08
   JUNGLE_LEAVES:            0.05
   JUNGLE_SAPLING:           0.05
+  KELP:                     0.08
   LARGE_FERN:               0.05
   LEAF_LITTER:              0.03
   LILAC:                    0.05
@@ -377,71 +340,107 @@ base:
   MANGROVE_ROOTS:           0.10
   MELON_SEEDS:              0.03
   MOSS_BLOCK:               0.20
-  MUD:                      0.04
   MUDDY_MANGROVE_ROOTS:     0.10
-  MYCELIUM:                 0.30
+  MUSHROOM_STEM:            0.40
   OAK_LEAVES:               0.05
   OAK_SAPLING:              0.05
   OPEN_EYEBLOSSOM:          0.30
   ORANGE_POPLAR_LEAVES:     0.05
   ORANGE_TULIP:             0.05
   OXEYE_DAISY:              0.05
+  PALE_HANGING_MOSS:        0.10
+  PALE_MOSS_BLOCK:          0.30
+  PALE_OAK_LEAVES:          0.05
+  PALE_OAK_SAPLING:         0.05
   PEONY:                    0.05
   PINK_PETALS:              0.05
   PINK_TULIP:               0.05
   PITCHER_PLANT:            1.00
   PITCHER_POD:              0.50
-  PODZOL:                   0.10
   POPLAR_SAPLING:           0.05
   POPPY:                    0.05
+  PUMPKIN:                  0.30
   PUMPKIN_SEEDS:            0.03
+  RED_MUSHROOM:             0.15
+  RED_MUSHROOM_BLOCK:       0.40
   RED_POPLAR_LEAVES:        0.05
-  RED_SAND:                 0.05
   RED_SHRUB:                0.05
   RED_TULIP:                0.05
-  ROOTED_DIRT:              0.10
   ROSE_BUSH:                0.05
-  SAND:                     0.05
   SEAGRASS:                 0.05
   SEA_PICKLE:               0.20
+  SHELF_MUSHROOM:           0.15
   SHORT_DRY_GRASS:          0.03
   SHORT_GRASS:              0.03
   SMALL_DRIPLEAF:           0.30
-  SNOW:                     0.02
-  SNOWBALL:                 0.02
-  SPONGE:                   4.00
   SPRUCE_LEAVES:            0.05
   SPRUCE_SAPLING:           0.05
+  SUGAR_CANE:               0.15
   SUNFLOWER:                0.05
   TALL_DRY_GRASS:           0.05
   TALL_GRASS:               0.05
+  TORCHFLOWER:              0.50
+  TORCHFLOWER_SEEDS:        0.50
   TUBE_CORAL:               0.30
   TUBE_CORAL_BLOCK:         0.30
   TUBE_CORAL_FAN:           0.30
   VINE:                     0.05
-  WET_SPONGE:               4.00
+  WHEAT:                    0.30
   WHEAT_SEEDS:              0.03
   WHITE_TULIP:              0.05
   WILDFLOWERS:              0.05
   YELLOW_POPLAR_LEAVES:     0.05
 
   # ======================================================================
-  #  MOB DROPS AND SEA ITEMS  (8 items)
+  #  MOB DROPS  (11 items)
   # ======================================================================
-  BONE:                 0.40
-  FEATHER:              0.15
-  GLOW_INK_SAC:         1.50
-  GUNPOWDER:            0.80
-  INK_SAC:              0.40
-  PRISMARINE_CRYSTALS:  0.80
-  PRISMARINE_SHARD:     0.50
-  STRING:               0.40
+  BLUE_EGG:      0.10
+  BONE:          0.40
+  BROWN_EGG:     0.10
+  EGG:           0.10
+  FEATHER:       0.15
+  GUNPOWDER:     0.80
+  INK_SAC:       0.40
+  RABBIT_HIDE:   0.10
+  ROTTEN_FLESH:  0.05
+  SPIDER_EYE:    0.50
+  STRING:        0.40
 
   # ======================================================================
-  #  EVERYTHING ELSE  (2 items)
+  #  NETHER, END AND DEEP DARK  (26 items)
   # ======================================================================
-  COBWEB:  0.50
-  FLINT:   0.10
+  CHORUS_FLOWER:      0.50
+  CHORUS_FRUIT:       0.30
+  CHORUS_PLANT:       0.40
+  CRIMSON_FUNGUS:     0.15
+  CRIMSON_NYLIUM:     0.10
+  CRIMSON_ROOTS:      0.05
+  END_STONE:          0.10
+  GILDED_BLACKSTONE:  1.50
+  GLOWSTONE_DUST:     0.30
+  MAGMA_BLOCK:        0.20
+  NETHERRACK:         0.02
+  NETHER_SPROUTS:     0.05
+  NETHER_WART:        0.30
+  NETHER_WART_BLOCK:  0.30
+  OBSIDIAN:           1.00
+  SCULK:              0.50
+  SCULK_VEIN:         0.30
+  SHROOMLIGHT:        0.80
+  SOUL_SAND:          0.05
+  SOUL_SOIL:          0.05
+  TWISTING_VINES:     0.10
+  WARPED_FUNGUS:      0.15
+  WARPED_NYLIUM:      0.10
+  WARPED_ROOTS:       0.05
+  WARPED_WART_BLOCK:  0.30
+  WEEPING_VINES:      0.10
+
+  # ======================================================================
+  #  UTILITY AND DECORATION  (2 items)
+  # ======================================================================
+  CHIPPED_ANVIL:  45.00
+  DAMAGED_ANVIL:  30.00
 
 # ------------------------------------------------------------------------------
 #  CRAFTED items: made from other items. Each price is what the recipe rule gives (95% of the ingredients,
@@ -450,213 +449,14 @@ base:
 crafted:
 
   # ======================================================================
-  #  STONE, SOIL AND BUILDING BLOCKS  (103 items)
+  #  BUILDING BLOCKS (dirt, sand, gravel, clay, ice, snow)  (6 items)
   # ======================================================================
-  ANDESITE_SLAB:              0.02
-  ANDESITE_STAIRS:            0.04
-  ANDESITE_WALL:              0.04
-  BRICK:                      0.20
-  BRICKS:                     0.76
-  BRICK_SLAB:                 0.36
-  BRICK_STAIRS:               0.72
-  BRICK_WALL:                 0.72
-  CHISELED_CINNABAR:          0.09
-  CHISELED_DEEPSLATE:         0.04
-  CHISELED_QUARTZ_BLOCK:      3.61
-  CHISELED_STONE_BRICKS:      0.04
-  CHISELED_SULFUR:            0.09
-  CHISELED_TUFF:              0.04
-  CHISELED_TUFF_BRICKS:       0.04
-  CINNABAR_BRICKS:            0.09
-  CINNABAR_BRICK_SLAB:        0.04
-  CINNABAR_BRICK_STAIRS:      0.09
-  CINNABAR_BRICK_WALL:        0.09
-  CINNABAR_SLAB:              0.04
-  CINNABAR_STAIRS:            0.09
-  CINNABAR_WALL:              0.09
-  COBBLED_DEEPSLATE_SLAB:     0.02
-  COBBLED_DEEPSLATE_STAIRS:   0.04
-  COBBLED_DEEPSLATE_WALL:     0.04
-  COBBLESTONE_SLAB:           0.02
-  COBBLESTONE_STAIRS:         0.04
-  COBBLESTONE_WALL:           0.04
-  CRACKED_DEEPSLATE_BRICKS:   0.04
-  CRACKED_DEEPSLATE_TILES:    0.04
-  CRACKED_STONE_BRICKS:       0.04
-  DEEPSLATE_BRICKS:           0.04
-  DEEPSLATE_BRICK_SLAB:       0.02
-  DEEPSLATE_BRICK_STAIRS:     0.04
-  DEEPSLATE_BRICK_WALL:       0.04
-  DEEPSLATE_TILES:            0.04
-  DEEPSLATE_TILE_SLAB:        0.02
-  DEEPSLATE_TILE_STAIRS:      0.04
-  DEEPSLATE_TILE_WALL:        0.04
-  DIORITE_SLAB:               0.02
-  DIORITE_STAIRS:             0.04
-  DIORITE_WALL:               0.04
-  GLASS:                      0.05
-  GLASS_PANE:                 0.01
-  GRANITE_SLAB:               0.02
-  GRANITE_STAIRS:             0.04
-  GRANITE_WALL:               0.04
-  POLISHED_ANDESITE:          0.04
-  POLISHED_ANDESITE_SLAB:     0.02
-  POLISHED_ANDESITE_STAIRS:   0.04
-  POLISHED_CINNABAR:          0.09
-  POLISHED_CINNABAR_SLAB:     0.04
-  POLISHED_CINNABAR_STAIRS:   0.09
-  POLISHED_CINNABAR_WALL:     0.09
-  POLISHED_DEEPSLATE:         0.04
-  POLISHED_DEEPSLATE_SLAB:    0.02
-  POLISHED_DEEPSLATE_STAIRS:  0.04
-  POLISHED_DEEPSLATE_WALL:    0.04
-  POLISHED_DIORITE:           0.04
-  POLISHED_DIORITE_SLAB:      0.02
-  POLISHED_DIORITE_STAIRS:    0.04
-  POLISHED_GRANITE:           0.04
-  POLISHED_GRANITE_SLAB:      0.02
-  POLISHED_GRANITE_STAIRS:    0.04
-  POLISHED_SULFUR:            0.09
-  POLISHED_SULFUR_SLAB:       0.04
-  POLISHED_SULFUR_STAIRS:     0.09
-  POLISHED_SULFUR_WALL:       0.09
-  POLISHED_TUFF:              0.04
-  POLISHED_TUFF_SLAB:         0.02
-  POLISHED_TUFF_STAIRS:       0.04
-  POLISHED_TUFF_WALL:         0.04
-  QUARTZ_BRICKS:              3.61
-  QUARTZ_PILLAR:              3.61
-  QUARTZ_SLAB:                1.80
-  QUARTZ_STAIRS:              3.61
-  SMOOTH_QUARTZ:              3.80
-  SMOOTH_QUARTZ_SLAB:         1.80
-  SMOOTH_QUARTZ_STAIRS:       3.61
-  SMOOTH_STONE:               0.05
-  SMOOTH_STONE_SLAB:          0.02
-  STONE:                      0.05
-  STONE_BRICKS:               0.04
-  STONE_BRICK_SLAB:           0.02
-  STONE_BRICK_STAIRS:         0.04
-  STONE_BRICK_WALL:           0.04
-  STONE_SLAB:                 0.02
-  STONE_STAIRS:               0.04
-  SULFUR_BRICKS:              0.09
-  SULFUR_BRICK_SLAB:          0.04
-  SULFUR_BRICK_STAIRS:        0.09
-  SULFUR_BRICK_WALL:          0.09
-  SULFUR_SLAB:                0.04
-  SULFUR_STAIRS:              0.09
-  SULFUR_WALL:                0.09
-  TINTED_GLASS:               1.92
-  TUFF_BRICKS:                0.04
-  TUFF_BRICK_SLAB:            0.02
-  TUFF_BRICK_STAIRS:          0.04
-  TUFF_BRICK_WALL:            0.04
-  TUFF_SLAB:                  0.02
-  TUFF_STAIRS:                0.04
-  TUFF_WALL:                  0.04
-
-  # ======================================================================
-  #  ORES, METALS AND GEMS  (19 items)
-  # ======================================================================
-  AMETHYST_BLOCK:    3.80
-  CHARCOAL:          0.40
-  COAL_BLOCK:        8.55
-  COPPER_BLOCK:      3.42
-  COPPER_NUGGET:     0.04
-  DIAMOND_BLOCK:     256.50
-  EMERALD_BLOCK:     34.20
-  GOLD_BLOCK:        34.20
-  GOLD_NUGGET:       0.42
-  IRON_BLOCK:        17.10
-  IRON_NUGGET:       0.21
-  LAPIS_BLOCK:       6.84
-  NETHERITE_BLOCK:   942.21
-  NETHERITE_INGOT:   110.20
-  QUARTZ_BLOCK:      3.80
-  RAW_COPPER_BLOCK:  3.42
-  RAW_GOLD_BLOCK:    34.20
-  RAW_IRON_BLOCK:    17.10
-  REDSTONE_BLOCK:    4.27
-
-  # ======================================================================
-  #  TOOLS AND WEAPONS  (27 items)
-  # ======================================================================
-  ARROW:                     0.08
-  BOW:                       1.39
-  BRUSH:                     0.60
-  BUCKET:                    5.70
-  CARROT_ON_A_STICK:         1.19
-  CLOCK:                     15.67
-  COMPASS:                   8.07
-  CROSSBOW:                  3.89
-  FIRE_CHARGE:               0.82
-  FISHING_ROD:               1.01
-  FLINT_AND_STEEL:           1.99
-  LEAD:                      0.95
-  MACE:                      477.85
-  NAME_TAG:                  0.17
-  NETHERITE_AXE:             205.07
-  NETHERITE_HOE:             178.00
-  NETHERITE_PICKAXE:         205.07
-  NETHERITE_SHOVEL:          150.92
-  NETHERITE_SPEAR:           150.92
-  NETHERITE_SWORD:           177.91
-  RECOVERY_COMPASS:          68.46
-  SHEARS:                    3.80
-  SHIELD:                    2.41
-  SPECTRAL_ARROW:            0.60
-  SPYGLASS:                  1.71
-  WARPED_FUNGUS_ON_A_STICK:  1.10
-  WIND_CHARGE:               0.71
-
-  # ======================================================================
-  #  ARMOUR AND MOUNTS  (44 items)
-  # ======================================================================
-  BLACK_HARNESS:             2.04
-  BLUE_HARNESS:              2.04
-  BROWN_HARNESS:             2.04
-  COPPER_BOOTS:              1.52
-  COPPER_CHESTPLATE:         3.04
-  COPPER_HELMET:             1.90
-  COPPER_LEGGINGS:           2.66
-  CYAN_HARNESS:              2.04
-  DIAMOND_BOOTS:             114.00
-  DIAMOND_CHESTPLATE:        228.00
-  DIAMOND_HELMET:            142.50
-  DIAMOND_LEGGINGS:          199.50
-  GOLDEN_BOOTS:              15.20
-  GOLDEN_CHESTPLATE:         30.40
-  GOLDEN_HELMET:             19.00
-  GOLDEN_LEGGINGS:           26.60
-  GRAY_HARNESS:              2.04
-  GREEN_HARNESS:             2.04
-  IRON_BOOTS:                7.60
-  IRON_CHESTPLATE:           15.20
-  IRON_HELMET:               9.50
-  IRON_LEGGINGS:             13.30
-  LEATHER_BOOTS:             2.28
-  LEATHER_CHESTPLATE:        4.56
-  LEATHER_HELMET:            2.85
-  LEATHER_LEGGINGS:          3.99
-  LIGHT_BLUE_HARNESS:        2.04
-  LIGHT_GRAY_HARNESS:        2.04
-  LIME_HARNESS:              2.04
-  MAGENTA_HARNESS:           2.04
-  NETHERITE_BOOTS:           231.99
-  NETHERITE_CHESTPLATE:      340.29
-  NETHERITE_HELMET:          259.06
-  NETHERITE_HORSE_ARMOR:     147.44
-  NETHERITE_LEGGINGS:        313.21
-  NETHERITE_NAUTILUS_ARMOR:  147.44
-  ORANGE_HARNESS:            2.04
-  PINK_HARNESS:              2.04
-  PURPLE_HARNESS:            2.04
-  RED_HARNESS:               2.04
-  TURTLE_HELMET:             14.25
-  WHITE_HARNESS:             2.04
-  WOLF_ARMOR:                5.70
-  YELLOW_HARNESS:            2.04
+  BLUE_ICE:     5.81
+  CLAY:         0.76
+  COARSE_DIRT:  0.02
+  PACKED_ICE:   0.68
+  RESIN_BLOCK:  2.56
+  SNOW_BLOCK:   0.07
 
   # ======================================================================
   #  WOOD (every wood family, including poplar)  (194 items)
@@ -857,7 +657,196 @@ crafted:
   WARPED_TRAPDOOR:          0.25
 
   # ======================================================================
-  #  COLOURS (wool, concrete, glass, terracotta, dyes) AND DECORATION  (282 items)
+  #  STONE AND BRICKS  (185 items)
+  # ======================================================================
+  ANDESITE_SLAB:                       0.02
+  ANDESITE_STAIRS:                     0.04
+  ANDESITE_WALL:                       0.04
+  BLACKSTONE_SLAB:                     0.02
+  BLACKSTONE_STAIRS:                   0.04
+  BLACKSTONE_WALL:                     0.04
+  BRICK:                               0.20
+  BRICKS:                              0.76
+  BRICK_SLAB:                          0.36
+  BRICK_STAIRS:                        0.72
+  BRICK_WALL:                          0.72
+  CHISELED_CINNABAR:                   0.09
+  CHISELED_DEEPSLATE:                  0.04
+  CHISELED_NETHER_BRICKS:              0.06
+  CHISELED_POLISHED_BLACKSTONE:        0.04
+  CHISELED_QUARTZ_BLOCK:               3.61
+  CHISELED_RED_SANDSTONE:              0.18
+  CHISELED_RESIN_BRICKS:               1.08
+  CHISELED_SANDSTONE:                  0.18
+  CHISELED_STONE_BRICKS:               0.04
+  CHISELED_SULFUR:                     0.09
+  CHISELED_TUFF:                       0.04
+  CHISELED_TUFF_BRICKS:                0.04
+  CINNABAR_BRICKS:                     0.09
+  CINNABAR_BRICK_SLAB:                 0.04
+  CINNABAR_BRICK_STAIRS:               0.09
+  CINNABAR_BRICK_WALL:                 0.09
+  CINNABAR_SLAB:                       0.04
+  CINNABAR_STAIRS:                     0.09
+  CINNABAR_WALL:                       0.09
+  COBBLED_DEEPSLATE_SLAB:              0.02
+  COBBLED_DEEPSLATE_STAIRS:            0.04
+  COBBLED_DEEPSLATE_WALL:              0.04
+  COBBLESTONE_SLAB:                    0.02
+  COBBLESTONE_STAIRS:                  0.04
+  COBBLESTONE_WALL:                    0.04
+  CRACKED_DEEPSLATE_BRICKS:            0.04
+  CRACKED_DEEPSLATE_TILES:             0.04
+  CRACKED_NETHER_BRICKS:               0.07
+  CRACKED_POLISHED_BLACKSTONE_BRICKS:  0.04
+  CRACKED_STONE_BRICKS:                0.04
+  CUT_RED_SANDSTONE:                   0.18
+  CUT_RED_SANDSTONE_SLAB:              0.09
+  CUT_SANDSTONE:                       0.18
+  CUT_SANDSTONE_SLAB:                  0.09
+  DARK_PRISMARINE:                     4.16
+  DARK_PRISMARINE_SLAB:                1.97
+  DARK_PRISMARINE_STAIRS:              3.95
+  DEEPSLATE_BRICKS:                    0.04
+  DEEPSLATE_BRICK_SLAB:                0.02
+  DEEPSLATE_BRICK_STAIRS:              0.04
+  DEEPSLATE_BRICK_WALL:                0.04
+  DEEPSLATE_TILES:                     0.04
+  DEEPSLATE_TILE_SLAB:                 0.02
+  DEEPSLATE_TILE_STAIRS:               0.04
+  DEEPSLATE_TILE_WALL:                 0.04
+  DIORITE_SLAB:                        0.02
+  DIORITE_STAIRS:                      0.04
+  DIORITE_WALL:                        0.04
+  END_STONE_BRICKS:                    0.09
+  END_STONE_BRICK_SLAB:                0.04
+  END_STONE_BRICK_STAIRS:              0.09
+  END_STONE_BRICK_WALL:                0.09
+  GRANITE_SLAB:                        0.02
+  GRANITE_STAIRS:                      0.04
+  GRANITE_WALL:                        0.04
+  MOSSY_COBBLESTONE:                   0.09
+  MOSSY_COBBLESTONE_SLAB:              0.04
+  MOSSY_COBBLESTONE_STAIRS:            0.08
+  MOSSY_COBBLESTONE_WALL:              0.08
+  MOSSY_STONE_BRICKS:                  0.08
+  MOSSY_STONE_BRICK_SLAB:              0.03
+  MOSSY_STONE_BRICK_STAIRS:            0.07
+  MOSSY_STONE_BRICK_WALL:              0.07
+  MUD_BRICKS:                          0.30
+  MUD_BRICK_SLAB:                      0.14
+  MUD_BRICK_STAIRS:                    0.28
+  MUD_BRICK_WALL:                      0.28
+  NETHER_BRICK:                        0.02
+  NETHER_BRICKS:                       0.07
+  NETHER_BRICK_FENCE:                  0.05
+  NETHER_BRICK_SLAB:                   0.03
+  NETHER_BRICK_STAIRS:                 0.06
+  NETHER_BRICK_WALL:                   0.06
+  PACKED_MUD:                          0.32
+  POLISHED_ANDESITE:                   0.04
+  POLISHED_ANDESITE_SLAB:              0.02
+  POLISHED_ANDESITE_STAIRS:            0.04
+  POLISHED_BASALT:                     0.04
+  POLISHED_BLACKSTONE:                 0.04
+  POLISHED_BLACKSTONE_BRICKS:          0.04
+  POLISHED_BLACKSTONE_BRICK_SLAB:      0.02
+  POLISHED_BLACKSTONE_BRICK_STAIRS:    0.04
+  POLISHED_BLACKSTONE_BRICK_WALL:      0.04
+  POLISHED_BLACKSTONE_SLAB:            0.02
+  POLISHED_BLACKSTONE_STAIRS:          0.04
+  POLISHED_BLACKSTONE_WALL:            0.04
+  POLISHED_CINNABAR:                   0.09
+  POLISHED_CINNABAR_SLAB:              0.04
+  POLISHED_CINNABAR_STAIRS:            0.09
+  POLISHED_CINNABAR_WALL:              0.09
+  POLISHED_DEEPSLATE:                  0.04
+  POLISHED_DEEPSLATE_SLAB:             0.02
+  POLISHED_DEEPSLATE_STAIRS:           0.04
+  POLISHED_DEEPSLATE_WALL:             0.04
+  POLISHED_DIORITE:                    0.04
+  POLISHED_DIORITE_SLAB:               0.02
+  POLISHED_DIORITE_STAIRS:             0.04
+  POLISHED_GRANITE:                    0.04
+  POLISHED_GRANITE_SLAB:               0.02
+  POLISHED_GRANITE_STAIRS:             0.04
+  POLISHED_SULFUR:                     0.09
+  POLISHED_SULFUR_SLAB:                0.04
+  POLISHED_SULFUR_STAIRS:              0.09
+  POLISHED_SULFUR_WALL:                0.09
+  POLISHED_TUFF:                       0.04
+  POLISHED_TUFF_SLAB:                  0.02
+  POLISHED_TUFF_STAIRS:                0.04
+  POLISHED_TUFF_WALL:                  0.04
+  PRISMARINE:                          1.90
+  PRISMARINE_BRICKS:                   4.27
+  PRISMARINE_BRICK_SLAB:               2.02
+  PRISMARINE_BRICK_STAIRS:             4.05
+  PRISMARINE_SLAB:                     0.90
+  PRISMARINE_STAIRS:                   1.80
+  PRISMARINE_WALL:                     1.80
+  PURPUR_BLOCK:                        0.28
+  PURPUR_PILLAR:                       0.26
+  PURPUR_SLAB:                         0.13
+  PURPUR_STAIRS:                       0.26
+  QUARTZ_BLOCK:                        3.80
+  QUARTZ_BRICKS:                       3.61
+  QUARTZ_PILLAR:                       3.61
+  QUARTZ_SLAB:                         1.80
+  QUARTZ_STAIRS:                       3.61
+  RED_NETHER_BRICKS:                   0.60
+  RED_NETHER_BRICK_SLAB:               0.28
+  RED_NETHER_BRICK_STAIRS:             0.57
+  RED_NETHER_BRICK_WALL:               0.57
+  RED_SANDSTONE:                       0.19
+  RED_SANDSTONE_SLAB:                  0.09
+  RED_SANDSTONE_STAIRS:                0.18
+  RED_SANDSTONE_WALL:                  0.18
+  RESIN_BRICK:                         0.30
+  RESIN_BRICKS:                        1.14
+  RESIN_BRICK_SLAB:                    0.54
+  RESIN_BRICK_STAIRS:                  1.08
+  RESIN_BRICK_WALL:                    1.08
+  SANDSTONE:                           0.19
+  SANDSTONE_SLAB:                      0.09
+  SANDSTONE_STAIRS:                    0.18
+  SANDSTONE_WALL:                      0.18
+  SMOOTH_BASALT:                       0.05
+  SMOOTH_QUARTZ:                       3.80
+  SMOOTH_QUARTZ_SLAB:                  1.80
+  SMOOTH_QUARTZ_STAIRS:                3.61
+  SMOOTH_RED_SANDSTONE:                0.19
+  SMOOTH_RED_SANDSTONE_SLAB:           0.09
+  SMOOTH_RED_SANDSTONE_STAIRS:         0.18
+  SMOOTH_SANDSTONE:                    0.19
+  SMOOTH_SANDSTONE_SLAB:               0.09
+  SMOOTH_SANDSTONE_STAIRS:             0.18
+  SMOOTH_STONE:                        0.05
+  SMOOTH_STONE_SLAB:                   0.02
+  STONE:                               0.05
+  STONE_BRICKS:                        0.04
+  STONE_BRICK_SLAB:                    0.02
+  STONE_BRICK_STAIRS:                  0.04
+  STONE_BRICK_WALL:                    0.04
+  STONE_SLAB:                          0.02
+  STONE_STAIRS:                        0.04
+  SULFUR_BRICKS:                       0.09
+  SULFUR_BRICK_SLAB:                   0.04
+  SULFUR_BRICK_STAIRS:                 0.09
+  SULFUR_BRICK_WALL:                   0.09
+  SULFUR_SLAB:                         0.04
+  SULFUR_STAIRS:                       0.09
+  SULFUR_WALL:                         0.09
+  TUFF_BRICKS:                         0.04
+  TUFF_BRICK_SLAB:                     0.02
+  TUFF_BRICK_STAIRS:                   0.04
+  TUFF_BRICK_WALL:                     0.04
+  TUFF_SLAB:                           0.02
+  TUFF_STAIRS:                         0.04
+  TUFF_WALL:                           0.04
+
+  # ======================================================================
+  #  COLORS AND GLASS (wool, concrete, terracotta, glass, banners, beds, candles, dyes)  (262 items)
   # ======================================================================
   BLACK_BANNER:                   1.51
   BLACK_BED:                      0.96
@@ -870,7 +859,6 @@ crafted:
   BLACK_CUSHION:                  0.31
   BLACK_DYE:                      0.38
   BLACK_GLAZED_TERRACOTTA:        0.76
-  BLACK_SHULKER_BOX:              22.62
   BLACK_STAINED_GLASS:            0.09
   BLACK_STAINED_GLASS_PANE:       0.03
   BLACK_TERRACOTTA:               0.76
@@ -887,7 +875,6 @@ crafted:
   BLUE_CUSHION:                   0.31
   BLUE_DYE:                       0.04
   BLUE_GLAZED_TERRACOTTA:         0.72
-  BLUE_SHULKER_BOX:               22.30
   BLUE_STAINED_GLASS:             0.05
   BLUE_STAINED_GLASS_PANE:        0.01
   BLUE_TERRACOTTA:                0.72
@@ -904,13 +891,11 @@ crafted:
   BROWN_CUSHION:                  0.31
   BROWN_DYE:                      0.19
   BROWN_GLAZED_TERRACOTTA:        0.74
-  BROWN_SHULKER_BOX:              22.44
   BROWN_STAINED_GLASS:            0.07
   BROWN_STAINED_GLASS_PANE:       0.02
   BROWN_TERRACOTTA:               0.74
   BROWN_WOOL_SLAB:                0.11
   BROWN_WOOL_STAIRS:              0.35
-  BUNDLE:                         0.95
   CANDLE:                         1.14
   CYAN_BANNER:                    1.51
   CYAN_BED:                       0.96
@@ -923,13 +908,13 @@ crafted:
   CYAN_CUSHION:                   0.31
   CYAN_DYE:                       0.21
   CYAN_GLAZED_TERRACOTTA:         0.77
-  CYAN_SHULKER_BOX:               22.71
   CYAN_STAINED_GLASS:             0.10
   CYAN_STAINED_GLASS_PANE:        0.03
   CYAN_TERRACOTTA:                0.77
   CYAN_WOOL_SLAB:                 0.11
   CYAN_WOOL_STAIRS:               0.35
-  GLOW_ITEM_FRAME:                2.61
+  GLASS:                          0.05
+  GLASS_PANE:                     0.01
   GRAY_BANNER:                    1.51
   GRAY_BED:                       0.96
   GRAY_BUNDLE:                    1.16
@@ -941,7 +926,6 @@ crafted:
   GRAY_CUSHION:                   0.31
   GRAY_DYE:                       0.28
   GRAY_GLAZED_TERRACOTTA:         0.75
-  GRAY_SHULKER_BOX:               22.53
   GRAY_STAINED_GLASS:             0.08
   GRAY_STAINED_GLASS_PANE:        0.02
   GRAY_TERRACOTTA:                0.75
@@ -958,13 +942,11 @@ crafted:
   GREEN_CUSHION:                  0.31
   GREEN_DYE:                      0.10
   GREEN_GLAZED_TERRACOTTA:        0.73
-  GREEN_SHULKER_BOX:              22.36
   GREEN_STAINED_GLASS:            0.05
   GREEN_STAINED_GLASS_PANE:       0.01
   GREEN_TERRACOTTA:               0.73
   GREEN_WOOL_SLAB:                0.11
   GREEN_WOOL_STAIRS:              0.35
-  ITEM_FRAME:                     1.25
   LIGHT_BLUE_BANNER:              1.51
   LIGHT_BLUE_BED:                 0.96
   LIGHT_BLUE_BUNDLE:              0.94
@@ -976,7 +958,6 @@ crafted:
   LIGHT_BLUE_CUSHION:             0.31
   LIGHT_BLUE_DYE:                 0.04
   LIGHT_BLUE_GLAZED_TERRACOTTA:   0.72
-  LIGHT_BLUE_SHULKER_BOX:         22.30
   LIGHT_BLUE_STAINED_GLASS:       0.05
   LIGHT_BLUE_STAINED_GLASS_PANE:  0.01
   LIGHT_BLUE_TERRACOTTA:          0.72
@@ -993,7 +974,6 @@ crafted:
   LIGHT_GRAY_CUSHION:             0.31
   LIGHT_GRAY_DYE:                 0.04
   LIGHT_GRAY_GLAZED_TERRACOTTA:   0.72
-  LIGHT_GRAY_SHULKER_BOX:         22.30
   LIGHT_GRAY_STAINED_GLASS:       0.05
   LIGHT_GRAY_STAINED_GLASS_PANE:  0.01
   LIGHT_GRAY_TERRACOTTA:          0.72
@@ -1010,7 +990,6 @@ crafted:
   LIME_CUSHION:                   0.31
   LIME_DYE:                       0.20
   LIME_GLAZED_TERRACOTTA:         0.74
-  LIME_SHULKER_BOX:               22.45
   LIME_STAINED_GLASS:             0.07
   LIME_STAINED_GLASS_PANE:        0.02
   LIME_TERRACOTTA:                0.74
@@ -1027,13 +1006,11 @@ crafted:
   MAGENTA_CUSHION:                0.31
   MAGENTA_DYE:                    0.02
   MAGENTA_GLAZED_TERRACOTTA:      0.72
-  MAGENTA_SHULKER_BOX:            22.28
   MAGENTA_STAINED_GLASS:          0.04
   MAGENTA_STAINED_GLASS_PANE:     0.01
   MAGENTA_TERRACOTTA:             0.72
   MAGENTA_WOOL_SLAB:              0.11
   MAGENTA_WOOL_STAIRS:            0.35
-  MOSS_CARPET:                    0.12
   ORANGE_BANNER:                  1.51
   ORANGE_BED:                     0.96
   ORANGE_BUNDLE:                  0.94
@@ -1045,14 +1022,11 @@ crafted:
   ORANGE_CUSHION:                 0.31
   ORANGE_DYE:                     0.04
   ORANGE_GLAZED_TERRACOTTA:       0.72
-  ORANGE_SHULKER_BOX:             22.30
   ORANGE_STAINED_GLASS:           0.05
   ORANGE_STAINED_GLASS_PANE:      0.01
   ORANGE_TERRACOTTA:              0.72
   ORANGE_WOOL_SLAB:               0.11
   ORANGE_WOOL_STAIRS:             0.35
-  PAINTING:                       0.92
-  PALE_MOSS_CARPET:               0.19
   PINK_BANNER:                    1.51
   PINK_BED:                       0.96
   PINK_BUNDLE:                    0.92
@@ -1064,7 +1038,6 @@ crafted:
   PINK_CUSHION:                   0.31
   PINK_DYE:                       0.02
   PINK_GLAZED_TERRACOTTA:         0.72
-  PINK_SHULKER_BOX:               22.28
   PINK_STAINED_GLASS:             0.04
   PINK_STAINED_GLASS_PANE:        0.01
   PINK_TERRACOTTA:                0.72
@@ -1081,7 +1054,6 @@ crafted:
   PURPLE_CUSHION:                 0.31
   PURPLE_DYE:                     0.02
   PURPLE_GLAZED_TERRACOTTA:       0.72
-  PURPLE_SHULKER_BOX:             22.28
   PURPLE_STAINED_GLASS:           0.04
   PURPLE_STAINED_GLASS_PANE:      0.01
   PURPLE_TERRACOTTA:              0.72
@@ -1098,15 +1070,14 @@ crafted:
   RED_CUSHION:                    0.31
   RED_DYE:                        0.02
   RED_GLAZED_TERRACOTTA:          0.72
-  RED_SHULKER_BOX:                22.28
   RED_STAINED_GLASS:              0.04
   RED_STAINED_GLASS_PANE:         0.01
   RED_TERRACOTTA:                 0.72
   RED_WOOL_SLAB:                  0.11
   RED_WOOL_STAIRS:                0.35
-  SHULKER_BOX:                    23.44
   STRAW_BED:                      1.82
   TERRACOTTA:                     0.76
+  TINTED_GLASS:                   1.92
   WHITE_BANNER:                   1.51
   WHITE_BED:                      0.96
   WHITE_BUNDLE:                   0.94
@@ -1118,7 +1089,6 @@ crafted:
   WHITE_CUSHION:                  0.31
   WHITE_DYE:                      0.04
   WHITE_GLAZED_TERRACOTTA:        0.72
-  WHITE_SHULKER_BOX:              22.30
   WHITE_STAINED_GLASS:            0.05
   WHITE_STAINED_GLASS_PANE:       0.01
   WHITE_TERRACOTTA:               0.72
@@ -1135,7 +1105,6 @@ crafted:
   YELLOW_CUSHION:                 0.31
   YELLOW_DYE:                     0.02
   YELLOW_GLAZED_TERRACOTTA:       0.72
-  YELLOW_SHULKER_BOX:             22.28
   YELLOW_STAINED_GLASS:           0.04
   YELLOW_STAINED_GLASS_PANE:      0.01
   YELLOW_TERRACOTTA:              0.72
@@ -1143,29 +1112,31 @@ crafted:
   YELLOW_WOOL_STAIRS:             0.35
 
   # ======================================================================
-  #  REDSTONE, UTILITY AND WORKSTATIONS  (141 items)
+  #  ORES AND METALS (ores, ingots, gems, netherite)  (16 items)
   # ======================================================================
-  ACTIVATOR_RAIL:                       2.01
-  ANVIL:                                56.33
-  ARMOR_STAND:                          0.53
-  BARREL:                               0.58
-  BEACON:                               117.08
-  BLAST_FURNACE:                        10.00
-  BOOK:                                 0.96
-  BOOKSHELF:                            3.24
-  BOWL:                                 0.06
-  BREWING_STAND:                        2.99
-  CALIBRATED_SCULK_SENSOR:              7.60
-  CAMPFIRE:                             1.77
-  CARTOGRAPHY_TABLE:                    0.60
-  CAULDRON:                             13.30
-  CHEST:                                0.68
-  CHEST_MINECART:                       9.67
-  CHISELED_BOOKSHELF:                   0.62
-  COMPARATOR:                           2.68
-  COMPOSTER:                            0.26
-  CONDUIT:                              148.20
+  AMETHYST_BLOCK:    3.80
+  CHARCOAL:          0.40
+  COAL_BLOCK:        8.55
+  COPPER_NUGGET:     0.04
+  DIAMOND_BLOCK:     256.50
+  EMERALD_BLOCK:     34.20
+  GOLD_BLOCK:        34.20
+  GOLD_NUGGET:       0.42
+  IRON_BLOCK:        17.10
+  IRON_NUGGET:       0.21
+  LAPIS_BLOCK:       6.84
+  NETHERITE_BLOCK:   942.21
+  NETHERITE_INGOT:   110.20
+  RAW_COPPER_BLOCK:  3.42
+  RAW_GOLD_BLOCK:    34.20
+  RAW_IRON_BLOCK:    17.10
+
+  # ======================================================================
+  #  COPPER (every block, door, bar, lantern and statue, in every weathering stage)  (93 items)
+  # ======================================================================
+  CHISELED_COPPER:                      0.81
   COPPER_BARS:                          0.14
+  COPPER_BLOCK:                         3.42
   COPPER_BULB:                          3.26
   COPPER_CHAIN:                         0.45
   COPPER_CHEST:                         3.68
@@ -1174,76 +1145,25 @@ crafted:
   COPPER_LANTERN:                       0.41
   COPPER_TORCH:                         0.12
   COPPER_TRAPDOOR:                      1.52
-  CRAFTER:                              11.53
-  CRAFTING_TABLE:                       0.34
-  DAYLIGHT_DETECTOR:                    3.10
-  DECORATED_POT:                        0.76
-  DETECTOR_RAIL:                        1.99
-  DISPENSER:                            2.12
-  DROPPER:                              0.80
-  ENCHANTING_TABLE:                     61.71
-  ENDER_CHEST:                          13.38
-  END_ROD:                              0.78
+  CUT_COPPER:                           0.81
+  CUT_COPPER_SLAB:                      0.40
+  CUT_COPPER_STAIRS:                    0.81
+  EXPOSED_CHISELED_COPPER:              0.71
   EXPOSED_COPPER_BULB:                  2.96
   EXPOSED_COPPER_GRATE:                 0.71
-  FLETCHING_TABLE:                      0.53
-  FLOWER_POT:                           0.57
-  FURNACE:                              0.38
-  FURNACE_MINECART:                     9.38
-  GLASS_BOTTLE:                         0.04
-  GLOWSTONE:                            1.14
-  GRINDSTONE:                           0.36
-  HEAVY_WEIGHTED_PRESSURE_PLATE:        3.80
-  HOPPER:                               10.14
-  HOPPER_MINECART:                      18.65
-  IRON_BARS:                            0.71
-  IRON_CHAIN:                           2.29
-  IRON_DOOR:                            3.80
-  IRON_TRAPDOOR:                        7.60
-  JACK_O_LANTERN:                       0.38
-  JUKEBOX:                              29.18
-  LADDER:                               0.19
-  LANTERN:                              1.70
-  LECTERN:                              3.23
-  LEVER:                                0.13
+  EXPOSED_CUT_COPPER:                   0.71
+  EXPOSED_CUT_COPPER_SLAB:              0.35
+  EXPOSED_CUT_COPPER_STAIRS:            0.71
   LIGHTNING_ROD:                        1.14
-  LIGHT_WEIGHTED_PRESSURE_PLATE:        7.60
-  LODESTONE:                            2.20
-  LOOM:                                 0.93
-  MAP:                                  8.73
-  MINECART:                             9.50
-  NOTE_BLOCK:                           1.15
-  OBSERVER:                             2.18
+  OXIDIZED_CHISELED_COPPER:             0.71
   OXIDIZED_COPPER_BULB:                 2.96
   OXIDIZED_COPPER_GRATE:                0.71
-  PAPER:                                0.14
-  PISTON:                               2.82
-  POLISHED_BLACKSTONE_BUTTON:           0.03
-  POLISHED_BLACKSTONE_PRESSURE_PLATE:   0.07
-  POWERED_RAIL:                         3.89
-  RAIL:                                 0.71
-  REDSTONE_LAMP:                        2.98
-  REDSTONE_TORCH:                       0.56
-  REPEATER:                             1.68
-  RESPAWN_ANCHOR:                       20.34
-  SCAFFOLDING:                          0.11
-  SEA_LANTERN:                          5.70
-  SMITHING_TABLE:                       4.14
-  SMOKER:                               1.88
-  SOUL_CAMPFIRE:                        1.44
-  SOUL_LANTERN:                         1.71
-  SOUL_TORCH:                           0.12
-  STICKY_PISTON:                        3.62
-  STONECUTTER:                          2.04
-  STONE_BUTTON:                         0.04
-  STONE_PRESSURE_PLATE:                 0.09
-  TARGET:                               4.33
-  TNT:                                  3.99
-  TNT_MINECART:                         12.81
-  TORCH:                                0.11
-  TRAPPED_CHEST:                        1.62
-  TRIPWIRE_HOOK:                        1.03
+  OXIDIZED_CUT_COPPER:                  0.71
+  OXIDIZED_CUT_COPPER_SLAB:             0.35
+  OXIDIZED_CUT_COPPER_STAIRS:           0.71
+  WAXED_CHISELED_COPPER:                0.95
   WAXED_COPPER_BARS:                    0.89
+  WAXED_COPPER_BLOCK:                   4.00
   WAXED_COPPER_BULB:                    3.68
   WAXED_COPPER_CHAIN:                   1.18
   WAXED_COPPER_CHEST:                   4.25
@@ -1252,6 +1172,11 @@ crafted:
   WAXED_COPPER_GRATE:                   0.95
   WAXED_COPPER_LANTERN:                 1.14
   WAXED_COPPER_TRAPDOOR:                2.20
+  WAXED_CUT_COPPER:                     0.95
+  WAXED_CUT_COPPER_SLAB:                0.47
+  WAXED_CUT_COPPER_STAIRS:              0.95
+  WAXED_EXPOSED_CHISELED_COPPER:        0.85
+  WAXED_EXPOSED_COPPER:                 3.61
   WAXED_EXPOSED_COPPER_BARS:            0.89
   WAXED_EXPOSED_COPPER_BULB:            3.40
   WAXED_EXPOSED_COPPER_CHAIN:           1.18
@@ -1261,8 +1186,13 @@ crafted:
   WAXED_EXPOSED_COPPER_GRATE:           0.85
   WAXED_EXPOSED_COPPER_LANTERN:         1.14
   WAXED_EXPOSED_COPPER_TRAPDOOR:        2.20
+  WAXED_EXPOSED_CUT_COPPER:             0.85
+  WAXED_EXPOSED_CUT_COPPER_SLAB:        0.42
+  WAXED_EXPOSED_CUT_COPPER_STAIRS:      0.85
   WAXED_EXPOSED_LIGHTNING_ROD:          1.84
   WAXED_LIGHTNING_ROD:                  1.84
+  WAXED_OXIDIZED_CHISELED_COPPER:       0.85
+  WAXED_OXIDIZED_COPPER:                3.61
   WAXED_OXIDIZED_COPPER_BARS:           0.89
   WAXED_OXIDIZED_COPPER_BULB:           3.40
   WAXED_OXIDIZED_COPPER_CHAIN:          1.18
@@ -1272,7 +1202,12 @@ crafted:
   WAXED_OXIDIZED_COPPER_GRATE:          0.85
   WAXED_OXIDIZED_COPPER_LANTERN:        1.14
   WAXED_OXIDIZED_COPPER_TRAPDOOR:       2.20
+  WAXED_OXIDIZED_CUT_COPPER:            0.85
+  WAXED_OXIDIZED_CUT_COPPER_SLAB:       0.42
+  WAXED_OXIDIZED_CUT_COPPER_STAIRS:     0.85
   WAXED_OXIDIZED_LIGHTNING_ROD:         1.84
+  WAXED_WEATHERED_CHISELED_COPPER:      0.85
+  WAXED_WEATHERED_COPPER:               3.61
   WAXED_WEATHERED_COPPER_BARS:          0.89
   WAXED_WEATHERED_COPPER_BULB:          3.40
   WAXED_WEATHERED_COPPER_CHAIN:         1.18
@@ -1282,13 +1217,120 @@ crafted:
   WAXED_WEATHERED_COPPER_GRATE:         0.85
   WAXED_WEATHERED_COPPER_LANTERN:       1.14
   WAXED_WEATHERED_COPPER_TRAPDOOR:      2.20
+  WAXED_WEATHERED_CUT_COPPER:           0.85
+  WAXED_WEATHERED_CUT_COPPER_SLAB:      0.42
+  WAXED_WEATHERED_CUT_COPPER_STAIRS:    0.85
   WAXED_WEATHERED_LIGHTNING_ROD:        1.84
+  WEATHERED_CHISELED_COPPER:            0.71
   WEATHERED_COPPER_BULB:                2.96
   WEATHERED_COPPER_GRATE:               0.71
-  WRITABLE_BOOK:                        1.43
+  WEATHERED_CUT_COPPER:                 0.71
+  WEATHERED_CUT_COPPER_SLAB:            0.35
+  WEATHERED_CUT_COPPER_STAIRS:          0.71
 
   # ======================================================================
-  #  FOOD  (26 items)
+  #  REDSTONE AND TRANSPORT  (35 items)
+  # ======================================================================
+  ACTIVATOR_RAIL:                      2.01
+  CALIBRATED_SCULK_SENSOR:             7.60
+  CHEST_MINECART:                      9.67
+  COMPARATOR:                          2.68
+  CRAFTER:                             11.53
+  DAYLIGHT_DETECTOR:                   3.10
+  DETECTOR_RAIL:                       1.99
+  DISPENSER:                           2.12
+  DROPPER:                             0.80
+  FURNACE_MINECART:                    9.38
+  HEAVY_WEIGHTED_PRESSURE_PLATE:       3.80
+  HOPPER:                              10.14
+  HOPPER_MINECART:                     18.65
+  JUKEBOX:                             29.18
+  LEVER:                               0.13
+  LIGHT_WEIGHTED_PRESSURE_PLATE:       7.60
+  MINECART:                            9.50
+  NOTE_BLOCK:                          1.15
+  OBSERVER:                            2.18
+  PISTON:                              2.82
+  POLISHED_BLACKSTONE_BUTTON:          0.03
+  POLISHED_BLACKSTONE_PRESSURE_PLATE:  0.07
+  POWERED_RAIL:                        3.89
+  RAIL:                                0.71
+  REDSTONE_BLOCK:                      4.27
+  REDSTONE_LAMP:                       2.98
+  REDSTONE_TORCH:                      0.56
+  REPEATER:                            1.68
+  STICKY_PISTON:                       3.62
+  STONE_BUTTON:                        0.04
+  STONE_PRESSURE_PLATE:                0.09
+  TARGET:                              4.33
+  TNT:                                 3.99
+  TNT_MINECART:                        12.81
+  TRIPWIRE_HOOK:                       1.03
+
+  # ======================================================================
+  #  TOOLS AND WEAPONS  (24 items)
+  # ======================================================================
+  ARROW:                     0.08
+  BOW:                       1.39
+  BRUSH:                     0.60
+  BUCKET:                    5.70
+  CARROT_ON_A_STICK:         1.19
+  CLOCK:                     15.67
+  COMPASS:                   8.07
+  CROSSBOW:                  3.89
+  FIREWORK_ROCKET:           0.29
+  FIRE_CHARGE:               0.82
+  FISHING_ROD:               1.01
+  FLINT_AND_STEEL:           1.99
+  MACE:                      477.85
+  NETHERITE_AXE:             205.07
+  NETHERITE_HOE:             178.00
+  NETHERITE_PICKAXE:         205.07
+  NETHERITE_SHOVEL:          150.92
+  NETHERITE_SPEAR:           150.92
+  NETHERITE_SWORD:           177.91
+  SHEARS:                    3.80
+  SPECTRAL_ARROW:            0.60
+  SPYGLASS:                  1.71
+  WARPED_FUNGUS_ON_A_STICK:  1.10
+  WIND_CHARGE:               0.71
+
+  # ======================================================================
+  #  ARMOR AND MOUNTS (armour, horse armour, saddle, lead, name tag)  (30 items)
+  # ======================================================================
+  BLACK_HARNESS:             2.04
+  BLUE_HARNESS:              2.04
+  BROWN_HARNESS:             2.04
+  CYAN_HARNESS:              2.04
+  GRAY_HARNESS:              2.04
+  GREEN_HARNESS:             2.04
+  LEAD:                      0.95
+  LEATHER_BOOTS:             2.28
+  LEATHER_CHESTPLATE:        4.56
+  LEATHER_HELMET:            2.85
+  LEATHER_LEGGINGS:          3.99
+  LIGHT_BLUE_HARNESS:        2.04
+  LIGHT_GRAY_HARNESS:        2.04
+  LIME_HARNESS:              2.04
+  MAGENTA_HARNESS:           2.04
+  NETHERITE_BOOTS:           231.99
+  NETHERITE_CHESTPLATE:      340.29
+  NETHERITE_HELMET:          259.06
+  NETHERITE_HORSE_ARMOR:     147.44
+  NETHERITE_LEGGINGS:        313.21
+  NETHERITE_NAUTILUS_ARMOR:  147.44
+  ORANGE_HARNESS:            2.04
+  PINK_HARNESS:              2.04
+  PURPLE_HARNESS:            2.04
+  RED_HARNESS:               2.04
+  SHIELD:                    2.41
+  TURTLE_HELMET:             14.25
+  WHITE_HARNESS:             2.04
+  WOLF_ARMOR:                5.70
+  YELLOW_HARNESS:            2.04
+
+  # ======================================================================
+  #  FOOD  (19 items)
   # ======================================================================
   BAKED_POTATO:            0.25
   BEETROOT_SOUP:           1.48
@@ -1303,177 +1345,125 @@ crafted:
   COOKED_SALMON:           0.30
   COOKIE:                  0.09
   DRIED_KELP:              0.08
-  DRIED_KELP_BLOCK:        0.68
-  FERMENTED_SPIDER_EYE:    0.75
   GLISTERING_MELON_SLICE:  3.23
   GOLDEN_APPLE:            30.87
   GOLDEN_CARROT:           3.42
-  GOLDEN_DANDELION:        3.23
-  HONEYCOMB_BLOCK:         3.04
-  HONEY_BLOCK:             2.28
-  MELON:                   0.42
   MUSHROOM_STEW:           0.34
   PUMPKIN_PIE:             0.51
   RABBIT_STEW:             1.24
-  SUGAR:                   0.14
 
   # ======================================================================
-  #  COPPER  (36 items)
+  #  FARMING AND PLANTS  (12 items)
   # ======================================================================
-  CHISELED_COPPER:                    0.81
-  CUT_COPPER:                         0.81
-  CUT_COPPER_SLAB:                    0.40
-  CUT_COPPER_STAIRS:                  0.81
-  EXPOSED_CHISELED_COPPER:            0.71
-  EXPOSED_CUT_COPPER:                 0.71
-  EXPOSED_CUT_COPPER_SLAB:            0.35
-  EXPOSED_CUT_COPPER_STAIRS:          0.71
-  OXIDIZED_CHISELED_COPPER:           0.71
-  OXIDIZED_CUT_COPPER:                0.71
-  OXIDIZED_CUT_COPPER_SLAB:           0.35
-  OXIDIZED_CUT_COPPER_STAIRS:         0.71
-  WAXED_CHISELED_COPPER:              0.95
-  WAXED_COPPER_BLOCK:                 4.00
-  WAXED_CUT_COPPER:                   0.95
-  WAXED_CUT_COPPER_SLAB:              0.47
-  WAXED_CUT_COPPER_STAIRS:            0.95
-  WAXED_EXPOSED_CHISELED_COPPER:      0.85
-  WAXED_EXPOSED_COPPER:               3.61
-  WAXED_EXPOSED_CUT_COPPER:           0.85
-  WAXED_EXPOSED_CUT_COPPER_SLAB:      0.42
-  WAXED_EXPOSED_CUT_COPPER_STAIRS:    0.85
-  WAXED_OXIDIZED_CHISELED_COPPER:     0.85
-  WAXED_OXIDIZED_COPPER:              3.61
-  WAXED_OXIDIZED_CUT_COPPER:          0.85
-  WAXED_OXIDIZED_CUT_COPPER_SLAB:     0.42
-  WAXED_OXIDIZED_CUT_COPPER_STAIRS:   0.85
-  WAXED_WEATHERED_CHISELED_COPPER:    0.85
-  WAXED_WEATHERED_COPPER:             3.61
-  WAXED_WEATHERED_CUT_COPPER:         0.85
-  WAXED_WEATHERED_CUT_COPPER_SLAB:    0.42
-  WAXED_WEATHERED_CUT_COPPER_STAIRS:  0.85
-  WEATHERED_CHISELED_COPPER:          0.71
-  WEATHERED_CUT_COPPER:               0.71
-  WEATHERED_CUT_COPPER_SLAB:          0.35
-  WEATHERED_CUT_COPPER_STAIRS:        0.71
+  BEEHIVE:           2.79
+  BONE_MEAL:         0.12
+  COMPOSTER:         0.26
+  DRIED_KELP_BLOCK:  0.68
+  GOLDEN_DANDELION:  3.23
+  HAY_BLOCK:         2.56
+  HONEYCOMB_BLOCK:   3.04
+  HONEY_BLOCK:       2.28
+  MELON:             0.42
+  MOSS_CARPET:       0.12
+  PALE_MOSS_CARPET:  0.19
+  SUGAR:             0.14
 
   # ======================================================================
-  #  NETHER, END AND DEEP DARK  (47 items)
+  #  MOB DROPS  (6 items)
   # ======================================================================
-  BLACKSTONE_SLAB:                     0.02
-  BLACKSTONE_STAIRS:                   0.04
-  BLACKSTONE_WALL:                     0.04
-  BLAZE_POWDER:                        1.42
-  CHISELED_NETHER_BRICKS:              0.06
-  CHISELED_POLISHED_BLACKSTONE:        0.04
-  CHISELED_RESIN_BRICKS:               1.08
-  CRACKED_NETHER_BRICKS:               0.07
-  CRACKED_POLISHED_BLACKSTONE_BRICKS:  0.04
-  DRIED_GHAST:                         38.04
-  ENDER_EYE:                           6.09
-  END_STONE_BRICKS:                    0.09
-  END_STONE_BRICK_SLAB:                0.04
-  END_STONE_BRICK_STAIRS:              0.09
-  END_STONE_BRICK_WALL:                0.09
-  MAGMA_CREAM:                         2.29
-  NETHER_BRICK:                        0.02
-  NETHER_BRICKS:                       0.07
-  NETHER_BRICK_FENCE:                  0.05
-  NETHER_BRICK_SLAB:                   0.03
-  NETHER_BRICK_STAIRS:                 0.06
-  NETHER_BRICK_WALL:                   0.06
-  POLISHED_BASALT:                     0.04
-  POLISHED_BLACKSTONE:                 0.04
-  POLISHED_BLACKSTONE_BRICKS:          0.04
-  POLISHED_BLACKSTONE_BRICK_SLAB:      0.02
-  POLISHED_BLACKSTONE_BRICK_STAIRS:    0.04
-  POLISHED_BLACKSTONE_BRICK_WALL:      0.04
-  POLISHED_BLACKSTONE_SLAB:            0.02
-  POLISHED_BLACKSTONE_STAIRS:          0.04
-  POLISHED_BLACKSTONE_WALL:            0.04
-  POPPED_CHORUS_FRUIT:                 0.30
-  PURPUR_BLOCK:                        0.28
-  PURPUR_PILLAR:                       0.26
-  PURPUR_SLAB:                         0.13
-  PURPUR_STAIRS:                       0.26
-  RED_NETHER_BRICKS:                   0.60
-  RED_NETHER_BRICK_SLAB:               0.28
-  RED_NETHER_BRICK_STAIRS:             0.57
-  RED_NETHER_BRICK_WALL:               0.57
-  RESIN_BLOCK:                         2.56
-  RESIN_BRICK:                         0.30
-  RESIN_BRICKS:                        1.14
-  RESIN_BRICK_SLAB:                    0.54
-  RESIN_BRICK_STAIRS:                  1.08
-  RESIN_BRICK_WALL:                    1.08
-  SMOOTH_BASALT:                       0.05
+  BLAZE_POWDER:          1.42
+  BONE_BLOCK:            1.02
+  ENDER_EYE:             6.09
+  FERMENTED_SPIDER_EYE:  0.75
+  MAGMA_CREAM:           2.29
+  SLIME_BLOCK:           8.55
 
   # ======================================================================
-  #  FARMING, PLANTS AND NATURAL BLOCKS  (40 items)
+  #  NETHER, END AND DEEP DARK  (4 items)
   # ======================================================================
-  BEEHIVE:                      2.79
-  BLUE_ICE:                     5.81
-  CHISELED_RED_SANDSTONE:       0.18
-  CHISELED_SANDSTONE:           0.18
-  CLAY:                         0.76
-  COARSE_DIRT:                  0.02
-  CUT_RED_SANDSTONE:            0.18
-  CUT_RED_SANDSTONE_SLAB:       0.09
-  CUT_SANDSTONE:                0.18
-  CUT_SANDSTONE_SLAB:           0.09
-  HAY_BLOCK:                    2.56
-  MOSSY_COBBLESTONE:            0.09
-  MOSSY_COBBLESTONE_SLAB:       0.04
-  MOSSY_COBBLESTONE_STAIRS:     0.08
-  MOSSY_COBBLESTONE_WALL:       0.08
-  MOSSY_STONE_BRICKS:           0.08
-  MOSSY_STONE_BRICK_SLAB:       0.03
-  MOSSY_STONE_BRICK_STAIRS:     0.07
-  MOSSY_STONE_BRICK_WALL:       0.07
-  MUD_BRICKS:                   0.30
-  MUD_BRICK_SLAB:               0.14
-  MUD_BRICK_STAIRS:             0.28
-  MUD_BRICK_WALL:               0.28
-  PACKED_ICE:                   0.68
-  PACKED_MUD:                   0.32
-  RED_SANDSTONE:                0.19
-  RED_SANDSTONE_SLAB:           0.09
-  RED_SANDSTONE_STAIRS:         0.18
-  RED_SANDSTONE_WALL:           0.18
-  SANDSTONE:                    0.19
-  SANDSTONE_SLAB:               0.09
-  SANDSTONE_STAIRS:             0.18
-  SANDSTONE_WALL:               0.18
-  SMOOTH_RED_SANDSTONE:         0.19
-  SMOOTH_RED_SANDSTONE_SLAB:    0.09
-  SMOOTH_RED_SANDSTONE_STAIRS:  0.18
-  SMOOTH_SANDSTONE:             0.19
-  SMOOTH_SANDSTONE_SLAB:        0.09
-  SMOOTH_SANDSTONE_STAIRS:      0.18
-  SNOW_BLOCK:                   0.07
+  DRIED_GHAST:          38.04
+  END_ROD:              0.78
+  GLOWSTONE:            1.14
+  POPPED_CHORUS_FRUIT:  0.30
 
   # ======================================================================
-  #  MOB DROPS AND SEA ITEMS  (13 items)
+  #  UTILITY AND DECORATION  (51 items)
   # ======================================================================
-  BONE_BLOCK:               1.02
-  BONE_MEAL:                0.12
-  DARK_PRISMARINE:          4.16
-  DARK_PRISMARINE_SLAB:     1.97
-  DARK_PRISMARINE_STAIRS:   3.95
-  PRISMARINE:               1.90
-  PRISMARINE_BRICKS:        4.27
-  PRISMARINE_BRICK_SLAB:    2.02
-  PRISMARINE_BRICK_STAIRS:  4.05
-  PRISMARINE_SLAB:          0.90
-  PRISMARINE_STAIRS:        1.80
-  PRISMARINE_WALL:          1.80
-  SLIME_BLOCK:              8.55
+  ANVIL:               56.33
+  ARMOR_STAND:         0.53
+  BARREL:              0.58
+  BLAST_FURNACE:       10.00
+  BOOK:                0.96
+  BOOKSHELF:           3.24
+  BOWL:                0.06
+  BREWING_STAND:       2.99
+  BUNDLE:              0.95
+  CAMPFIRE:            1.77
+  CARTOGRAPHY_TABLE:   0.60
+  CAULDRON:            13.30
+  CHEST:               0.68
+  CHISELED_BOOKSHELF:  0.62
+  CRAFTING_TABLE:      0.34
+  DECORATED_POT:       0.76
+  ENCHANTING_TABLE:    61.71
+  ENDER_CHEST:         13.38
+  FLETCHING_TABLE:     0.53
+  FLOWER_POT:          0.57
+  FURNACE:             0.38
+  GLASS_BOTTLE:        0.04
+  GLOW_ITEM_FRAME:     2.61
+  GRINDSTONE:          0.36
+  IRON_BARS:           0.71
+  IRON_CHAIN:          2.29
+  IRON_DOOR:           3.80
+  IRON_TRAPDOOR:       7.60
+  ITEM_FRAME:          1.25
+  JACK_O_LANTERN:      0.38
+  LADDER:              0.19
+  LANTERN:             1.70
+  LECTERN:             3.23
+  LODESTONE:           2.20
+  LOOM:                0.93
+  MAP:                 8.73
+  PAINTING:            0.92
+  PAPER:               0.14
+  RESPAWN_ANCHOR:      20.34
+  SCAFFOLDING:         0.11
+  SEA_LANTERN:         5.70
+  SMITHING_TABLE:      4.14
+  SMOKER:              1.88
+  SOUL_CAMPFIRE:       1.44
+  SOUL_LANTERN:        1.71
+  SOUL_TORCH:          0.12
+  STICK:               0.09
+  STONECUTTER:         2.04
+  TORCH:               0.11
+  TRAPPED_CHEST:       1.62
+  WRITABLE_BOOK:       1.43
 
   # ======================================================================
-  #  EVERYTHING ELSE  (2 items)
+  #  RARE AND SPECIAL (trophies, collectibles, shulker boxes)  (20 items)
   # ======================================================================
-  FIREWORK_ROCKET:  0.29
-  STICK:            0.09
+  BEACON:                  117.08
+  BLACK_SHULKER_BOX:       22.62
+  BLUE_SHULKER_BOX:        22.30
+  BROWN_SHULKER_BOX:       22.44
+  CONDUIT:                 148.20
+  CYAN_SHULKER_BOX:        22.71
+  GRAY_SHULKER_BOX:        22.53
+  GREEN_SHULKER_BOX:       22.36
+  LIGHT_BLUE_SHULKER_BOX:  22.30
+  LIGHT_GRAY_SHULKER_BOX:  22.30
+  LIME_SHULKER_BOX:        22.45
+  MAGENTA_SHULKER_BOX:     22.28
+  ORANGE_SHULKER_BOX:      22.30
+  PINK_SHULKER_BOX:        22.28
+  PURPLE_SHULKER_BOX:      22.28
+  RECOVERY_COMPASS:        68.46
+  RED_SHULKER_BOX:         22.28
+  SHULKER_BOX:             23.44
+  WHITE_SHULKER_BOX:       22.30
+  YELLOW_SHULKER_BOX:      22.28
 
 # ------------------------------------------------------------------------------
 #  PREMIUM items: tools with a fixed buy price, and rare things that are very expensive to BUY or cannot be bought.
@@ -1568,39 +1558,88 @@ premium:
   SKELETON_SKULL: {sell: 20}   # sell only (no-buy)
   PIGLIN_HEAD: {sell: 20}   # sell only (no-buy)
   ECHO_SHARD: {sell: 8, buy: 4000}
-  DISC_FRAGMENT_5: {sell: 3, buy: 600}
+  DISC_FRAGMENT_5: {sell: 3, buy: 1000}
   GHAST_TEAR: {sell: 5}               # sell only: buying it would be a way around the end crystal ban
-  PHANTOM_MEMBRANE: {sell: 2, buy: 150}
-  TURTLE_SCUTE: {sell: 3, buy: 250}
-  ARMADILLO_SCUTE: {sell: 1, buy: 80}
+  PHANTOM_MEMBRANE: {sell: 2, buy: 400}
+  TURTLE_SCUTE: {sell: 3, buy: 500}
+  ARMADILLO_SCUTE: {sell: 1, buy: 200}
+  # --- Armour follows the same ladder as the tools: a fixed buy price per material unit (helmet 5 units, chestplate 8,
+  #     leggings 7, boots 4). unit price: copper 70, chainmail 240, iron 180, gold 300, diamond 1600. Netherite armour is
+  #     a diamond piece + a netherite ingot + the upgrade template, so it follows by itself. Leather armour follows the
+  #     leather price. The sell price is what the recipe rule gave (95% of the ingredients), so selling is unchanged.
+  COPPER_HELMET: {sell: 1.90, buy: 350}
+  COPPER_CHESTPLATE: {sell: 3.04, buy: 560}
+  COPPER_LEGGINGS: {sell: 2.66, buy: 490}
+  COPPER_BOOTS: {sell: 1.52, buy: 280}
+  CHAINMAIL_HELMET: {sell: 6, buy: 1200}
+  CHAINMAIL_CHESTPLATE: {sell: 10, buy: 1920}
+  CHAINMAIL_LEGGINGS: {sell: 8, buy: 1680}
+  CHAINMAIL_BOOTS: {sell: 5, buy: 960}
+  IRON_HELMET: {sell: 9.50, buy: 900}
+  IRON_CHESTPLATE: {sell: 15.20, buy: 1440}
+  IRON_LEGGINGS: {sell: 13.30, buy: 1260}
+  IRON_BOOTS: {sell: 7.60, buy: 720}
+  GOLDEN_HELMET: {sell: 19.00, buy: 1500}
+  GOLDEN_CHESTPLATE: {sell: 30.40, buy: 2400}
+  GOLDEN_LEGGINGS: {sell: 26.60, buy: 2100}
+  GOLDEN_BOOTS: {sell: 15.20, buy: 1200}
+  DIAMOND_HELMET: {sell: 142.50, buy: 8000}
+  DIAMOND_CHESTPLATE: {sell: 228.00, buy: 12800}
+  DIAMOND_LEGGINGS: {sell: 199.50, buy: 11200}
+  DIAMOND_BOOTS: {sell: 114.00, buy: 6400}
+
+  # --- Stage 2: hard to get, but not legendary. The shop pays a few rupees (it never pays enough to farm) and sells
+  #     for hundreds or thousands: 100x to 1000x what it pays, set by how rare the item is and how much work it takes.
+  #     Name tags are crafted from a nugget and paper in this game version, so their sell price is pushed down to the
+  #     recipe cost automatically; the high buy price is for players who do not want to look for one.
+  NAME_TAG: {sell: 0.48, buy: 3000}
+  ENDER_PEARL: {sell: 5, buy: 600}          # an eye of ender (pearl + blaze powder) is now about 2,100
+  RABBIT_FOOT: {sell: 3, buy: 600}
+  WET_SPONGE: {sell: 4, buy: 1500}          # ocean monuments only; a dried sponge costs the same
+  SPONGE: {sell: 4, buy: 1500}
+  CRYING_OBSIDIAN: {sell: 3, buy: 500}      # ruined portals and piglin bartering
+  SPORE_BLOSSOM: {sell: 3, buy: 300}
+  PRISMARINE_SHARD: {sell: 0.5, buy: 60}
+  PRISMARINE_CRYSTALS: {sell: 0.8, buy: 150}
+  GLOW_INK_SAC: {sell: 1.5, buy: 160}
+
+  # --- Things that only exist in the world: the shop sells them, but never buys them back.
+  WATER_BUCKET: {sell: 1, buy: 25}
+  LAVA_BUCKET: {sell: 1, buy: 150}
+  POWDER_SNOW_BUCKET: {sell: 1, buy: 100}
+  COD_BUCKET: {sell: 1, buy: 120}
+  SALMON_BUCKET: {sell: 1, buy: 150}
+  PUFFERFISH_BUCKET: {sell: 1, buy: 250}
+  TROPICAL_FISH_BUCKET: {sell: 1, buy: 400}
+  TADPOLE_BUCKET: {sell: 1, buy: 300}
+  AXOLOTL_BUCKET: {sell: 1, buy: 3000}
+  EXPERIENCE_BOTTLE: {sell: 1, buy: 600}
+
   # Netherite: scrap and ancient debris set the price of the whole netherite chain. An ingot is 4 scrap, so it
   # costs about 100,000; netherite tools, armour and blocks are priced from that automatically.
   NETHERITE_SCRAP: {sell: 25, buy: 40000}
   ANCIENT_DEBRIS: {sell: 25, buy: 40000}
   NETHERITE_UPGRADE_SMITHING_TEMPLATE: {sell: 20, buy: 3000}
-  "*_POTTERY_SHERD": {sell: 1, buy: 400}
-  "MUSIC_DISC_*": {sell: 3, buy: 1500}
+  "*_POTTERY_SHERD": {sell: 1, buy: 2000}
+  "MUSIC_DISC_*": {sell: 3, buy: 5000}
   SADDLE: {sell: 5, buy: 3000}
   LEATHER_HORSE_ARMOR: {sell: 4, buy: 300}
   IRON_HORSE_ARMOR: {sell: 8, buy: 900}
   GOLDEN_HORSE_ARMOR: {sell: 12, buy: 1350}
   DIAMOND_HORSE_ARMOR: {sell: 25, buy: 3500}
-  CHAINMAIL_HELMET: {sell: 6, buy: 150}
-  CHAINMAIL_CHESTPLATE: {sell: 10, buy: 250}
-  CHAINMAIL_LEGGINGS: {sell: 8, buy: 200}
-  CHAINMAIL_BOOTS: {sell: 5, buy: 120}
   SNIFFER_EGG: {sell: 20, buy: 6000}
-  TURTLE_EGG: {sell: 5, buy: 600}
+  TURTLE_EGG: {sell: 5, buy: 1500}
   CREAKING_HEART: {sell: 9.97, buy: 2500}
-  WITHER_ROSE: {sell: 3, buy: 400}
-  DRAGON_BREATH: {sell: 4, buy: 300}
-  SCULK_CATALYST: {sell: 5, buy: 300}
-  SCULK_SHRIEKER: {sell: 5, buy: 300}
-  SCULK_SENSOR: {sell: 5, buy: 200}
-  BEE_NEST: {sell: 5, buy: 600}
-  "*_FROGLIGHT": {sell: 3, buy: 90}
-  BELL: {sell: 25, buy: 1500}
-  "*_BANNER_PATTERN": {sell: 1, buy: 500}
+  WITHER_ROSE: {sell: 3, buy: 3000}
+  DRAGON_BREATH: {sell: 4, buy: 1500}
+  SCULK_CATALYST: {sell: 5, buy: 1500}
+  SCULK_SHRIEKER: {sell: 5, buy: 1500}
+  SCULK_SENSOR: {sell: 5, buy: 600}
+  BEE_NEST: {sell: 5, buy: 1500}
+  "*_FROGLIGHT": {sell: 3, buy: 600}
+  BELL: {sell: 25, buy: 3000}
+  "*_BANNER_PATTERN": {sell: 1, buy: 2000}
+  MOJANG_BANNER_PATTERN: {sell: 1, buy: 6000}
   FLOWER_BANNER_PATTERN: {sell: 0.57, buy: 500}
   BORDURE_INDENTED_BANNER_PATTERN: {sell: 0.57, buy: 500}
   COPPER_HORSE_ARMOR: {sell: 3, buy: 450}

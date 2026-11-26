@@ -62,11 +62,11 @@ public final class ShopManager {
     private long dayCapPaise = 1_200_000;
     private double minPlayHours = 2;
     private long bigSalePaise = 200_000;
-    private long rareFromPaise = 150_000;
     private int overridesApplied;
     private int derived;
     private List<String> notes = List.of();
     private volatile Map<String, List<Material>> catalogCache = Map.of();
+    private volatile Map<String, String> categoryOverrides = Map.of();
 
     ShopManager(ArkaSMPEconomy plugin, List<Database.Sale> recentSales) {
         this.plugin = plugin;
@@ -132,7 +132,6 @@ public final class ShopManager {
                 if (o != null) for (String out : o.getKeys(false)) drops.add(new PriceEngine.Drop(in, out, o.getDouble(out)));
             }
         }
-        rareFromPaise = Money.SCALE * (long) Math.max(1, y.getDouble("rules.rare-from-rupees", 1500));
         ShopCategories.learnWoods(names);
         List<PriceEngine.Recipe> recipes = readRecipes();
         Map<String, String> remainders = new HashMap<>();
@@ -152,6 +151,7 @@ public final class ShopManager {
         applyOverrides(s, b, buyMult);
         sell = s;
         buy = b;
+        loadCategoryOverrides();
         catalogCache = buildCatalog();
         plugin.getLogger().info("Shop prices ready: " + s.size() + " items can be sold, " + b.size()
                 + " can be bought (" + derived + " derived from recipes, " + overridesApplied + " admin overrides).");
@@ -559,22 +559,50 @@ public final class ShopManager {
 
     // ---- category listing (for the menus) ------------------------------------------------------
 
-    /** Items that can be bought or sold, grouped by category id, each list sorted by name. */
+    /** Items that can be bought or sold, grouped by category id, each list in the order of {@link ShopCategories#order}. */
     public Map<String, List<Material>> catalog() {
         return catalogCache;
     }
 
+    /** The category an item is shown in: the owner's choice in shop-categories.yml, otherwise the built-in rules. */
+    public String categoryOf(Material m) {
+        String own = categoryOverrides.get(m.name());
+        return own != null ? own : ShopCategories.of(m);
+    }
+
+    /** shop-categories.yml: items: {NAME_TAG: rare}. Lets an owner move one item without touching the code. */
+    private void loadCategoryOverrides() {
+        File file = new File(plugin.getDataFolder(), "shop-categories.yml");
+        if (!file.exists()) plugin.saveResource("shop-categories.yml", false);
+        Map<String, String> map = new HashMap<>();
+        var sec = YamlConfiguration.loadConfiguration(file).getConfigurationSection("items");
+        if (sec != null) {
+            for (String key : sec.getKeys(false)) {
+                String cat = sec.getString(key, "");
+                if (Material.matchMaterial(key) == null) {
+                    plugin.getLogger().warning("shop-categories.yml: unknown item " + key + " (ignored)");
+                } else if (!ShopCategories.exists(cat)) {
+                    plugin.getLogger().warning("shop-categories.yml: " + key + " has an unknown category '" + cat + "' (ignored)");
+                } else {
+                    map.put(Material.matchMaterial(key).name(), cat);
+                }
+            }
+        }
+        categoryOverrides = map;
+    }
+
     private Map<String, List<Material>> buildCatalog() {
-        Map<String, List<Material>> out = new LinkedHashMap<>();
-        java.util.Set<Material> all = new java.util.TreeSet<>(Comparator.comparing(Material::name));
-        all.addAll(sell.keySet());
+        java.util.Set<Material> all = new java.util.HashSet<>(sell.keySet());
         all.addAll(buy.keySet());
-        for (Material m : all) {
-            String cat = ShopCategories.of(m);
-            // very expensive items go to "Rare & Special", but tools and armour stay together in their own
-            // category (diamond and netherite gear is priced high on purpose and players look for it there)
-            if (buy.getOrDefault(m, 0L) >= rareFromPaise && !cat.equals("tools") && !cat.equals("armor")) cat = "rare";
-            out.computeIfAbsent(cat, k -> new ArrayList<>()).add(m);
+        Map<String, List<Material>> groups = new HashMap<>();
+        for (Material m : all) groups.computeIfAbsent(categoryOf(m), k -> new ArrayList<>()).add(m);
+        Map<String, List<Material>> out = new LinkedHashMap<>();
+        for (ShopCategories.Cat c : ShopCategories.ALL) {
+            List<Material> list = groups.get(c.id());
+            if (list == null) continue;
+            Comparator<String> order = ShopCategories.order(c.id());
+            list.sort((a, b) -> order.compare(a.name(), b.name()));
+            out.put(c.id(), list);
         }
         return out;
     }

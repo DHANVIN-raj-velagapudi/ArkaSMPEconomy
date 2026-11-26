@@ -8,7 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
-/** args: base-prices.yml items.txt recipes.tsv outDir  -> runs the real engine on the real 26.3 recipes. */
+/** args: base-prices.yml items.txt recipes.tsv outDir [edible.txt]  -> runs the real engine on the real 26.3 recipes. */
 public class GenPrices {
     public static void main(String[] a) throws Exception {
         YamlConfiguration y = new YamlConfiguration();
@@ -74,5 +74,12 @@ public class GenPrices {
         StringBuilder pb = new StringBuilder();
         for (var e : r.priced().entrySet()) pb.append(e.getKey()).append('\t').append(e.getValue()).append(System.lineSeparator());
         Files.writeString(Path.of(a[3], "priced.tsv"), pb.toString());
+        // the shop category of every item (the same rules the shop menu uses), for make_full.py and the price list
+        Set<String> edible = new HashSet<>();
+        if (a.length > 4) for (String l : Files.readAllLines(Path.of(a[4]))) if (!l.isBlank()) edible.add(l.trim());
+        ShopCategories.learnWoods(items);
+        StringBuilder cb = new StringBuilder();
+        for (String it : items) cb.append(it).append((char) 9).append(ShopCategories.of(it, edible.contains(it))).append((char) 10);
+        Files.writeString(Path.of(a[3], "cats.tsv"), cb.toString());
     }
 }
