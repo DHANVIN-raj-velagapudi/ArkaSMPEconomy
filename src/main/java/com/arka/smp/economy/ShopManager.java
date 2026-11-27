@@ -352,6 +352,19 @@ public final class ShopManager {
         return q;
     }
 
+    /**
+     * Forgets sales older than a day for everyone, and players who have none left. history() only cleans the player
+     * who is selling right now, so a player who sold and left kept every sale in memory until the next restart.
+     */
+    void pruneSales() {
+        long cutoff = System.currentTimeMillis() - 86_400_000L;
+        for (var it = sales.values().iterator(); it.hasNext(); ) {
+            ArrayDeque<Sale> q = it.next();
+            while (!q.isEmpty() && q.peekFirst().ts() < cutoff) q.pollFirst();
+            if (q.isEmpty()) it.remove();
+        }
+    }
+
     private long soldDay(UUID id) {
         long sum = 0;
         for (Sale s : history(id)) sum += s.paise();

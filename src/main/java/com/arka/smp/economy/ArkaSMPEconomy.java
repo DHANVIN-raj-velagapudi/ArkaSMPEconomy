@@ -136,6 +136,7 @@ public final class ArkaSMPEconomy extends JavaPlugin implements Listener {
         // Save online accounts every 5 minutes (play-time progress); cheap, off the hot path.
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             for (Player p : Bukkit.getOnlinePlayers()) economy.save(p.getUniqueId());
+            shop.pruneSales();
         }, 6000L, 6000L);
 
         for (Player p : Bukkit.getOnlinePlayers()) setup(p);

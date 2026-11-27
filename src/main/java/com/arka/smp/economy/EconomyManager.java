@@ -366,15 +366,26 @@ public final class EconomyManager {
     // ---- baltop -----------------------------------------------------------------------------
 
     public void rebuildTop() {
-        List<TopEntry> list = new ArrayList<>();
+        List<TopEntry> all = new ArrayList<>();
         for (Account a : accounts.values()) {
-            if (!a.hideTop) list.add(new TopEntry(a.id, a.name, a.balance));
+            if (!a.hideTop) all.add(new TopEntry(a.id, a.name, a.balance));
         }
-        list.sort(Comparator.comparingLong(TopEntry::balance).reversed()
-                .thenComparing(e -> e.name().toLowerCase(Locale.ROOT)));
+        List<TopEntry> list = ranked(all);
         Map<UUID, Integer> rank = new HashMap<>();
         for (int i = 0; i < list.size(); i++) rank.put(list.get(i).id(), i + 1);
         top = new Top(List.copyOf(list), rank);
+    }
+
+    /** Richest first; equal balances by name (ignoring case). The lower-case name is made once per account, not once per comparison. */
+    static List<TopEntry> ranked(java.util.Collection<TopEntry> entries) {
+        record Keyed(TopEntry entry, String lower) {
+        }
+        List<Keyed> keyed = new ArrayList<>(entries.size());
+        for (TopEntry e : entries) keyed.add(new Keyed(e, e.name() == null ? "" : e.name().toLowerCase(Locale.ROOT)));
+        keyed.sort(Comparator.<Keyed>comparingLong(k -> k.entry().balance()).reversed().thenComparing(Keyed::lower));
+        List<TopEntry> out = new ArrayList<>(keyed.size());
+        for (Keyed k : keyed) out.add(k.entry());
+        return out;
     }
 
     public List<TopEntry> topEntries() {

@@ -3,6 +3,16 @@
 All notable changes to ArkaSMPEconomy. Versions follow `MAJOR.MINOR.PATCH`: a fix raises the last number, a new
 feature the middle one, a breaking change the first. Every release raises the version.
 
+## 1.10.1
+
+### Fixed
+- **Memory:** a player who sold items and then left kept their sales of the last 24 hours in memory until the next restart
+  (the list was only cleaned for the player who was selling right now). All sales older than a day are now dropped every 5 minutes.
+
+### Changed
+- `/baltop` sorting makes each lower-case name once per refresh instead of once per comparison (same order as before; checked
+  against the old sort on 5,000 random accounts).
+
 ## 1.10.0
 
 ### Added
